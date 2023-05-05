@@ -1,0 +1,35 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Identification Type" visible="{=${fieldMappingModel>/203/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/203/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zidentification_type}" visible="{=${fieldMappingModel>/203/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Identification Number" visible="{=${fieldMappingModel>/202/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/202/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zidentification_number}" visible="{=${fieldMappingModel>/202/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Valid from Date" visible="{=${fieldMappingModel>/463/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/463/mandatory} === 'Y' ? true : false}"/>
+		<DatePicker value="{Customers>/zvalid_from}" visible="{=${fieldMappingModel>/463/visibility} === 'Y' ? true : false}" valueFormat="yyyy-MM-dd" change="handleLiveChange" displayFormat="long"/>
+		
+		<Label text="Valid to date" visible="{=${fieldMappingModel>/467/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/467/mandatory} === 'Y' ? true : false}"/>
+        <DatePicker value="{Customers>/zvalid_to}" visible="{=${fieldMappingModel>/467/visibility} === 'Y' ? true : false}" valueFormat="yyyy-MM-dd" change="handleLiveChange" displayFormat="long"/>
+		
+		<Label text="Responsible Institute" visible="{=${fieldMappingModel>/335/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/335/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zresonsible_institute}" visible="{=${fieldMappingModel>/203/visibility} === 'Y' ? true : false}"/>
+		<Label text="Entry Date" visible="{=${fieldMappingModel>/180/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/180/mandatory} === 'Y' ? true : false}"/>
+		<DatePicker value="{Customers>/zentry_date}" visible="{=${fieldMappingModel>/180/visibility} === 'Y' ? true : false}" valueFormat="yyyy-MM-dd" change="handleLiveChange" displayFormat="long"/>
+		
+		<Label text="Country" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/111/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcountry}" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"/>
+		<Label text="Region" visible="{=${fieldMappingModel>/371/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/371/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcountry}" visible="{=${fieldMappingModel>/371/visibility} === 'Y' ? true : false}"/>
+
+		
+		
+	</forms:SimpleForm>
+</mvc:View>

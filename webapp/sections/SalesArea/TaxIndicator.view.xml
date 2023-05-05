@@ -1,0 +1,21 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Country" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/111/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcountry}" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Tax category" visible="{=${fieldMappingModel>/415/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/415/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztaxcategory}" visible="{=${fieldMappingModel>/415/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Tax Classification" visible="{=${fieldMappingModel>/417/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/417/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztax_classification}" visible="{=${fieldMappingModel>/417/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Tax Category 2" visible="{=${fieldMappingModel>/416/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/416/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztax_category2}" visible="{=${fieldMappingModel>/416/visibility} === 'Y' ? true : false}"/>
+		<Label text="Tax Classification 2" visible="{=${fieldMappingModel>/418/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/418/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztax_classification2}" visible="{=${fieldMappingModel>/418/visibility} === 'Y' ? true : false}"/>
+	</forms:SimpleForm>
+</mvc:View>

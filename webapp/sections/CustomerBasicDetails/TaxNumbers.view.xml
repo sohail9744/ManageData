@@ -1,0 +1,17 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Tax Number category" visible="{=${fieldMappingModel>/420/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/420/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztax_number_category}" visible="{=${fieldMappingModel>/420/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Tax Description" visible="{=${fieldMappingModel>/419/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/419/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztax_description}" visible="{=${fieldMappingModel>/419/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Tax Number" visible="{=${fieldMappingModel>/421/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/421/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztax_number}" visible="{=${fieldMappingModel>/421/visibility} === 'Y' ? true : false}"/>
+	
+		
+		
+	</forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog
+		id="mySelectDialog"
+		noDataText="No Customers Found"
+		title="Select Customer"
+		search=".onSearch"
+		confirm=".onDialogClose"
+		cancel=".onDialogClose"
+		items="{
+			path: 'LegalName>/LegalNameSet'
+		}">
+		<StandardListItem
+			title="{LegalName>Name}"
+			iconDensityAware="false"
+			iconInset="false"
+			type="Active" />
+	</SelectDialog>
+</core:FragmentDefinition>

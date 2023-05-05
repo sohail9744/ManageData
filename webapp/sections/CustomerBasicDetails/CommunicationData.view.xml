@@ -1,0 +1,28 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="PO Box" visible="{=${fieldMappingModel>/335/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/335/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpo_box_no_pin_code}" visible="{=${fieldMappingModel>/335/visibility} === 'Y' ? true : false}"/>
+		<Label text="Telephone" visible="{=${fieldMappingModel>/423/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/423/mandatory} === 'Y' ? true : false}"/>
+		<Input placeholder="Country" value="{Customers>/ztelephone_country_number_exte}" visible="{=${fieldMappingModel>/423/visibility} === 'Y' ? true : false}"/>
+		<Input placeholder="Number" value="{Customers>/ztelephone_country_number_exte}" visible="{=${fieldMappingModel>/423/visibility} === 'Y' ? true : false}"/>
+		<Input placeholder="Extension" value="{Customers>/ztelephone_country_number_exte}" visible="{=${fieldMappingModel>/423/visibility} === 'Y' ? true : false}"/>
+		<Label text="Mobile" visible="{=${fieldMappingModel>/283/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/283/mandatory} === 'Y' ? true : false}"/>
+		<Input placeholder="Country" value="{Customers>/zmobile_country_number}" visible="{=${fieldMappingModel>/283/visibility} === 'Y' ? true : false}"/>
+		<Input placeholder="Number" value="{Customers>/zmobile_country_number}" visible="{=${fieldMappingModel>/284/visibility} === 'Y' ? true : false}"/>
+		<Label text="Fax" visible="{=${fieldMappingModel>/184/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/184/mandatory} === 'Y' ? true : false}"/>
+		<Input placeholder="Country"  value="{Customers>/zfax_country_number_extension}" visible="{=${fieldMappingModel>/184/visibility} === 'Y' ? true : false}"/>
+		<Input placeholder="Number"  value="{Customers>/zfax_country_number_extension}" visible="{=${fieldMappingModel>/185/visibility} === 'Y' ? true : false}"/>
+		<Input placeholder="Extension"  value="{Customers>/zfax_country_number_extension}" visible="{=${fieldMappingModel>/186/visibility} === 'Y' ? true : false}"/>
+		<Label text="Email" visible="{=${fieldMappingModel>/176/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/176/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zemail_id}" visible="{=${fieldMappingModel>/176/visibility} === 'Y' ? true : false}"/>
+		<Label text="Website" visible="{=${fieldMappingModel>/478/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/478/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zwebsite}" visible="{=${fieldMappingModel>/478/visibility} === 'Y' ? true : false}"/>
+
+	</forms:SimpleForm>
+</mvc:View>

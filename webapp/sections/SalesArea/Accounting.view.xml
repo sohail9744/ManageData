@@ -1,0 +1,11 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Settlement Group" visible="{=${fieldMappingModel>/397/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/397/mandatory} === 'Y' ? true : false}" />
+		<Input  value="{Customers>/zsettlement_group}" visible="{=${fieldMappingModel>/397/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Account Assignment Group" visible="{=${fieldMappingModel>/1/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/1/mandatory} === 'Y' ? true : false}"/>
+		<Input  value="{Customers>/zaccount_assignment_group}" visible="{=${fieldMappingModel>/1/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

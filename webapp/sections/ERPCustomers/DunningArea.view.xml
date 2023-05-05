@@ -1,0 +1,12 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Grouping Key" visible="{=${fieldMappingModel>/196/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/196/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zgrouping_key}" visible="{=${fieldMappingModel>/196/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Dunning Area" visible="{=${fieldMappingModel>/174/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/174/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zdunning_area}" visible="{=${fieldMappingModel>/174/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Dunning Area Description" visible="{=${fieldMappingModel>/175/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/175/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zdunning_area_description}" visible="{=${fieldMappingModel>/175/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,26 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="ID" visible="{=${fieldMappingModel>/201/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/201/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zid}" visible="{=${fieldMappingModel>/201/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Bank Country" visible="{=${fieldMappingModel>/57/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/57/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zbankcountry}" visible="{=${fieldMappingModel>/57/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Bank Key" visible="{=${fieldMappingModel>/58/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/58/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zbankkey}" visible="{=${fieldMappingModel>/58/visibility} === 'Y' ? true : false}"/>
+		<Label text="Bank Name" visible="{=${fieldMappingModel>/59/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/59/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zbankname}" visible="{=${fieldMappingModel>/59/visibility} === 'Y' ? true : false}"/>
+		<Label text="Bank Account" visible="{=${fieldMappingModel>/56/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/56/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zbankaccount}" visible="{=${fieldMappingModel>/56/visibility} === 'Y' ? true : false}"/>
+		<Label text="Account Name" visible="{=${fieldMappingModel>/5/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/5/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zaccountname}" visible="{=${fieldMappingModel>/5/visibility} === 'Y' ? true : false}"/>
+
+		
+		
+	</forms:SimpleForm>
+</mvc:View>

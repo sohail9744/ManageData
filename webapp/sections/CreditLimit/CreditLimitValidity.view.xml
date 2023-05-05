@@ -1,0 +1,7 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Date" visible="{=${fieldMappingModel>/159/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/159/mandatory} === 'Y' ? true : false}"/>
+		<DatePicker value="{Customers>/zdate}" visible="{=${fieldMappingModel>/159/visibility} === 'Y' ? true : false}"/>
+	</forms:SimpleForm>
+</mvc:View>

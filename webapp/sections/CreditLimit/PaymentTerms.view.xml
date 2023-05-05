@@ -1,0 +1,16 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Max. Credit Days" visible="{=${fieldMappingModel>/277/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/277/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zmaximum_credit_days}" visible="{=${fieldMappingModel>/277/visibility} === 'Y' ? true : false}" />
+        <Label text="Cash Collection" visible="{=${fieldMappingModel>/80/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/80/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zcash_collection}" visible="{=${fieldMappingModel>/80/visibility} === 'Y' ? true : false}" />
+        <Label text="Transit Time" visible="{=${fieldMappingModel>/440/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/440/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/ztransit_time}" visible="{=${fieldMappingModel>/440/visibility} === 'Y' ? true : false}" />
+        <Label text="Total Credit Days" visible="{=${fieldMappingModel>/430/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/430/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/ztotal_credit_days}" visible="{=${fieldMappingModel>/430/visibility} === 'Y' ? true : false}" />
+        <Label text="Is Proxima" visible="{=${fieldMappingModel>/248/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/248/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zproxima}" visible="{=${fieldMappingModel>/248/visibility} === 'Y' ? true : false}" />
+        <Label text="Payment Terms" visible="{=${fieldMappingModel>/323/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/323/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zpayment_terms}" visible="{=${fieldMappingModel>/323/visibility} === 'Y' ? true : false}" />
+    </forms:SimpleForm>
+</mvc:View>

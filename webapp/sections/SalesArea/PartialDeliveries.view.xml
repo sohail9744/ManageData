@@ -1,0 +1,25 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Complete Delivery" visible="{=${fieldMappingModel>/105/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/105/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcomplete_delivery}" visible="{=${fieldMappingModel>/105/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Maximum Number of Part. Deliveries" visible="{=${fieldMappingModel>/279/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/279/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmaximum_number_of_part_delive}" visible="{=${fieldMappingModel>/279/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Partial Delivery per Item" visible="{=${fieldMappingModel>/311/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/311/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpartial_delivery_per_item}" visible="{=${fieldMappingModel>/311/visibility} === 'Y' ? true : false}"/>
+		<Label text="Unlimited Tolerance"  visible="{=${fieldMappingModel>/460/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/460/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zunlimited_tolerance}" visible="{=${fieldMappingModel>/460/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Underdelivery Tolerance" visible="{=${fieldMappingModel>/457/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/432/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zunder_delivery_tolerance}" visible="{=${fieldMappingModel>/457/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Overdelivery Tolerance" visible="{=${fieldMappingModel>/308/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/308/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zover_delivery_tolerance}" visible="{=${fieldMappingModel>/308/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,17 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Policy Number" visible="{=${fieldMappingModel>/340/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/340/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zpolicy_number}" visible="{=${fieldMappingModel>/340/visibility} === 'Y' ? true : false}"/>
+        <Label text="Amount Insured" visible="{=${fieldMappingModel>/27/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/27/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zamount_insured}" visible="{=${fieldMappingModel>/27/visibility} === 'Y' ? true : false}"/>
+
+        <Label text="Lead Months" visible="{=${fieldMappingModel>/258/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/258/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zlead_months}" visible="{=${fieldMappingModel>/258/visibility} === 'Y' ? true : false}"/>
+        <Label text="Institute Number" visible="{=${fieldMappingModel>/221/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/221/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zinstitute_number}" visible="{=${fieldMappingModel>/221/visibility} === 'Y' ? true : false}"/>
+        <Label text="Valid To" visible="{=${fieldMappingModel>/465/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/465/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zvalid_to}" visible="{=${fieldMappingModel>/465/visibility} === 'Y' ? true : false}"/>
+        <Label text="Deductible" visible="{=${fieldMappingModel>/162/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/162/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zdeductible}" visible="{=${fieldMappingModel>/162/visibility} === 'Y' ? true : false}"/>
+    </forms:SimpleForm>
+</mvc:View>

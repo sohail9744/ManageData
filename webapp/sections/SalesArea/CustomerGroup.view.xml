@@ -1,0 +1,20 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Customer Group 1" visible="{=${fieldMappingModel>/149/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/149/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcustomer_group1}" visible="{=${fieldMappingModel>/149/visibility} === 'Y' ? true : false}"/>
+		<Label text="Customer Group 2" visible="{=${fieldMappingModel>/150/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/150/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcustomer_group2}" visible="{=${fieldMappingModel>/150/visibility} === 'Y' ? true : false}"/>
+		<Label text="Customer Group 3" visible="{=${fieldMappingModel>/151/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/151/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcustomer_group3}" visible="{=${fieldMappingModel>/151/visibility} === 'Y' ? true : false}"/>
+		<Label text="Customer Group 4" visible="{=${fieldMappingModel>/152/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/152/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcustomer_group4}" visible="{=${fieldMappingModel>/152/visibility} === 'Y' ? true : false}"/>
+		<Label text="Customer Group 5" visible="{=${fieldMappingModel>/153/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/153/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcustomer_group5}" visible="{=${fieldMappingModel>/153/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

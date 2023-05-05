@@ -1,0 +1,22 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Manual Invoice Maintenance"  visible="{=${fieldMappingModel>/276/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/276/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmanual_invoice_maintenance}" visible="{=${fieldMappingModel>/276/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Rebate" visible="{=${fieldMappingModel>/369/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/369/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zrebate}" visible="{=${fieldMappingModel>/369/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Pricing" visible="{=${fieldMappingModel>/347/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/347/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpricing}" visible="{=${fieldMappingModel>/347/visibility} === 'Y' ? true : false}"/>
+		<Label text="Invoice Dates"  visible="{=${fieldMappingModel>/227/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/227/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zinvoicing_dates}" visible="{=${fieldMappingModel>/227/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Invoice List Dates" visible="{=${fieldMappingModel>/228/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/228/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zinvoicing_list_dates}" visible="{=${fieldMappingModel>/228/visibility} === 'Y' ? true : false}"/>
+		
+		
+	</forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,23 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Legal Entity" visible="{=${fieldMappingModel>/260/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/260/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcustomer_legal_name}" visible="{=${fieldMappingModel>/260/visibility} === 'Y' ? true : false}"/>
+		<Label text="Legal Form" visible="{=${fieldMappingModel>/261/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/261/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zlegalform}" visible="{=${fieldMappingModel>/261/visibility} === 'Y' ? true : false}"/>
+		<Label text="Date Founded" visible="{=${fieldMappingModel>/160/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/160/mandatory} === 'Y' ? true : false}"/>
+		<DatePicker id="zdateFound" value="{Customers>/zdate_founded}" valueFormat="yyyy-MM-dd" visible="{=${fieldMappingModel>/160/visibility} === 'Y' ? true : false}"/>
+		<!-- <DatePicker id="zdateFound" value="{path:'Customers>/zdate_founded', formatter: '.formatter.dateFormatter'}" valueFormat="yyyy-MM-dd" /> -->
+		<Label text="Liquidation Date" visible="{=${fieldMappingModel>/271/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/271/mandatory} === 'Y' ? true : false}"/>
+		<DatePicker id="zliqDate" value="{Customers>/zliquidationdate}" valueFormat="yyyy-MM-dd" visible="{=${fieldMappingModel>/271/visibility} === 'Y' ? true : false}"/>
+		<!-- <DatePicker id="zliqDate" value="{path:'Customers>/zliquidationdate', formatter: '.formatter.dateFormatter'}" valueFormat="yyyy-MM-dd" /> -->
+		
+		<Label text="Authorization Group" visible="{=${fieldMappingModel>/46/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/46/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zauthorization_group}" visible="{=${fieldMappingModel>/46/visibility} === 'Y' ? true : false}"/>
+
+	</forms:SimpleForm>
+</mvc:View>

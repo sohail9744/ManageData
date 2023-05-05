@@ -1,0 +1,25 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Accounting Clerk" visible="{=${fieldMappingModel>/9/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/9/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zaccounting_clerk}" visible="{=${fieldMappingModel>/9/visibility} === 'Y' ? true : false}" />
+        <Label text="Account with Number" visible="{=${fieldMappingModel>/7/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/7/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zaccount_with_number}"  visible="{=${fieldMappingModel>/7/visibility} === 'Y' ? true : false}"/>
+
+        <Label text="Account Memo" visible="{=${fieldMappingModel>/4/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/4/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zaccount_memo}"  visible="{=${fieldMappingModel>/4/visibility} === 'Y' ? true : false}"/>
+        <Label text="Clerk At Customer" visible="{=${fieldMappingModel>/96/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/96/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zclerk_at_customer}"  visible="{=${fieldMappingModel>/96/visibility} === 'Y' ? true : false}"/>
+        <Label text="Clerk's Telephone Number" visible="{=${fieldMappingModel>/97/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/97/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zclerks_telephone_number}"  visible="{=${fieldMappingModel>/97/visibility} === 'Y' ? true : false}"/>
+        <Label text="Account Statement" visible="{=${fieldMappingModel>/6/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/6/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zaccount_statement}"  visible="{=${fieldMappingModel>/6/visibility} === 'Y' ? true : false}"/>
+        <Label text="Collective Invoice Variant" visible="{=${fieldMappingModel>/100/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/100/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zcollective_invoice_variant}"  visible="{=${fieldMappingModel>/100/visibility} === 'Y' ? true : false}"/>
+        <Label text="Local Processing" visible="{=${fieldMappingModel>/272/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/272/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zlocal_processing}"  visible="{=${fieldMappingModel>/272/visibility} === 'Y' ? true : false}"/>
+        <Label text="Clerk's Internet Address" visible="{=${fieldMappingModel>/99/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/99/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zclerks_internet_address}"  visible="{=${fieldMappingModel>/99/visibility} === 'Y' ? true : false}"/>
+        <Label text="Clerk's Fax Number" visible="{=${fieldMappingModel>/98/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/98/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zclerks_fax_number}"  visible="{=${fieldMappingModel>/98/visibility} === 'Y' ? true : false}"/>
+    </forms:SimpleForm>
+</mvc:View>

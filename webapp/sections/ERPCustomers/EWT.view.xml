@@ -1,0 +1,8 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Withholding Tax Type" visible="{=${fieldMappingModel>/479/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/479/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zwith_holding_tax_type}" visible="{=${fieldMappingModel>/479/visibility} === 'Y' ? true : false}" />
+        <Label text="Withholding Tax type Description" visible="{=${fieldMappingModel>/480/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/480/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zwith_holding_tax_type_descrip}" visible="{=${fieldMappingModel>/480/visibility} === 'Y' ? true : false}" />
+    </forms:SimpleForm>
+</mvc:View>

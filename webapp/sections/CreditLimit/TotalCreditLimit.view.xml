@@ -1,0 +1,13 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Total Secured Credit Limit (AED)" visible="{=${fieldMappingModel>/433/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/433/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztotal_secured_limit}" visible="{=${fieldMappingModel>/433/visibility} === 'Y' ? true : false}"/>
+		<Label text="Total Unsecured Credit Limit (AED)" visible="{=${fieldMappingModel>/436/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/436/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztotal_unsecured_limit}" visible="{=${fieldMappingModel>/436/visibility} === 'Y' ? true : false}"/>
+		<Label text="Total Credit Amount (AED)" visible="{=${fieldMappingModel>/431/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/431/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztotal_credit_amount}" visible="{=${fieldMappingModel>/431/visibility} === 'Y' ? true : false}"/>
+	</forms:SimpleForm>
+</mvc:View>

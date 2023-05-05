@@ -1,0 +1,18 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Delivery Priority" visible="{=${fieldMappingModel>/164/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/164/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zdelivery_priority}" visible="{=${fieldMappingModel>/164/visibility} === 'Y' ? true : false}" />
+        <Label text="Shipping Conditions"  visible="{=${fieldMappingModel>/398/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/398/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zshipping_conditions}" visible="{=${fieldMappingModel>/398/visibility} === 'Y' ? true : false}" />
+
+        <Label text="Delivery Plant" visible="{=${fieldMappingModel>/163/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/163/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zdelivery_plant}" visible="{=${fieldMappingModel>/163/visibility} === 'Y' ? true : false}" />
+        <Label text="Order Combination"  visible="{=${fieldMappingModel>/306/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/306/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zorder_combination}" visible="{=${fieldMappingModel>/306/visibility} === 'Y' ? true : false}" />
+        <Label text="Relevant POD" visible="{=${fieldMappingModel>/374/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/374/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zrelevant_pod}" visible="{=${fieldMappingModel>/374/visibility} === 'Y' ? true : false}" />
+
+        <Label text="POD Timeframe" visible="{=${fieldMappingModel>/339/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/339/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zpod_timeframe}" visible="{=${fieldMappingModel>/339/visibility} === 'Y' ? true : false}" />
+    </forms:SimpleForm>
+</mvc:View>

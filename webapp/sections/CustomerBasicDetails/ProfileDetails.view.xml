@@ -1,0 +1,34 @@
+<mvc:View controllerName="Iffco.createCustomer.controller.view2" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<!-- <Label text="Street / House Number" required="true"/>
+		<Input value="{Customers>/zstreet_house_number}" editable="true"/> -->
+		<Label text="Postal Code / City" visible="{=${fieldMappingModel>/341/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/341/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpostal_code_city}" visible="{=${fieldMappingModel>/341/visibility} === 'Y' ? true : false}"/>
+        <Label text="Country" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/111/mandatory} === 'Y' ? true : false}"/>
+		<MultiInput id="LAND1" valueHelpRequest="handleValueHelpForCountry"
+														 valueHelpOnly="true" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"/>
+        <Label text="State / Region" visible="{=${fieldMappingModel>/406/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/406/mandatory} === 'Y' ? true : false}"/>
+		<MultiInput value="" change="handleInputType" id="STATE" valueHelpRequest="handleValueHelpForRegion"
+														 valueHelpOnly="true" visible="{=${fieldMappingModel>/406/visibility} === 'Y' ? true : false}"/>
+        <Label text="Language" visible="{=${fieldMappingModel>/252/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/252/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zlanguage}" visible="{=${fieldMappingModel>/252/visibility} === 'Y' ? true : false}"/>
+		<Label text="Transportation Zone" visible="{=${fieldMappingModel>/441/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/441/mandatory} === 'Y' ? true : false}"/>
+		<MultiInput change="handleInputType" id="TRSPTNZNE" valueHelpRequest="handleValueHelpForTrsptnZne"
+														 valueHelpOnly="true" visible="{=${fieldMappingModel>/441/visibility} === 'Y' ? true : false}"/>
+		<Label text="PO Box Postal Code /PO Box" visible="{=${fieldMappingModel>/335/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/335/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcompany_postal_code}" visible="{=${fieldMappingModel>/335/visibility} === 'Y' ? true : false}"/>
+		<Label text="PO BOX WithoutNumber" visible="{=${fieldMappingModel>/338/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/338/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcompany_postal_code}" visible="{=${fieldMappingModel>/338/visibility} === 'Y' ? true : false}"/>
+		<Label text="Company Postal Code" visible="{=${fieldMappingModel>/104/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/104/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcompany_postal_code}" visible="{=${fieldMappingModel>/104/visibility} === 'Y' ? true : false}"/>
+
+	</forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,39 @@
+<mvc:View  xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Request ID" />
+        <Input value="{Customers>/zrequest_no}" editable="false" />
+        <Label text="Request Type"  />
+        <Input value = "{Customers>/zrequest_type}"  editable="false" />
+        <Label text="Description" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/211/mandatory} === 'Y' ? true : false}" />
+        <RadioButtonGroup selectedIndex="0" select="onDescriptionSelect">
+            <RadioButton id="0" text="Credit"/>
+            <!-- <RadioButto  id='0' text="{=${Customers>/zpriority} === "Credit" ? "Credit" : "Credit"}" -->
+            <!-- <RadioButto  id='0' text="{=${Customers>/zpriority} === "Cash" ? "Cash" : "Cash"}" -->
+            <RadioButton id="1" text="Cash" />
+        </RadioButtonGroup>
+
+        <Label text="Priority" visible="{=${fieldMappingModel>/348/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/348/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zpriority}" visible="{=${fieldMappingModel>/348/visibility} === 'Y' ? true : false}"/>
+        <Label text="Due Date" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/211/mandatory} === 'Y' ? true : false}" />
+        <DatePicker value="{Customers>/zduedate}" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"/>
+        <Label text="Reason" visible="{=${fieldMappingModel>/367/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/367/mandatory} === 'Y' ? true : false}" />
+        <Input value="{Customers>/zreason}" visible="{=${fieldMappingModel>/367/visibility} === 'Y' ? true : false}"/>
+        <Label text="Status" visible="{=${fieldMappingModel>/407/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/407/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zstatus}" editable="false" visible="{=${fieldMappingModel>/407/visibility} === 'Y' ? true : false}"/>
+
+        <Label text="Created On/By" visible="{=${fieldMappingModel>/116/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/116/mandatory} === 'Y' ? true : false}" />
+        <DatePicker  editable="false" value="{Customers>/zcreated_date}" visible="{=${fieldMappingModel>/116/visibility} === 'Y' ? true : false}" valueFormat="yyyy-MM-dd" displayFormat="long" />
+        <Label text="Updated On/By" visible="{=${fieldMappingModel>/88/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/88/mandatory} === 'Y' ? true : false}"/>
+        <DatePicker editable="false" value="{Customers>/zupdated_date}" visible="{=${fieldMappingModel>/88/visibility} === 'Y' ? true : false}" valueFormat="yyyy-MM-dd" displayFormat="long"/>
+        <Label text="Finished On/By" visible="{=${fieldMappingModel>/189/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/189/mandatory} === 'Y' ? true : false}"/>
+        <DatePicker editable="false" value="{Customers>/zfinalizedon}" visible="{=${fieldMappingModel>/189/visibility} === 'Y' ? true : false}"/>
+    </forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="Validation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../catalogservice;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="HTML5"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="../../../sap/zsb_clap/$metadata">
+        <edmx:Include Namespace="ZSB_CLAP" Alias="SAP"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="zsb_clap_van.v1" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <Annotations Target="cds_zsd_clap.ZDD_CLAP_VIEW_PRType">
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="GeneralInformation"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data one"/>
+                                        <PropertyValue Property="ID" String="group1Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#one"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data two"/>
+                                        <PropertyValue Property="ID" String="group2Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#two"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data three"/>
+                                        <PropertyValue Property="ID" String="group3Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#three"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data four"/>
+                                        <PropertyValue Property="ID" String="group4Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#four"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data five"/>
+                                        <PropertyValue Property="ID" String="group5Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#five"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data six"/>
+                                        <PropertyValue Property="ID" String="group6Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#six"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data seven"/>
+                                        <PropertyValue Property="ID" String="group7Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#seven"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data eight"/>
+                                        <PropertyValue Property="ID" String="group8Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#eight"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data nine"/>
+                                        <PropertyValue Property="ID" String="group9Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#nine"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data ten"/>
+                                        <PropertyValue Property="ID" String="group10Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ten"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data eleven"/>
+                                        <PropertyValue Property="ID" String="group11Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#eleven"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Label" String="Customer Data twelve"/>
+                                        <PropertyValue Property="ID" String="group12Information"/>
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#twelve"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                            <Annotation Term="UI.IsSummary" Bool="true"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="one">
+                    <Record>
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Business Unit Name"/>
+                                    <PropertyValue Property="Value" Path="zbusiness_unit_name"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Customer Number"/>
+                                    <PropertyValue Property="Value" Path="zcustomer_num"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Vertical"/>
+                                    <PropertyValue Property="Value" Path="zvertical"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Customer Internal Rating"/>
+                                    <PropertyValue Property="Value" Path="zcustomer_internal_rating"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Type of Entity"/>
+                                    <PropertyValue Property="Value" Path="ztype_of_entity"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Year of Establishment"/>
+                                    <PropertyValue Property="Value" Path="zyear_of_establishment"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Add Sites"/>
+                                    <PropertyValue Property="Value" Path="zadd_sites"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="Customer Legal Name"/>
+                                    <PropertyValue Property="Value" Path="zcustomer_legal_name"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Label" String="zcustomer_group"/>
+                                    <PropertyValue Property="Value" Path="zcustomer_group"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zcustomer_num"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zbusiness_unit_name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zvertical"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zcustomer_group"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zcustomer_legal_name"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zadd_sites"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zyear_of_establishment"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="ztype_of_entity"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="zcustomer_internal_rating"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,22 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Company Code" visible="{=${fieldMappingModel>/102/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/102/mandatory} === 'Y' ? true : false}" />
+		<Input visible="{=${fieldMappingModel>/102/visibility} === 'Y' ? true : false}" value="{Customers>/zcompany_code}"/>
+		<Label text = "Reconcilation Account" visible="{=${fieldMappingModel>/370/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/370/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zreconciliation_account}" visible="{=${fieldMappingModel>/370/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Head office" visible="{=${fieldMappingModel>/187/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/187/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zhead_office}" visible="{=${fieldMappingModel>/197/visibility} === 'Y' ? true : false}"/>
+		<Label text="Authorization Group" visible="{=${fieldMappingModel>/46/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/46/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zauthorization_group}" visible="{=${fieldMappingModel>/46/visibility} === 'Y' ? true : false}"/>
+		<Label text="Value Adjustment" visible="{=${fieldMappingModel>/471/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/471/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zvalue_adjustment}" visible="{=${fieldMappingModel>/471/visibility} === 'Y' ? true : false}"/>
+		<Label text="Sort Key" visible="{=${fieldMappingModel>/400/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/400/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zsort_key}" visible="{=${fieldMappingModel>/400/visibility} === 'Y' ? true : false}"/>
+		<Label text="Planning Group" visible="{=${fieldMappingModel>/334/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/334/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zplanning_group}" visible="{=${fieldMappingModel>/334/visibility} === 'Y' ? true : false}"/>
+		<Label text="Release Group" visible="{=${fieldMappingModel>/373/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/373/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zrelease_group}" visible="{=${fieldMappingModel>/373/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

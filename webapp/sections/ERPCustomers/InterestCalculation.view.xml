@@ -1,0 +1,15 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Interest Indicator" visible="{=${fieldMappingModel>/226/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/226/mandatory} === 'Y' ? true : false}" />
+		<Input visible="{=${fieldMappingModel>/226/visibility} === 'Y' ? true : false}" value="{Customers>/zinterest_indicator}"/>
+		<Label text = "Interest Calculation Frequency" visible="{=${fieldMappingModel>/225/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/225/mandatory} === 'Y' ? true : false}" />
+		<Input value="{Customers>/zinterest_calculation_frequenc}" visible="{=${fieldMappingModel>/225/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Last key Date" visible="{=${fieldMappingModel>/255/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/255/mandatory} === 'Y' ? true : false}" />
+		<DatePicker value="{Customers>/zlast_key_date}" visible="{=${fieldMappingModel>/255/visibility} === 'Y' ? true : false}" valueFormat="yyyy-MM-dd" displayFormat="long" />
+		
+		<Label text="Last Interest Run" visible="{=${fieldMappingModel>/254/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/254/mandatory} === 'Y' ? true : false}" />
+		<Input value="{Customers>/zlast_interestringn}" visible="{=${fieldMappingModel>/254/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

@@ -1,0 +1,16 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <Label text="Price Group" visible="{=${fieldMappingModel>/344/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/344/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zprice_group}" visible="{=${fieldMappingModel>/344/visibility} === 'Y' ? true : false}"/>
+        <Label text="Price List" visible="{=${fieldMappingModel>/345/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/345/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zpricelist}" visible="{=${fieldMappingModel>/345/visibility} === 'Y' ? true : false}" />
+        <Label text="Price Procedure Determination"  visible="{=${fieldMappingModel>/346/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/346/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zprice_procedured_term}" visible="{=${fieldMappingModel>/346/visibility} === 'Y' ? true : false}"/>
+        <Label text="Customer Statistic Group"  visible="{=${fieldMappingModel>/155/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/155/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcustomer_statistics_group}" visible="{=${fieldMappingModel>/155/visibility} === 'Y' ? true : false}"/>
+    </forms:SimpleForm>
+</mvc:View>

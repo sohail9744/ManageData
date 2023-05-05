@@ -1,0 +1,27 @@
+<mvc:View controllerName="Iffco.createCustomer.controller.view2" id="aptView" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout" id="apt">
+		<Label text="Payment Method" visible="{=${fieldMappingModel>/321/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/321/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpayment_method}" visible="{=${fieldMappingModel>/321/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Alternative payer" visible="{=${fieldMappingModel>/25/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/25/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zalternative_payer}" visible="{=${fieldMappingModel>/25/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Bill of Exchange Limit" visible="{=${fieldMappingModel>/61/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/61/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zbill_of_exchangelimit}" visible="{=${fieldMappingModel>/61/visibility} === 'Y' ? true : false}"/>
+		<Label text="Payment Method Supplement" visible="{=${fieldMappingModel>/322/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/322/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpayment_method_supplement}" visible="{=${fieldMappingModel>/322/visibility} === 'Y' ? true : false}"/>
+		<Label text="Next Payee" visible="{=${fieldMappingModel>/294/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/294/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/znext_payee}" visible="{=${fieldMappingModel>/294/visibility} === 'Y' ? true : false}"/>
+		<Label text="Lockbox" visible="{=${fieldMappingModel>/274/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/274/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zlockbox}" visible="{=${fieldMappingModel>/274/visibility} === 'Y' ? true : false}"/>
+		<Label text="Payment Block" visible="{=${fieldMappingModel>/318/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/318/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpayment_block}" visible="{=${fieldMappingModel>/318/visibility} === 'Y' ? true : false}"/>
+		<Label text="House Bank" visible="{=${fieldMappingModel>/198/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/198/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zhouse_bank}" visible="{=${fieldMappingModel>/198/visibility} === 'Y' ? true : false}"/>
+		<Label text="Grouping Key" visible="{=${fieldMappingModel>/196/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/196/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zgrouping_key}" visible="{=${fieldMappingModel>/196/visibility} === 'Y' ? true : false}"/>
+        <Label text="Individual payment" visible="{=${fieldMappingModel>/210/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/210/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zindividual_paymen}" visible="{=${fieldMappingModel>/210/visibility} === 'Y' ? true : false}"/>
+        <Label text="Payment Advice by EDI" visible="{=${fieldMappingModel>/317/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/317/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpayment_advice_by_edi}" visible="{=${fieldMappingModel>/317/visibility} === 'Y' ? true : false}"/>
+	</forms:SimpleForm>
+</mvc:View>

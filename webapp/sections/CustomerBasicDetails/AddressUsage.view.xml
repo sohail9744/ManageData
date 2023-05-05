@@ -1,0 +1,16 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Address Type" visible="{=${fieldMappingModel>/19/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/19/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zaddress_type}" visible="{=${fieldMappingModel>/19/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Address" visible="{=${fieldMappingModel>/16/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/16/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zstandard_usage}" visible="{=${fieldMappingModel>/16/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Standard Usage" visible="{=${fieldMappingModel>/405/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/405/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zstandard_usage}" visible="{=${fieldMappingModel>/405/visibility} === 'Y' ? true : false}"/>
+		
+		
+	</forms:SimpleForm>
+</mvc:View>

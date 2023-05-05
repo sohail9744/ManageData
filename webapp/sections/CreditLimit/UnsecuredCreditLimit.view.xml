@@ -1,0 +1,74 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <forms:SimpleForm editable="false" layout="ColumnLayout">
+        <core:Title text="Open Credit / Clean Credit" />
+        <Label text="Amount (SAR)" visible="{=${fieldMappingModel>/302/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/302/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zopen_clean_credit_amount}" visible="{=${fieldMappingModel>/302/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="CAD" />
+        <Label text="Amount (SAR)" visible="{=${fieldMappingModel>/76/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/76/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcad_amount}" visible="{=${fieldMappingModel>/76/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="PDC in hand" />
+        <Label text="Amount (SAR)" visible="{=${fieldMappingModel>/328/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/328/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zpoc_in_hand_amount}" visible="{=${fieldMappingModel>/328/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="Undated Cheque / Security Deposit Cheque" />
+        <Label text="Amount (SAR)" visible="{=${fieldMappingModel>/453/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/453/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zundated_or_security_deposit_c}" visible="{=${fieldMappingModel>/453/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="CRI (only Insolvency risk)" />
+        <Label text="Insurer" visible="{=${fieldMappingModel>/136/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/136/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcri_insurer}" visible="{=${fieldMappingModel>/136/visibility} === 'Y' ? true : false}"/>
+        <Label text="Amount (SAR)" visible="{=${fieldMappingModel>/137/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/137/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcri_insurer_amount}" visible="{=${fieldMappingModel>/137/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="Unconfirmed LC from Non-Approved Bank" />
+        <Label text="Bank Name" visible="{=${fieldMappingModel>/445/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/445/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zuncfrmd_lc_nonapvd_bnkname}" visible="{=${fieldMappingModel>/445/visibility} === 'Y' ? true : false}"/>
+        <Label text="Amount (SAR)" visible="{=${fieldMappingModel>/447/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/447/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zuncfrmd_lc_nonapvd_bnkamt}" visible="{=${fieldMappingModel>/447/visibility} === 'Y' ? true : false}"/>
+
+        <core:Title text="Credit Risk Insurance (CRI) [With attachments]" />
+        <Label text="Insurer" visible="{=${fieldMappingModel>/139/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/139/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcri_proposed_insurer}" visible="{=${fieldMappingModel>/139/visibility} === 'Y' ? true : false}"/>
+        <Label text="Amount (AED)" visible="{=${fieldMappingModel>/138/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/138/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcri_proposed_amount}" visible="{=${fieldMappingModel>/138/visibility} === 'Y' ? true : false}"/>
+        <Label text="CRI Buyer ID" visible="{=${fieldMappingModel>/127/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/127/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcri_buyerid}" visible="{=${fieldMappingModel>/127/visibility} === 'Y' ? true : false}"/>
+        <Label text="Approval Mail Attachment" visible="{=${fieldMappingModel>/126/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/126/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcri_proposed_appr_mail_attach}" visible="{=${fieldMappingModel>/126/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="Corporate Guarantee from Parent co. of Class A customer" />
+        <Label text="Name of Company" visible="{=${fieldMappingModel>/290/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/290/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcorp_classa_prop_name_of_comp}" visible="{=${fieldMappingModel>/290/visibility} === 'Y' ? true : false}"/>
+        <Label text="Amount (AED)" visible="{=${fieldMappingModel>/303/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/303/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcorp_classa_proposed_amount}" visible="{=${fieldMappingModel>/303/visibility} === 'Y' ? true : false}"/>
+       
+        <core:Title text="Cash Deposit/Advance" />
+        <Label text="Amount (AED)" visible="{=${fieldMappingModel>/81/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/81/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zcashdep_adv_proposed_amount}" visible="{=${fieldMappingModel>/81/visibility} === 'Y' ? true : false}"/>
+        
+        <core:Title text="Avalization Draft (accepted by Customer and duly accepted by Customer Bank)" />
+        <Label text="Bank Name" visible="{=${fieldMappingModel>/48/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/48/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zavalization_draft_bank_name}" visible="{=${fieldMappingModel>/48/visibility} === 'Y' ? true : false}"/>
+        <Label text="Amount (AED)" visible="{=${fieldMappingModel>/47/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/47/mandatory} === 'Y' ? true : false}"/>
+        <Input value="{Customers>/zavalization_draft_amount}" visible="{=${fieldMappingModel>/47/visibility} === 'Y' ? true : false}"/>
+    </forms:SimpleForm>
+</mvc:View>

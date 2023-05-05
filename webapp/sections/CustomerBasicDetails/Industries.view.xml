@@ -1,0 +1,18 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Industry" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/211/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zindustry}" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text = "Industry Description" visible="{=${fieldMappingModel>/219/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/219/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zindustry_description}" visible="{=${fieldMappingModel>/219/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Standard Industry" visible="{=${fieldMappingModel>/404/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/404/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zstandard_industry}" visible="{=${fieldMappingModel>/404/visibility} === 'Y' ? true : false}"/>
+	
+		
+		
+	</forms:SimpleForm>
+</mvc:View>

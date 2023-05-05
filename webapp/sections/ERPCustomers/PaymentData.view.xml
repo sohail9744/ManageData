@@ -1,0 +1,27 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Terms Of Payment" visible="{=${fieldMappingModel>/426/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/426/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zterms_of_payment}" visible="{=${fieldMappingModel>/426/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Payment History Record" visible="{=${fieldMappingModel>/320/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/320/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpayment_history_record}" visible="{=${fieldMappingModel>/320/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Credit Memo Payment Terms" visible="{=${fieldMappingModel>/124/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/124/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcredi_memo_payment_terms}" visible="{=${fieldMappingModel>/124/visibility} === 'Y' ? true : false}"/>
+		<Label text = "BE Charges Payment Term" visible="{=${fieldMappingModel>/54/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/54/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zbe_charges_payment_term}" visible="{=${fieldMappingModel>/54/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Check Cashing Time" visible="{=${fieldMappingModel>/91/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/91/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zcheck_cashing_time}" visible="{=${fieldMappingModel>/91/visibility} === 'Y' ? true : false}"/>
+		<Label text = "Tolernace Group" visible="{=${fieldMappingModel>/428/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/428/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztolerance_group}" visible="{=${fieldMappingModel>/428/visibility} === 'Y' ? true : false}"/>
+		
+		<Label text="Know/Negotiated Leave" visible="{=${fieldMappingModel>/250/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/250/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zknown_egotiated_leave}" visible="{=${fieldMappingModel>/250/visibility} === 'Y' ? true : false}"/>
+
+		<Label text="AR Pledging Indicator" visible="{=${fieldMappingModel>/30/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/30/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zar_pledging_indicator}" visible="{=${fieldMappingModel>/30/visibility} === 'Y' ? true : false}"/>
+		<Label text="Payment History Record" visible="{=${fieldMappingModel>/320/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/320/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zpayment_history_record}" visible="{=${fieldMappingModel>/320/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

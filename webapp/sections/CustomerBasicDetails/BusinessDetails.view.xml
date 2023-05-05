@@ -1,0 +1,30 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Business Partner ID / Grouping" visible="{=${fieldMappingModel>/70/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/70/mandatory} === 'Y' ? true : false}"/>
+		<Select
+					forceSelection="true"
+					selectedKey="{Customers>/zbusiness_partner_id_grouping}"
+					items="{
+						path: 'MasterData>/BusinessPartnerDD'
+					}">
+					<core:Item key="{MasterData>BPKey}" text="{MasterData>BPText}" />
+				</Select>
+        <Label text="Title" visible="{=${fieldMappingModel>/427/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/427/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/ztitle}" visible="{=${fieldMappingModel>/427/visibility} === 'Y' ? true : false}"/>
+        <Label text="Name"  visible="{=${fieldMappingModel>/288/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/288/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zfirst_name}" visible="{=${fieldMappingModel>/288/visibility} === 'Y' ? true : false}"/>
+        <Label text="Name2" visible="{=${fieldMappingModel>/289/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/289/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zlast_name}" visible="{=${fieldMappingModel>/289/visibility} === 'Y' ? true : false}"/>
+        <Label text="Salutation" visible="{=${fieldMappingModel>/393/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/393/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zsalutation}" visible="{=${fieldMappingModel>/393/visibility} === 'Y' ? true : false}"/>
+		 <Label text="Search Term1" visible="{=${fieldMappingModel>/395/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/395/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zsearch_term1}" visible="{=${fieldMappingModel>/395/visibility} === 'Y' ? true : false}"/>
+		
+	</forms:SimpleForm>
+</mvc:View>

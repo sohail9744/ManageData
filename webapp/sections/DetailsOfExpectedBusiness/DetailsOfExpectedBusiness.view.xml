@@ -1,0 +1,80 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+        <core:Title text="Annual Sales Revenue"/>
+		<Label text="Proposed Volume" visible="{=${fieldMappingModel>/363/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/363/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zannual_proposed_volume}" visible="{=${fieldMappingModel>/363/visibility} === 'Y' ? true : false}"/>
+		<Label text="Variance in Amount" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/351/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zannual_variance_in_amount1}" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"/>
+		<Label text="Actual Volume" visible="{=${fieldMappingModel>/14/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/14/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zannual_actual_volume}" visible="{=${fieldMappingModel>/14/visibility} === 'Y' ? true : false}"/>
+        <Label text="Proposed Value" visible="{=${fieldMappingModel>/362/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/362/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zannual_propsed_value}" visible="{=${fieldMappingModel>/362/visibility} === 'Y' ? true : false}"/>
+        <Label text="Variance in Amount" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/351/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zannual_variance_in_amount2}" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"/>
+        <Label text="Actual Turnover" visible="{=${fieldMappingModel>/13/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/13/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zannual_actual_turnover}" visible="{=${fieldMappingModel>/13/visibility} === 'Y' ? true : false}"/>
+        
+		<core:Title text="Monthly Expected Highest Sales"/>
+		<Label text="Actual Sales Volume" visible="{=${fieldMappingModel>/12/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/12/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmonthly_actual_sales_volume}" visible="{=${fieldMappingModel>/12/visibility} === 'Y' ? true : false}"/>
+		<Label text="Variance in Amount" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/351/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmonthly_variance_in_amount1}" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"/>
+		<Label text="Actual Volume" visible="{=${fieldMappingModel>/14/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/14/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmonthly_actual_volume}" visible="{=${fieldMappingModel>/14/visibility} === 'Y' ? true : false}"/>
+        <Label text="Actual Sales Value" visible="{=${fieldMappingModel>/11/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/11/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmonthly_actual_sales_value}" visible="{=${fieldMappingModel>/11/visibility} === 'Y' ? true : false}"/>
+        <Label text="Variance in Amount" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/351/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmonthly_variance_in_amount2}" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"/>
+        <Label text="Actual Turnover" visible="{=${fieldMappingModel>/13/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/13/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zmonthly_actual_turnover}" visible="{=${fieldMappingModel>/13/visibility} === 'Y' ? true : false}"/>
+        
+		<core:Title text="Gross Contribution"/>
+		<Label text="Proposed Avg. GC/MT or GC %" visible="{=${fieldMappingModel>/350/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/350/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zgc_proposed_avg_gc_mt_or_gc}" visible="{=${fieldMappingModel>/350/visibility} === 'Y' ? true : false}"/>
+		<Label text="Variance in Amount" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/351/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zgc_variance_in_amount}" visible="{=${fieldMappingModel>/351/visibility} === 'Y' ? true : false}"/>
+		<Label text="Actual GC Earned" visible="{=${fieldMappingModel>/10/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/10/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zgc_actual_gc_earned}" visible="{=${fieldMappingModel>/10/visibility} === 'Y' ? true : false}"/>
+        <Label text="Proposed Inco Term" visible="{=${fieldMappingModel>/356/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/356/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zgc_proposed_inco_term}" visible="{=${fieldMappingModel>/356/visibility} === 'Y' ? true : false}"/>
+        
+		<core:Title text="Other Details"/>
+		<Label text="Customer Debtors Balance at Last Month End" visible="{=${fieldMappingModel>/147/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/147/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zod_cust_debtors_bal_lastmonth}" visible="{=${fieldMappingModel>/147/visibility} === 'Y' ? true : false}"/>
+		<Label text="Overdue if any" visible="{=${fieldMappingModel>/309/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/309/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zoverdue_if_any}" visible="{=${fieldMappingModel>/309/visibility} === 'Y' ? true : false}"/>
+		<Label text="Prov. For Doubtful Debt" visible="{=${fieldMappingModel>/364/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/364/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zod_prov_for_doubtful_debt}" visible="{=${fieldMappingModel>/364/visibility} === 'Y' ? true : false}"/>
+        <Label text="Cheque Bounce" visible="{=${fieldMappingModel>/93/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/93/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zod_cheque_bounce}" visible="{=${fieldMappingModel>/93/visibility} === 'Y' ? true : false}"/>
+        <Label text="Cases of Delayed Payments" visible="{=${fieldMappingModel>/79/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/79/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zod_cases_of_delayed_payts}" visible="{=${fieldMappingModel>/79/visibility} === 'Y' ? true : false}"/>
+		<Label text="Max Delay" visible="{=${fieldMappingModel>/278/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/278/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zod_max_delay}" visible="{=${fieldMappingModel>/278/visibility} === 'Y' ? true : false}"/>
+		<Label text="Attachment of Statement of Accounts" visible="{=${fieldMappingModel>/35/visibility} === 'Y' ? true : false}"
+ required="{=${fieldMappingModel>/35/mandatory} === 'Y' ? true : false}"/>
+		<Input value="{Customers>/zod_attach_of_statement}" visible="{=${fieldMappingModel>/35/visibility} === 'Y' ? true : false}"/>
+	</forms:SimpleForm>
+</mvc:View>
