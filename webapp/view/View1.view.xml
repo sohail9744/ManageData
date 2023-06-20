@@ -1,4 +1,11 @@
-<mvc:View controllerName="Iffco.createCustomer.controller.View1" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.f" xmlns:fb="sap.ui.comp.filterbar" xmlns:svm="sap.ui.comp.smartvariants">
+<mvc:View controllerName="Iffco.clap.controller.View1"
+ xmlns:mvc="sap.ui.core.mvc" 
+ displayBlock="true"
+  xmlns="sap.m"
+   xmlns:core="sap.ui.core"
+   xmlns:f="sap.f" 
+   xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:svm="sap.ui.comp.smartvariants">
     <Page id="page" title="Credit Limit Approval Portal" titleAlignment="Center">
         <content>
             <f:DynamicPage headerExpanded="{/headerExpanded}">
@@ -66,7 +73,7 @@
                                             <Input />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Business Unit" label="Business Unit">
+                                    <!-- <fb:FilterItem name="Business Unit" label="Business Unit">
                                         <fb:control>
                                             <MultiComboBox name="Business Unit" selectionChange=".onSelectionChange" items="{
 												path: '/ZDD_BusinessUnit_VH',
@@ -75,7 +82,7 @@
                                                 <core:Item key="{businessunit}" text="{businessunit}" />
                                             </MultiComboBox>
                                         </fb:control>
-                                    </fb:FilterItem>
+                                    </fb:FilterItem> -->
                                     <fb:FilterItem name="Request Type" label="Request Type">
                                         <fb:control>
                                             <MultiComboBox name="Request Type" selectedKeys="All" selectionChange=".onSelectionChange" items="{
@@ -101,7 +108,8 @@
 						path: '/ZDD_CLAP1_VIEW'
 					}"> -->
                     <Table id="table" inset="false" items="{
-						path: '/ZDD_CUSTOMER'
+						path: '/ZDD_CUSTOMER', filters:[{path:'zrequest_type',operator:'EQ',value1:'Create Customer'}],
+                         sorter: [{ path: 'zcreated_date', descending: 'true'}]
 					}">
                         <headerToolbar>
                             <OverflowToolbar>
@@ -109,10 +117,8 @@
                                     <Title text="Customer Requests" level="H2" />
                                     <ToolbarSpacer />
 
-                                    <Button text="New Cutsomer" type="Emphasized" press="handleNewCustomer" />
-                                    <!-- <Button text="Customer Limit Change" type="Emphasized" press="handleEditCustomer"/> -->
-                                    <Button text="Bulk Request" type="Emphasized" enabled="false" />
-                                    <!-- <Button text="Generate Report" type="Emphasized"  enabled="false"/> -->
+                                    <Button text="New Customer" type="Emphasized" press="handleNewCustomer" />
+                                    
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
@@ -148,10 +154,12 @@
                                 <cells>
                                     <Text text="{zrequest_no}" />
                                     <Text text="{zrequest_type}" />
-                                    <Text text="{zcustomer_legal_name}" />
+                                    <Text text="{zfirst_name}" />
                                     <Text text="{zimport_license_number}" />
                                     <Text text="{zcompany_code}" />
-                                    <Text text="{zcreated_date}" />
+                                    <!-- <Text text="{zcreated_date}" /> -->
+                                    <Text text="{path:'zcreated_date', formatter: '.formatter.getFormatDate'}" />
+                                    <!-- {path:'expandEntitiesModel>/0/CreatedDate', formatter: '.formatter.formatDate'} -->
                                     <Text text="{zcreated_by}" />
                                     <Text text="{zrequest_status}" />
                                 </cells>

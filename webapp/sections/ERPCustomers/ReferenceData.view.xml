@@ -1,12 +1,15 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+<mvc:View controllerName="Iffco.clap.sections.ERPCustomers.ReferenceDataController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Previous Account Number" visible="{=${fieldMappingModel>/343/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/343/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zprevious_account_number}" visible="{=${fieldMappingModel>/343/visibility} === 'Y' ? true : false}"/>
-		<Label text = "Buying Group" visible="{=${fieldMappingModel>/73/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/73/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zbuying_group}" visible="{=${fieldMappingModel>/73/visibility} === 'Y' ? true : false}"/>
+		<Label text="Previous Account Number" visible="{=${fieldMappingModels>/PreviousAccountNumberVisible} === true ? true : false}"
+		 required="{=${fieldMappingModels>/PreviousAccountNumberMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zprevious_account_number}" type="Number" liveChange="handleSetMaxLength" maxLength="10" visible="{=${fieldMappingModels>/PreviousAccountNumberVisible} === true ? true : false}"/>
+		<Label text = "Buying Group" visible="{=${fieldMappingModels>/BuyingGroupVisible} === true ? true : false}"
+		 required="{=${fieldMappingModels>/BuyingGroupMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zbuying_group}" maxLength="10" visible="{=${fieldMappingModels>/BuyingGroupVisible} === true ? true : false}"/>
 		
-		<Label text="Personnel Number" visible="{=${fieldMappingModel>/333/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/333/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zpersonnel_number}" visible="{=${fieldMappingModel>/333/visibility} === 'Y' ? true : false}"/>
+		<Label text="Personnel Number" visible="{=${fieldMappingModels>/PersonnelNumberVisible} === true ? true : false}"
+		 required="{=${fieldMappingModels>/PersonnelNumberMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpersonnel_number}" maxLength="8" type="Number" liveChange="handleSetMaxLength" visible="{=${fieldMappingModels>/PersonnelNumberVisible} === true ? true : false}"/>
 		
 	</forms:SimpleForm>
 </mvc:View>

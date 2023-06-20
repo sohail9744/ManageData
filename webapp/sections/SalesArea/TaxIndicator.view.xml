@@ -1,21 +1,23 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+<mvc:View controllerName="Iffco.clap.sections.SalesArea.TaxIndicatorController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Country" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/111/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zcountry}" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"/>
-		<Label text = "Tax category" visible="{=${fieldMappingModel>/415/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/415/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/ztaxcategory}" visible="{=${fieldMappingModel>/415/visibility} === 'Y' ? true : false}"/>
-		
-		<Label text="Tax Classification" visible="{=${fieldMappingModel>/417/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/417/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/ztax_classification}" visible="{=${fieldMappingModel>/417/visibility} === 'Y' ? true : false}"/>
-		
-		<Label text="Tax Category 2" visible="{=${fieldMappingModel>/416/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/416/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/ztax_category2}" visible="{=${fieldMappingModel>/416/visibility} === 'Y' ? true : false}"/>
-		<Label text="Tax Classification 2" visible="{=${fieldMappingModel>/418/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/418/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/ztax_classification2}" visible="{=${fieldMappingModel>/418/visibility} === 'Y' ? true : false}"/>
+		<Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcountry}" maxLength="20" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/>
+		<Label text = "Tax category" visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/TaxCategoryMandatory} === true ? true : false}"/>
+		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztaxcategory}" visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"/> -->
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForTaxCat" value="{Customers>/ztaxcategory}"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"/>
+		<Label text="Tax Classification" visible="{=${fieldMappingModels>/TaxclassificationVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/TaxclassificationMandatory} === true ? true : false}"/>
+		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztax_classification}" maxLength="1" visible="{=${fieldMappingModels>/TaxclassificationVisible} === true ? true : false}"/> -->
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForTaxClssfn" value="{Customers>/ztax_classification}"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/TaxclassificationVisible} === true ? true : false}"/>
+		<Label text="Tax Category 2" visible="{=${fieldMappingModels>/TaxCategory2Visible} === true ? true : false}"
+ required="{=${fieldMappingModels>/TaxCategory2Mandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztax_category2}" visible="{=${fieldMappingModels>/TaxCategory2Visible} === true ? true : false}"/>
+		<Label text="Tax Classification 2" visible="{=${fieldMappingModels>/Taxclassification2Visible} === true ? true : false}"
+ required="{=${fieldMappingModels>/Taxclassification2Mandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztax_classification2}" maxLength="1" visible="{=${fieldMappingModels>/Taxclassification2Visible} === true ? true : false}"/>
 	</forms:SimpleForm>
 </mvc:View>

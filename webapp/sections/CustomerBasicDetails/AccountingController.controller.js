@@ -5,6 +5,6 @@ sap.ui.define([
 ) {
 	"use strict";
 
-	return Controller.extend("Iffco.clap.sections.CustomerBasicDetails.ProfileDetails", {
+	return Controller.extend("Iffco.clap.sections.CustomerBasicDetails.AccountingController", {
 	});
 });

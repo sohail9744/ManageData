@@ -1,24 +1,24 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Incoterms" visible="{=${fieldMappingModel>/209/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/209/mandatory} === 'Y' ? true : false}"/>
- <MultiInput valueHelpRequest="handleValueHelpForIncoterms"
-	 valueHelpOnly="true" visible="{=${fieldMappingModel>/209/visibility} === 'Y' ? true : false}"/>
-		<!-- <Input value="{Customers>/zinco_term}" visible="{=${fieldMappingModel>/209/visibility} === 'Y' ? true : false}"/> -->
-		<Label text = "Inco. Location1"  visible="{=${fieldMappingModel>/208/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/208/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zinco_location1}" visible="{=${fieldMappingModel>/208/visibility} === 'Y' ? true : false}"/>
-		
-		<Label text="Payment Terms" visible="{=${fieldMappingModel>/323/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/323/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zpayment_terms}" visible="{=${fieldMappingModel>/323/visibility} === 'Y' ? true : false}"/>
+		<Label text="Incoterms" visible="{=${fieldMappingModels>/IncotermsVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/IncotermsMandatory} === true ? true : false}"/>
+ <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zinco_term}" maxLength="3" valueHelpRequest="handleValueHelpForIncoterms"
+	 valueHelpOnly="true" visible="{=${fieldMappingModels>/IncotermsVisible} === true ? true : false}"/>
+		<!-- <Input value="{Customers>/zinco_term}" visible="{=${fieldMappingModels>/209} === true ? true : false}"/> -->
+		<Label text = "Inco. Location1"  visible="{=${fieldMappingModels>/Inco.Location1Visible} === true ? true : false}"
+ required="{=${fieldMappingModels>/Inco.Location1Mandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zinco_location1}" maxLength="70" visible="{=${fieldMappingModels>/Inco.Location1Visible} === true ? true : false}"/>	
+		<Label text="Payment Terms" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/PaymentTermsMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpayment_terms}" maxLength="4" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"/>
 
-		<Label text="Credit Control  Area" visible="{=${fieldMappingModel>/117/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/117/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zcredit_control_area}" visible="{=${fieldMappingModel>/117/visibility} === 'Y' ? true : false}"/>
-		<Label text="Payment Gurantee Procedure" visible="{=${fieldMappingModel>/319/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/319/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zpayment_gurantee_procedure}" visible="{=${fieldMappingModel>/319/visibility} === 'Y' ? true : false}"/>
+		<Label text="Credit Control Area" visible="{=${fieldMappingModels>/CreditControlAreaVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/CreditControlAreaMandatory} === true ? true : false}"/>
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcredit_control_area}" valueHelpRequest="handleValueHelpForCreditControl"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/CreditControlAreaVisible} === true ? true : false}"/>
+		<Label text="Payment Gurantee Procedure" visible="{=${fieldMappingModels>/PaymentGuranteeProcedureVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/PaymentGuranteeProcedureMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpayment_gurantee_procedure}" visible="{=${fieldMappingModels>/PaymentGuranteeProcedureVisible} === true ? true : false}"/>
 		
 	</forms:SimpleForm>
 </mvc:View>

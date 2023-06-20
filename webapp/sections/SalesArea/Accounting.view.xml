@@ -1,11 +1,13 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
-	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Settlement Group" visible="{=${fieldMappingModel>/397/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/397/mandatory} === 'Y' ? true : false}" />
-		<Input  value="{Customers>/zsettlement_group}" visible="{=${fieldMappingModel>/397/visibility} === 'Y' ? true : false}"/>
-		<Label text = "Account Assignment Group" visible="{=${fieldMappingModel>/1/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/1/mandatory} === 'Y' ? true : false}"/>
-		<Input  value="{Customers>/zaccount_assignment_group}" visible="{=${fieldMappingModel>/1/visibility} === 'Y' ? true : false}"/>
-		
-	</forms:SimpleForm>
+<mvc:View controllerName="Iffco.clap.sections.SalesArea.AccountingController" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:forms="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" height="100%">
+	
+	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<l:content>
+
+		<Button text="Add Sales Area" id="add" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" icon="sap-icon://add" type="Transparent" press="handleCreate" />
+		<Button text="Display Sales Area" tooltip = "click here" visible="{=${appView>/mode} === false ? true : false}" id="generateSales" press="handleGenerateSales"/>
+			 <VBox id="container"> </VBox>
+			
+
+		</l:content>
+	</l:VerticalLayout>
 </mvc:View>

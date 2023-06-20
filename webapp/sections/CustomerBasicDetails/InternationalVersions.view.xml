@@ -1,27 +1,27 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Address Version" visible="{=${fieldMappingModel>/20/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/20/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zaddress_version}" visible="{=${fieldMappingModel>/20/visibility} === 'Y' ? true : false}"/>
-		<Label text = "Title" visible="{=${fieldMappingModel>/427/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/427/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/ztitle}" visible="{=${fieldMappingModel>/427/visibility} === 'Y' ? true : false}"/>
+		<Label text="Address Version" visible="{=${fieldMappingModels>/AddressVersionVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/AddressVersionMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zaddress_version}" maxLength="10" visible="{=${fieldMappingModels>/AddressVersionVisible} === true ? true : false}"/>
+		<Label text = "Title" visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/TitleMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztitle}" visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"/>
 		
-		<Label text="Name" visible="{=${fieldMappingModel>/288/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/288/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zfirst_name}" visible="{=${fieldMappingModel>/288/visibility} === 'Y' ? true : false}"/>
-		<Label text="Name 2" visible="{=${fieldMappingModel>/289/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/289/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zlast_name}" visible="{=${fieldMappingModel>/289/visibility} === 'Y' ? true : false}"/>
-		<Label text= "Search term" visible="{=${fieldMappingModel>/394/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/394/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zsearch_term}" visible="{=${fieldMappingModel>/394/visibility} === 'Y' ? true : false}"/>
-		<!-- <Label text="Street House Number" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/211/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zstreet_house_number}" visible="{=${fieldMappingModel>/211/visibility} === 'Y' ? true : false}"/> -->
-        <Label text="City" visible="{=${fieldMappingModel>/94/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/94/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zcity}" visible="{=${fieldMappingModel>/94/visibility} === 'Y' ? true : false}"/>
+		<Label text="Name" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/NameMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zfirst_name}" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"/>
+		<Label text="Name 2" visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"
+ required="{=${fieldMappingModels>/Name2Mandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlast_name}" visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"/>
+		<Label text= "Search term" visible="{=${fieldMappingModels>/SearchTermVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/SearchTermMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zsearch_term}" visible="{=${fieldMappingModels>/SearchTermVisible} === true ? true : false}"/>
+		<!-- <Label text="Street House Number" visible="{=${fieldMappingModels>/211} === true ? true : false}"
+ required="{=${fieldMappingModels>/211} === true ? true : false}"/>
+		<Input value="{Customers>/zstreet_house_number}" visible="{=${fieldMappingModels>/211} === true ? true : false}"/> -->
+        <Label text="City" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/CityMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcity}" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"/>
 		
 	</forms:SimpleForm>
 </mvc:View>

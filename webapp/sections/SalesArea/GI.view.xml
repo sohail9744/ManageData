@@ -1,10 +1,10 @@
-<mvc:View controllerName="Iffco.createCustomer.controller.view2" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+<mvc:View controllerName="Iffco.clap.sections.SalesArea.GIController" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" >
 	
 	<Table id="salesOrg" items="{salesModel>/}">
 												<headerToolbar>
 													<Toolbar>
 														<ToolbarSpacer/>
-														<Button id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleAddSales"/>
+														<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleAddSales"/>
 													</Toolbar>
 												</headerToolbar>
 												<columns>
@@ -23,13 +23,13 @@
 													</Column>
 												</columns>
 												<items>
-													<ColumnListItem type="Active"  press="onTaxItemPress">
+													<ColumnListItem type="Active"  visible="{= ${salesModel>Flag} === 'D' ? false : true}">
 														<cells>
-															<Text id="taxLandId" text="{salesModel>zsales_orgnization}" visible="{=${fieldMappingModel>/391/visibility} === 'Y' ? true : false}"/>
-															<Text id="taxNameId" text="{salesModel>zdistribution_channel}" visible="{=${fieldMappingModel>/167/visibility} === 'Y' ? true : false}"/>
-															<Text id="TAXTYPE" text="{salesModel>zdivision}"  visible="{=${fieldMappingModel>/168/visibility} === 'Y' ? true : false}"/>
+															<Text id="taxLandId" text="{salesModel>zsales_orgnization} - {salesModel>zsales_orgnization_text}" visible="{=${fieldMappingModel>/391/visibility} === 'Y' ? true : false}"/>
+															<Text id="taxNameId" text="{salesModel>zdistribution_channel} - {salesModel>zdistribution_channel_text}" visible="{=${fieldMappingModel>/167/visibility} === 'Y' ? true : false}"/>
+															<Text id="TAXTYPE" text="{salesModel>zdivision} - {salesModel>zdivision_text}"  visible="{=${fieldMappingModel>/168/visibility} === 'Y' ? true : false}"/>
 															
-															<Button icon="sap-icon://delete" type="Transparent" press="handleDeleteSalesGrid"/>
+															<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" icon="sap-icon://delete" type="Transparent" press="handleDeleteSalesGrid"/>
 														</cells>
 													</ColumnListItem>
 												</items>

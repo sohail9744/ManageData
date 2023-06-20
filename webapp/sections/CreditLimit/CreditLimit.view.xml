@@ -1,46 +1,11 @@
-<mvc:View controllerName="Iffco.createCustomer.controller.view2" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+<mvc:View controllerName="Iffco.clap.sections.CreditLimit.CreditLimitController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" id="cl" layout="ColumnLayout">
-		<!-- <Label text="Credit Limit Type"/>
-		<Input value="{Customers>/}" />
-		<Label text="Secured Credit Limit"/>
-		<Input value="{Customers>/}" />
-		<Label text="unsecured"/>
-		<Input value="{Customers>/}" />
-		<Label text="Both"/>
-		<Input value="{Customers>/}" />
-		<Label text="Credit Limit Currency"/>
-		<Input value="{Customers>/}" />
-		<Label text="Unsecured Credit Limit "/>
-		<Input value="{Customers>/}" />
-		<Label text="Open Credit/Clean Credit"/>
-		<Input value="{Customers>/}" />
-		<Label text="Amount (AED)"/>
-		<Input value="{Customers>/}" />
-		<Label text="CRI (only Insolvency risk)"/>
-		<Input value="{Customers>/}" />
-		<Label text="CAD"/>
-		<Input value="{Customers>/}" />
-		<Label text="Amount (AED)"/>
-		<Input value="{Customers>/}" />
-		<Label text="Amount (AED)"/>
-		<Input value="{Customers>/}" />
-		<Label text="PDC in Hand"/>
-		<Input value="{Customers>/}" />
-		<Label text="Amount (AED)"/>
-		<Input value="{Customers>/}" />
-		<Label text="Updated Cheque/Security Deposite Cheque"/>
-		<Input value="{Customers>/}" />
-		<Label text="Amount (AED)"/>
-		<Input value="{Customers>/}" />
-		<Label text="Unconfirmed LC from Non Approved Bank"/>
-		<Input value="{Customers>/}" />
-		<Label text="Bank Name"/>
-		<Input value="{Customers>/}" />
-		<Label text="Amount (AED)"/> -->
-		<Label text="Credit Limit Type" visible="{=${fieldMappingModel>/121/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/121/mandatory} === 'Y' ? true : false}"/>
-		<RadioButtonGroup select="handleCreditLimitTypeSelect">
-			<RadioButton selected="{= ${Customers>/zcredit_limit_type} === 'Secured Credit Limit' ? true : false}" text="Secured Credit Limit" />
-			<RadioButton selected="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit Limit'? true : false}" text="UnSecured Credit Limit" />
+		
+		<Label text="Credit Limit Type" visible="{=${fieldMappingModels>/CreditLimitTypeVisible} === true ? true : false}" required="{=${fieldMappingModels>/CreditLimitTypeMandatory} === true ? true : false}"/>
+		<RadioButtonGroup select="handleCreditLimitTypeSelect" selectedIndex="0">
+			<RadioButton enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{= ${Customers>/zcredit_limit_type} === 'Secured Credit' || ${appView>/selectedType} === 0 ? true : false}" text="Secured Credit Limit" />
+			<RadioButton enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit' || ${appView>/selectedType} === 1 ? true : false}" text="UnSecured Credit Limit" />
+		    <RadioButton enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{= ${Customers>/zcredit_limit_type} === 'Both' || ${appView>/selectedType} === 2 ? true : false}" text="Both" />
 		</RadioButtonGroup>
-	</forms:SimpleForm>
+	</forms:SimpleForm>	
 </mvc:View>

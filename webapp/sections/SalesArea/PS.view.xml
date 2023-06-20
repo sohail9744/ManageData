@@ -1,16 +1,20 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+<mvc:View controllerName="Iffco.clap.sections.SalesArea.PSController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
     <forms:SimpleForm editable="false" layout="ColumnLayout">
-        <Label text="Price Group" visible="{=${fieldMappingModel>/344/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/344/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zprice_group}" visible="{=${fieldMappingModel>/344/visibility} === 'Y' ? true : false}"/>
-        <Label text="Price List" visible="{=${fieldMappingModel>/345/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/345/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zpricelist}" visible="{=${fieldMappingModel>/345/visibility} === 'Y' ? true : false}" />
-        <Label text="Price Procedure Determination"  visible="{=${fieldMappingModel>/346/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/346/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zprice_procedured_term}" visible="{=${fieldMappingModel>/346/visibility} === 'Y' ? true : false}"/>
-        <Label text="Customer Statistic Group"  visible="{=${fieldMappingModel>/155/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/155/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zcustomer_statistics_group}" visible="{=${fieldMappingModel>/155/visibility} === 'Y' ? true : false}"/>
+        <Label text="Price Group" visible="{=${fieldMappingModels>/PriceGroupVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/PriceGroupMandatory} === true ? true : false}"/>
+        <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForPriceGrp" value="{Customers>/zprice_group}"
+       valueHelpOnly="true" visible="{=${fieldMappingModels>/PriceGroupVisible} === true ? true : false}"/>
+	<Label text="Price List" visible="{=${fieldMappingModels>/PricelistVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/PricelistMandatory} === true ? true : false}"/>
+       <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForPriceList" value="{Customers>/zpricelist}"
+       valueHelpOnly="true" visible="{=${fieldMappingModels>/PricelistVisible} === true ? true : false}"/>
+	<Label text="Price Procedure Determination"  visible="{=${fieldMappingModels>/PriceProcedureDterm.Visible} === true ? true : false}"
+ required="{=${fieldMappingModels>/PriceProcedureDterm.Mandatory} === true ? true : false}"/>
+        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zprice_procedured_term}" maxLength="2" visible="{=${fieldMappingModels>/PriceProcedureDterm.Visible} === true ? true : false}"/> -->
+        <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForPPDetermination" value="{Customers>/zprice_procedured_term}"
+       valueHelpOnly="true" visible="{=${fieldMappingModels>/PriceProcedureDterm.Visible} === true ? true : false}"/>
+	<Label text="Customer Statistic Group"  visible="{=${fieldMappingModels>/CustomerStatisticsGroupVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/CustomerStatisticsGroupMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcustomer_statistics_group}" maxLength="1" visible="{=${fieldMappingModels>/CustomerStatisticsGroupVisible} === true ? true : false}"/>
     </forms:SimpleForm>
 </mvc:View>

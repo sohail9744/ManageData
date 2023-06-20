@@ -1,11 +1,12 @@
 sap.ui.define(
     ["sap/ui/core/UIComponent",
     "sap/ui/Device",
-    "Iffco/createCustomer/model/models"],
+    "Iffco/clap/model/models"
+],
     function (UIComponent, Device, models) {
         "use strict";
 
-        return UIComponent.extend("Iffco.createCustomer.Component", {
+        return UIComponent.extend("Iffco.clap.Component", {
             metadata: {
                 manifest: "json"
             },
@@ -26,6 +27,7 @@ sap.ui.define(
                 this.setModel(models.createDeviceModel(), "device");
                 this.setModel(models.createAppModel(), "Customers");
                 this.setModel(models.createMasterDataModel(), "MasterData");
+                this.setModel(models.createSalesModel(), "SalesDefaultModel");
 
             
                 

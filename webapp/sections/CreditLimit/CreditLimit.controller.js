@@ -7,7 +7,7 @@ sap.ui.define([
 
 	return Controller.extend("Iffco.clap.sections.CreditLimit.CreditLimit", {
         handleCreditLimitTypeSelect:function (evt) {
-            console.log("hi");
+            console.log("h2");
         }
 	});
 });

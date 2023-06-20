@@ -1,16 +1,24 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+<mvc:View controllerName="Iffco.clap.sections.CreditLimit.PaymentTermsController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
     <forms:SimpleForm editable="false" layout="ColumnLayout">
-        <Label text="Max. Credit Days" visible="{=${fieldMappingModel>/277/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/277/mandatory} === 'Y' ? true : false}" />
-        <Input value="{Customers>/zmaximum_credit_days}" visible="{=${fieldMappingModel>/277/visibility} === 'Y' ? true : false}" />
-        <Label text="Cash Collection" visible="{=${fieldMappingModel>/80/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/80/mandatory} === 'Y' ? true : false}" />
-        <Input value="{Customers>/zcash_collection}" visible="{=${fieldMappingModel>/80/visibility} === 'Y' ? true : false}" />
-        <Label text="Transit Time" visible="{=${fieldMappingModel>/440/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/440/mandatory} === 'Y' ? true : false}" />
-        <Input value="{Customers>/ztransit_time}" visible="{=${fieldMappingModel>/440/visibility} === 'Y' ? true : false}" />
-        <Label text="Total Credit Days" visible="{=${fieldMappingModel>/430/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/430/mandatory} === 'Y' ? true : false}" />
-        <Input value="{Customers>/ztotal_credit_days}" visible="{=${fieldMappingModel>/430/visibility} === 'Y' ? true : false}" />
-        <Label text="Is Proxima" visible="{=${fieldMappingModel>/248/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/248/mandatory} === 'Y' ? true : false}" />
-        <Input value="{Customers>/zproxima}" visible="{=${fieldMappingModel>/248/visibility} === 'Y' ? true : false}" />
-        <Label text="Payment Terms" visible="{=${fieldMappingModel>/323/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/323/mandatory} === 'Y' ? true : false}" />
-        <Input value="{Customers>/zpayment_terms}" visible="{=${fieldMappingModel>/323/visibility} === 'Y' ? true : false}" />
+        <Label text="Max. Credit Days" visible="{=${fieldMappingModels>/MaxCreditDaysVisible} === true ? true : false}" 
+        required="{=${fieldMappingModels>/MaxCreditDaysMandatory} === true ? true : false}" />
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zmaximum_credit_days}" maxLength="20" visible="{=${fieldMappingModels>/MaxCreditDaysVisible} === true ? true : false}" />
+        <Label text="Cash Collection" visible="{=${fieldMappingModels>/CashCollectionVisible} === true ? true : false}" 
+        required="{=${fieldMappingModels>/CashCollectionMandatory} === true ? true : false}" />
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcash_collection}" maxLength="20" visible="{=${fieldMappingModels>/CashCollectionVisible} === true ? true : false}" />
+        <Label text="Transit Time" visible="{=${fieldMappingModels>/TransitTimeVisible} === true ? true : false}"
+         required="{=${fieldMappingModels>/TransitTimeMandatory} === true ? true : false}" />
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztransit_time}" maxLength="20" visible="{=${fieldMappingModels>/TransitTimeVisible} === true ? true : false}" />
+        <Label text="Total Credit Days" visible="{=${fieldMappingModels>/TotalCreditDaysVisible} === true ? true : false}" required="{=${fieldMappingModels>/TotalCreditDaysMandatory} === true ? true : false}" />
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztotal_credit_days}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/TotalCreditDaysVisible} === true ? true : false}" />
+        <Label text="Is Proxima" visible="{=${fieldMappingModels>/IsProximaVisible} === true ? true : false}"
+         required="{=${fieldMappingModels>/IsProximaMandatory} === true ? true : false}" />
+        <CheckBox enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{=${Customers>/zproxima} === 'Y' ? true : false}" visible="{=${fieldMappingModels>/IsProximaVisible} === true ? true : false}" />
+        <!-- <Input value="{Customers>/zproxima}" maxLength="20" visible="{=${fieldMappingModels>/IsProximaVisible} === true ? true : false}" /> -->
+        <Label text="Payment Terms" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"
+         required="{=${fieldMappingModels>/PaymentTermsMandatory} === true ? true : false}" />
+        <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpayment_terms}" valueHelpRequest="handleValueHelpForPaymentTerms"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/TermsOfPaymentVisible} === true ? true : false}"/>
     </forms:SimpleForm>
 </mvc:View>
+

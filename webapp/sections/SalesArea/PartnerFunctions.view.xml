@@ -1,18 +1,18 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Bill to, Ship to, Payer, Buyer" visible="{=${fieldMappingModel>/62/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/62/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zbill_to_buyer}" visible="{=${fieldMappingModel>/62/visibility} === 'Y' ? true : false}"/>
-		<Label text = "Only Ship To" visible="{=${fieldMappingModel>/301/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/301/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zonly_ship_to}" visible="{=${fieldMappingModel>/301/visibility} === 'Y' ? true : false}"/>
+		<Label text="Bill to, Ship to, Payer, Buyer" visible="{=${fieldMappingModels>/BilltoShiptoPayerBuyerVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/BilltoShiptoPayerBuyerMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zbill_to_buyer}" maxLength="10" visible="{=${fieldMappingModels>/BilltoShiptoPayerBuyerVisible} === true ? true : false}"/>
+		<Label text = "Only Ship To" visible="{=${fieldMappingModels>/OnlyShipToVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/OnlyShipToMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zonly_ship_to}" maxLength="10" visible="{=${fieldMappingModels>/OnlyShipToVisible} === true ? true : false}"/>
 		
-		<Label text="Sales Person" visible="{=${fieldMappingModel>/392/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/392/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zsales_person}" visible="{=${fieldMappingModel>/392/visibility} === 'Y' ? true : false}"/>
-		<Label text="Agent" visible="{=${fieldMappingModel>/22/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/22/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zagent}" visible="{=${fieldMappingModel>/22/visibility} === 'Y' ? true : false}"/>
+		<Label text="Sales Person" visible="{=${fieldMappingModels>/SalesPersonVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/SalesPersonMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zsales_person}" maxLength="12" visible="{=${fieldMappingModels>/SalesPersonVisible} === true ? true : false}"/>
+		<Label text="Agent" visible="{=${fieldMappingModels>/AgentVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/AgentMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zagent}" maxLength="1" visible="{=${fieldMappingModels>/AgentVisible} === true ? true : false}"/>
 
 		
 	</forms:SimpleForm>

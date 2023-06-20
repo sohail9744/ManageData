@@ -1,23 +1,29 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+<mvc:View controllerName="Iffco.clap.sections.CustomerBasicDetails.SiteDetailsController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<Label text="Legal Entity" visible="{=${fieldMappingModel>/260/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/260/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zcustomer_legal_name}" visible="{=${fieldMappingModel>/260/visibility} === 'Y' ? true : false}"/>
-		<Label text="Legal Form" visible="{=${fieldMappingModel>/261/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/261/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zlegalform}" visible="{=${fieldMappingModel>/261/visibility} === 'Y' ? true : false}"/>
-		<Label text="Date Founded" visible="{=${fieldMappingModel>/160/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/160/mandatory} === 'Y' ? true : false}"/>
-		<DatePicker id="zdateFound" value="{Customers>/zdate_founded}" valueFormat="yyyy-MM-dd" visible="{=${fieldMappingModel>/160/visibility} === 'Y' ? true : false}"/>
+		<Label text="Legal Entity" visible="{=${fieldMappingModels>/LegalEntityVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/LegalEntityMandatory} === true ? true : false}"/>
+		<Input value="{Customers>/zlegal_entity}" enabled="{=${Customers>/zrequest_no} ? false : true}" maxLength="2" visible="{=${fieldMappingModels>/LegalEntityVisible} === true ? true : false}"/>
+		<Label text="Legal Name" visible="{=${fieldMappingModels>/LegalNameVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/LegalNameMandatory} === true ? true : false}"/>
+        <MultiInput showClearIcon="true" value="{Customers>/zcustomer_legal_name}" enabled="{=${Customers>/zrequest_no} ? false : true}" valueHelpRequest="handleValueHelpForLegalName"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/LegalNameVisible} === true ? true : false}"/>
+		<Label text="Legal Form" visible="{=${fieldMappingModels>/LegalFormVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/LegalFormMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlegalform}" type="Number" liveChange="handleSetMaxLength" maxLength="2" visible="{=${fieldMappingModels>/LegalFormVisible} === true ? true : false}"/>
+		<Label text="Date Founded" visible="{=${fieldMappingModels>/DateFoundedVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/DateFoundedMandatory} === true ? true : false}"/>
+		<DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="zdateFound" value="{Customers>/zdate_founded}" valueFormat="yyyy-MM-dd" visible="{=${fieldMappingModels>/DateFoundedVisible} === true ? true : false}"/>
 		<!-- <DatePicker id="zdateFound" value="{path:'Customers>/zdate_founded', formatter: '.formatter.dateFormatter'}" valueFormat="yyyy-MM-dd" /> -->
-		<Label text="Liquidation Date" visible="{=${fieldMappingModel>/271/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/271/mandatory} === 'Y' ? true : false}"/>
-		<DatePicker id="zliqDate" value="{Customers>/zliquidationdate}" valueFormat="yyyy-MM-dd" visible="{=${fieldMappingModel>/271/visibility} === 'Y' ? true : false}"/>
+		<Label text="Liquidation Date" visible="{=${fieldMappingModels>/LiquidationDateVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/LiquidationDateMandatory} === true ? true : false}"/>
+		<DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="zliqDate" value="{Customers>/zliquidationdate}" valueFormat="yyyy-MM-dd" visible="{=${fieldMappingModels>/LiquidationDateVisible} === true ? true : false}"/>
 		<!-- <DatePicker id="zliqDate" value="{path:'Customers>/zliquidationdate', formatter: '.formatter.dateFormatter'}" valueFormat="yyyy-MM-dd" /> -->
 		
-		<Label text="Authorization Group" visible="{=${fieldMappingModel>/46/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/46/mandatory} === 'Y' ? true : false}"/>
-		<Input value="{Customers>/zauthorization_group}" visible="{=${fieldMappingModel>/46/visibility} === 'Y' ? true : false}"/>
-
+		<Label text="Authorization Group" visible="{=${fieldMappingModels>/AuthorizationGroupVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/AuthorizationGroupMandatory} === true ? true : false}"/>
+		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zauthorization_group}" maxLength="4" visible="{=${fieldMappingModels>/AuthorizationGroupVisible} === true ? true : false}"/> -->
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForAuthorization" value="{Customers>/zauthorization_group}"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/AuthorizationGroupVisible} === true ? true : false}"/>
+		
 	</forms:SimpleForm>
 </mvc:View>

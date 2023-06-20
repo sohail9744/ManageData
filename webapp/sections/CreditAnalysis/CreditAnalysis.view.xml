@@ -1,4 +1,4 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core">
+<mvc:View controllerName="Iffco.clap.sections.CreditAnalysis.CreditAnalysisController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core">
     <!-- <forms:SimpleForm editable="false" layout="ColumnLayout">
 		<Label text="{i18n>ActualWork}"/>
 		<Input id="actWork" value="{Customers>/ActualWork}" editable="true"/>
@@ -9,42 +9,86 @@
 		<CheckBox text="{i18n>FinalConfirmation}" selected="{Customers>/Confirmed}"/>
 	</forms:SimpleForm> -->
     <forms:SimpleForm editable="false" layout="ColumnLayout">
-        <core:Title text="Questions" />
-        <Label text="Are the details for Credit Analysis available (For unsecured credit it is mandatory)" visible="{=${fieldMappingModel>/31/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/31/mandatory} === 'Y' ? true : false}" />
-        <RadioButtonGroup visible="{=${fieldMappingModel>/31/visibility} === 'Y' ? true : false}">
+        <!-- <core:Title text="Questions" />
+        <Label text="Are the details for Credit Analysis available (For unsecured credit it is mandatory)"  />
+        <RadioButtonGroup>
             <RadioButton text="Yes" />
             <RadioButton text="No" />
-        </RadioButtonGroup>
+        </RadioButtonGroup>  -->
+
         <core:Title text="Financials Details to be attached (any one)" />
-        <Label text="Financials Statements" visible="{=${fieldMappingModel>/190/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/190/mandatory} === 'Y' ? true : false}" />
-        <u:FileUploader visible="{=${fieldMappingModel>/190/visibility} === 'Y' ? true : false}" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" />
-        <Label text="D and B Report" visible="{=${fieldMappingModel>/157/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/157/mandatory} === 'Y' ? true : false}" />
-        <u:FileUploader visible="{=${fieldMappingModel>/157/visibility} === 'Y' ? true : false}" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" />
-        <Label text="Bank Statement / References" visible="{=${fieldMappingModel>/60/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/60/mandatory} === 'Y' ? true : false}" />
-        <u:FileUploader visible="{=${fieldMappingModel>/60/visibility} === 'Y' ? true : false}" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" />
-        <Label text="Last 12 months statement of accounts (IFFCO) / Other documents" visible="{=${fieldMappingModel>/253/visibility} === 'Y' ? true : false}" required="{=${fieldMappingModel>/253/mandatory} === 'Y' ? true : false}" />
-        <u:FileUploader visible="{=${fieldMappingModel>/253/visibility} === 'Y' ? true : false}" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" />
+        <Label text="Financials Statements" visible="{=${fieldMappingModels>/FinancialStatementVisible} === true ? true : false}" required="{=${fieldMappingModels>/FinancialStatementMandatory} === true ? true : false}" />
+        <u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" visible="{=${fieldMappingModels>/FinancialStatementVisible} === true ? true : false}"
+         value="{getDmsModel>/financialStmts}"
+         id="financialStmts"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />
+    <!-- <Button icon="sap-icon://download" id="financialStmtsId" width="30px" type="Transparent" press="handleDownloadPress" enabled="{= ${getDmsModel>/financialStmts} !== '' ? true : false}"/> -->
+    <!-- <Button text="Upload File" press="onConfirm"/> -->
+        
+        <Label text="D and B Report" visible="{=${fieldMappingModels>/DBReportVisible} === true ? true : false}" required="{=${fieldMappingModels>/DBReportMandatory} === true ? true : false}" />
+        <u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" visible="{=${fieldMappingModels>/DBReportVisible} === true ? true : false}"
+        value="{getDmsModel>/dandbreport}"
+         id="dandbreport"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />
+        
+        <Label text="Bank Statement / References" visible="{=${fieldMappingModels>/BankStatement-ReferencesVisible} === true ? true : false}" 
+        required="{=${fieldMappingModels>/BankStatement-ReferencesMandatory} === true ? true : false}" />
+        <!-- <u:FileUploader visible="{=${fieldMappingModels>/BankStatement-ReferencesVisible} === true ? true : false}" name="myFileUpload" uploadUrl="upload/" tooltip="Upload your file to the local server" uploadComplete="handleUploadComplete" /> -->
+        <u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" visible="{=${fieldMappingModels>/BankStatement-ReferencesVisible} === true ? true : false}"
+        value="{getDmsModel>/bankStatement}"
+         id="bankStatement"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />
+    <!-- <Button text="Upload File" press="onConfirm"/> -->
+        <Label text="Last 12 months statement of accounts (IFFCO) / Other documents" visible="{=${fieldMappingModels>/Last12monthsstatementsofaccountsorotherdocumentsVisible} === true ? true : false}" required="{=${fieldMappingModels>/Last12monthsstatementsofaccountsorotherdocumentsMandatory} === true ? true : false}" />
+        <u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" visible="{=${fieldMappingModels>/Last12monthsstatementsofaccountsorotherdocumentsVisible} === true ? true : false}"
+         value="{getDmsModel>/otherDocs}"
+         id="otherDocs"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />
+        
         <core:Title text="Others" />
-        <Label text="Year of Financial" visible="{=${fieldMappingModel>/482/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/482/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zyear_of_financial}" visible="{=${fieldMappingModel>/482/visibility} === 'Y' ? true : false}"/>
-        <Label text="Revenue/Net Profit Currency" visible="{=${fieldMappingModel>/378/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/378/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zrevenue_net_profit_crncy}" visible="{=${fieldMappingModel>/378/visibility} === 'Y' ? true : false}"/>
-        <Label text="Revenue/Turn over" visible="{=${fieldMappingModel>/379/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/379/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zrevenue_turnover}" visible="{=${fieldMappingModel>/379/visibility} === 'Y' ? true : false}"/>
-        <Label text="Net Profit" visible="{=${fieldMappingModel>/293/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/293/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/znetprofit}" visible="{=${fieldMappingModel>/293/visibility} === 'Y' ? true : false}"/>
-        <Label text="Country" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/111/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zcountry}" visible="{=${fieldMappingModel>/111/visibility} === 'Y' ? true : false}"/>
-        <Label text="Country Rating" visible="{=${fieldMappingModel>/113/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/113/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zcountry_rating}" visible="{=${fieldMappingModel>/113/visibility} === 'Y' ? true : false}"/>
-        <Label text="D and B Credit Rating" visible="{=${fieldMappingModel>/158/visibility} === 'Y' ? true : false}"
- required="{=${fieldMappingModel>/158/mandatory} === 'Y' ? true : false}"/>
-        <Input value="{Customers>/zd_and_b_rating}" visible="{=${fieldMappingModel>/158/visibility} === 'Y' ? true : false}"/>
+        <Label text="Year of Establisment" visible="{=${fieldMappingModels>/YearofEstablishmentVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/YearofEstablishmentMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zyear_of_establishment}" liveChange="handleSetMaxLength" type="Number" maxLength="4" visible="{=${fieldMappingModels>/YearofEstablishmentVisible} === true ? true : false}"/>
+        
+        <Label text="Year of Financial" visible="{=${fieldMappingModels>/YearofFinancialVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/YearofFinancialMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zyear_of_financial}" liveChange="handleSetMaxLength" type="Number" maxLength="20" visible="{=${fieldMappingModels>/YearofFinancialVisible} === true ? true : false}"/>
+        
+        <Label text="Revenue/Net Profit Currency" visible="{=${fieldMappingModels>/RevenueNetProfitcurrencyVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/RevenueNetProfitcurrencyMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zrevenue_net_profit_crncy}" maxLength="20" visible="{=${fieldMappingModels>/RevenueNetProfitcurrencyVisible} === true ? true : false}"/>
+        
+        <Label text="Revenue/Turn over" visible="{=${fieldMappingModels>/RevenueturnoverVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/RevenueturnoverMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zrevenue_turnover}" maxLength="20" visible="{=${fieldMappingModels>/RevenueturnoverVisible} === true ? true : false}"/>
+        
+        <Label text="Net Profit" visible="{=${fieldMappingModels>/NetProfitVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/NetProfitMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/znetprofit}" liveChange="handleSetMaxLength" type="Number" maxLength="20" visible="{=${fieldMappingModels>/NetProfitVisible} === true ? true : false}"/>
+        
+        <Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
+        <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcountry2}" maxLength="20" valueHelpRequest="handleValueHelpForCountryRating"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/>
+        
+        <Label text="Country Rating" visible="{=${fieldMappingModels>/CountryRatingVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/CountryRatingMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="ctryRtng" maxLength="20" value="{Customers>/zcountry_rating}" visible="{=${fieldMappingModels>/CountryRatingVisible} === true ? true : false}"/>
+        
+        <Label text="D and B Credit Rating" visible="{=${fieldMappingModels>/DandBcreditRatingVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/DandBcreditRatingMandatory} === true ? true : false}"/>
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zd_and_b_rating}" maxLength="20" visible="{=${fieldMappingModels>/DandBcreditRatingVisible} === true ? true : false}"/>
     </forms:SimpleForm>
 </mvc:View>

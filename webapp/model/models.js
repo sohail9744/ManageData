@@ -1,4 +1,5 @@
 sap.ui.define([
+	"sap/ui/base/ManagedObject",
     "sap/ui/model/json/JSONModel",
     "sap/ui/Device"
 ],
@@ -10,7 +11,8 @@ sap.ui.define([
      * 
      * @returns {Function} createDeviceModel() for providing runtime info for the device the UI5 app is running on
      */
-    function (JSONModel, Device) {
+	
+    function (ManagedObject, JSONModel, Device) {
         "use strict";
 
         return {
@@ -22,10 +24,10 @@ sap.ui.define([
             createMasterDataModel: function(){
                 var oTemp = {
                     "BusinessPartnerDD" : [
-                        {"BPKey":"1", "BPText":"Sold To"},
-                        {"BPKey":"2", "BPText":"Ship To"},
-                        {"BPKey":"3", "BPText":"One Time"},
-                        {"BPKey":"4", "BPText":"Intercompany Customer"},
+                        {"BPKey":"Sold", "BPText":"Sold To"},
+                        {"BPKey":"Ship", "BPText":"Ship To"},
+                        {"BPKey":"One", "BPText":"One Time"},
+                        {"BPKey":"Inte", "BPText":"Intercompany Customer"},
                     ],
                     "BPRoles": [
                         {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},
@@ -35,18 +37,19 @@ sap.ui.define([
                     "Status":[
                         {"value": "All"},
                         {"value": "In Draft"},
-                        {"value": "Submitted"},
-                        {"value": "Sendback to Initiator"},
-                        {"value": "Credit Controller Pending"},
-                        {"value": "Credit COntroller Approved"},
-                        {"value": "Sales head Pending"},
-                        {"value": "Reviewer Pending"},
-                        {"value": "Reviewer Rejected"}
+                        {"value": "In Progress"}
+                        // {"value": "Sendback to Initiator"},
+                        // {"value": "Credit Controller Pending"},
+                        // {"value": "Credit COntroller Approved"},
+                        // {"value": "Sales head Pending"},
+                        // {"value": "Reviewer Pending"},
+                        // {"value": "Reviewer Rejected"}
                     ],
                     "RequestType":[
                         {value:"All"},
                         {value:"Create Customer"},
-                        {value:"Edit Customer"}
+                        {value:"Change Customer"},
+                        {value:"Extend Customer"}
                     ],
                     "Priority":[
                         {"value":"Low"},
@@ -189,6 +192,74 @@ sap.ui.define([
                 }
                 var oModel = new JSONModel();
                 oModel.setData(oTemp);
+                return oModel;
+            },
+            createSalesModel : function () {
+                var objects = 
+                    {
+                        "zsettlement_group" : "",
+                        "zaccount_assignment_group" : "",
+                        "zagency_business" : "",
+                        "zdocument_index_active" : "",
+                        "zmanual_invoice_maintenance" : "",
+                        "zrebate" : "",
+                        "zpricing" : "",
+                        "zinvoicing_dates" : "",
+                        "zinvoicing_list_dates" : "",
+                        "zcustomer_group1" : "",
+                        "zcustomer_group2" : "",
+                        "zcustomer_group3" : "",
+                        "zcustomer_group4" : "",
+                        "zcustomer_group5" : "",
+                        "zcustomer_group" : "",
+                        "zinco_term" : "",
+                        "zinco_location1" : "",
+                        "zpayment_terms" : "",
+                        "zcredit_control_area" : "",
+                        "zpayment_gurantee_procedure" : "",
+                        "zcomplete_delivery" : "",
+                        "zmaximum_number_of_part_delive" : "",
+                        "zpartial_delivery_per_item" : "",
+                        "zunlimited_tolerance" : "",
+                        "zunder_delivery_tolerance" : "",
+                        "zover_delivery_tolerance" : "",
+                        "zbill_to_buyer" : "",
+                        "zonly_ship_to" : "",
+                        "zsales_person" : "",
+                        "zagent" : "",
+                        "zprice_group" : "",
+                        "zpricelist" : "",
+                        "zprice_procedured_term" : "",
+                        "zcustomer_statistics_group" : "",
+                        "zsales_district" : "",
+                        "zsales_office" : "",
+                        "zsales_group" : "",
+                        "zcustomer_group" : "",
+                        "zabc_class" : "",
+                        "zcurrency" : "",
+                        "zaccount_at_customer" : "",
+                        "zswitch_off_rounding" : "",
+                        "zorderprobability" : "",
+                        "zauthorization_group" : "",
+                        "zitemproposal" : "",
+                        "zunit_of_measure_group" : "",
+                        "zexchange_rate_type" : "",
+                        "zpp_customer_procedure" : "",
+                        "zdelivery_priority" : "",
+                        "zshipping_conditions" : "",
+                        "zdelivery_plant" : "",
+                        "zorder_combination" : "",
+                        "zrelevant_pod" : "",
+                        "zpod_timeframe" : "",
+                        "zcountry" : "",
+                        "ztaxcategory" : "",
+                        "ztax_classification" : "",
+                        "ztax_category2" : "",
+                        "ztax_classification2" : "",
+                    }
+                ;
+                var oModel = new JSONModel();
+                oModel.setData(objects);
                 return oModel;
             }
         };

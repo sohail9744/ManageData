@@ -1,0 +1,82 @@
+<mvc:View controllerName="Iffco.clap.sections.CreditProfileSegmentData.FurtherInfoController" xmlns:mvc="sap.ui.core.mvc"
+ xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+<forms:SimpleForm editable="false" layout="ColumnLayout">
+
+    <Label text="Information Cat" />
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="infoCat" value="{Customers>/zinfo_category}" valueHelpRequest="handleValueHelpForInfoCat"
+		valueHelpOnly="true" />
+	
+	</forms:SimpleForm>
+	<Table id="furtherInfo" items="{creditSegmentModel>/}">
+												<headerToolbar>
+													<Toolbar>
+														<ToolbarSpacer/>
+														<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleFurtherOpen"/>
+													</Toolbar>
+												</headerToolbar>
+												<columns>
+												<Column>
+														<Text text="Information Type" />
+													</Column>
+													<Column>
+														<Text text="Name of Type" />
+													</Column>
+													<Column>
+														<Text text="Relevance for Credit Check" />
+													</Column>
+													<Column>
+														<Text text="Individual Step" />
+													</Column>
+													
+													<Column>
+														<Text text="Amount"/>
+													</Column>
+                                                    <Column>
+														<Text text="From Date"/>
+													</Column>
+                                                    <Column>
+														<Text text="To Date"/>
+													</Column>
+                                                    <Column>
+														<Text text="Entered On"/>
+													</Column>
+                                                    <Column>
+														<Text text="Deleted On"/>
+													</Column>
+                                                    <Column>
+														<Text text="Resubmit"/>
+													</Column>
+                                                    <Column>
+														<Text text="Text Field"/>
+													</Column>
+													<Column>
+														<Text text=""/>
+													</Column>
+												</columns>
+												<items>
+													<ColumnListItem type="Active" visible="{= ${creditSegmentModel>Flag} === 'D' ? false : true}" press="onTaxItemPress">
+														<cells>
+														    <Text text="{creditSegmentModel>zinfo_type}" />
+															<Text text="{creditSegmentModel>zname_of_type}" />
+															<CheckBox selected="{=${creditSegmentModel>zrelevant} === 'Y' ? true : false}"/>
+															
+															<Text text="{creditSegmentModel>zindividual_step}" />
+															<Text text="{creditSegmentModel>zcredit_amount}"></Text>
+															<Text text="{creditSegmentModel>zdate_from}"></Text>
+                                                            <Text text="{creditSegmentModel>zdate_to}"></Text>
+                                                            <Text text="{creditSegmentModel>zentered_on}"></Text>
+                                                            <Text text="{creditSegmentModel>zdeleted_on}"></Text>
+                                                            <Text text="{creditSegmentModel>zresubmission_date}"></Text>
+                                                            <!-- <Text text="{path:'creditSegmentModel>zdate_from', formatter: '.formatter.getFormatDate'}"></Text>
+                                                            <Text text="{path:'creditSegmentModel>zdate_to', formatter: '.formatter.getFormatDate'}"></Text>
+                                                            <Text text="{path:'creditSegmentModel>zentered_on', formatter: '.formatter.getFormatDate'}"></Text>
+                                                            <Text text="{path:'creditSegmentModel>zdeleted_on', formatter: '.formatter.getFormatDate'}"></Text>
+                                                            <Text text="{path:'creditSegmentModel>zresubmission_date', formatter: '.formatter.getFormatDate'}"></Text> -->
+                                                            <Text text="{creditSegmentModel>ztext_field}"></Text>
+															
+															<Button icon="sap-icon://delete" type="Transparent" press="handleDeleteCreditSegmentGrid"/>
+														</cells>
+													</ColumnListItem>
+												</items>
+											</Table>
+</mvc:View>

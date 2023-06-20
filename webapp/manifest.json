@@ -1,7 +1,7 @@
 {
     "_version": "1.45.0",
     "sap.app": {
-        "id": "Iffco.createCustomer",
+        "id": "Iffco.clap",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -36,6 +36,24 @@
             },
             "S4D":{
                 "uri": "/sap/opu/odata/sap/ZIFFCO_VALUEHELP_SRV",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "DMS":{
+                "uri": "/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "2.0"
+                }
+            },
+            "Workflow":{
+                "uri": "/srv-api/v2/catalog",
                 "type": "OData",
                 "settings": {
                     "annotations": [],
@@ -84,7 +102,7 @@
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
                 "settings": {
-                    "bundleName": "Iffco.createCustomeri18n.i18n"
+                    "bundleName": "Iffco.clap.i18n.i18n"
                 }
             },
             "": {
@@ -101,6 +119,16 @@
                 "dataSource": "S4D",
                 "preload": true,
                 "settings": {}
+            },
+            "DMS":{
+                "dataSource": "DMS",
+                "preload": true,
+                "settings": {}
+            },
+            "Workflow":{
+                "dataSource": "Workflow",
+                "preload": true,
+                "settings": {}
             }
         },
         "resources": {
@@ -115,11 +143,11 @@
                 "routerClass": "sap.m.routing.Router",
                 "viewType": "XML",
                 "async": true,
-                "viewPath": "Iffco.createCustomer.view",
+                "viewPath": "Iffco.clap.view",
                 "controlAggregation": "pages",
                 "controlId": "app",
                 "clearControlAggregation": false,
-                "path": "Iffco.createCustomer.view"
+                "path": "Iffco.clap.view"
             },
             "routes": [
                 {
@@ -130,7 +158,7 @@
                     ]
                 },
                 {
-                    "pattern": "CustomerDetail/{zcustomer_num}/{zsales_orgnization}/{mode}",
+                    "pattern": "CustomerDetail/{zcustomer_num}/:zsales_orgnization:/{mode}/{process}",
                     "name": "CustomerDetail",
                     "target": [
                         "TargetView2"
@@ -155,7 +183,7 @@
             }
         },
         "rootView": {
-            "viewName": "Iffco.createCustomer.view.App",
+            "viewName": "Iffco.clap.view.App",
             "type": "XML",
             "async": true,
             "id": "App"
