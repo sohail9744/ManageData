@@ -136,11 +136,22 @@ sap.ui.define([
 
             //Value Help for Transportation Zone
             handleValueHelpForTrsptnZne: function (evt) {
+                debugger
                 this.trnsptZonField = evt.getSource();
                 this.val = this.getView().byId("LAND1").getValue();
                 if(this.val){
-                    this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val.split(" - ")[0])]);
-                    // this.TransprtZone.getBinding("items").filter([]);
+                    var filter1 = new sap.ui.model.Filter("Land1", sap.ui.model.FilterOperator.Contains,  this.val);
+                    var filter2 = new sap.ui.model.Filter("Landx", sap.ui.model.FilterOperator.Contains,  this.val);
+                    var oFilter = new sap.ui.model.Filter({
+                        filters: [filter1, filter2],
+                        and: false
+                    });
+
+
+                    // filters.push(new sap.ui.model.Filter(sFilters, false));
+                    // this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val.split(" - ")[0])]);
+                    this.TransprtZone.getBinding("items").filter([oFilter]);
+                    // // this.TransprtZone.getBinding("items").filter([]);
                     this.TransprtZone.open();
                 }else{
                     sap.m.MessageBox.error("Please select the Country");

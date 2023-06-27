@@ -22,13 +22,10 @@ sap.ui.define([
         return Controller.extend("Iffco.clap.controller.view2", {
             formatter: formatter,
             onInit: function () {
-            },
-            onAfterRendering: function () {
                 var that = this;
                 var oMessageManager, oModel, oView;
 
                 oView = this.getView();
-
                 // set message model
                 oMessageManager = sap.ui.getCore().getMessageManager();
                 oView.setModel(oMessageManager.getMessageModel(), "message");
@@ -47,6 +44,7 @@ sap.ui.define([
                     this.AccAssmntGrp = new sap.ui.xmlfragment("Iffco.clap.fragments.AccAssmntGrp", this);
                     this.getView().addDependent(this.AccAssmntGrp);
                 }
+
             },
             _onRouteMatched: function (oEvent) {
                 var that = this;
@@ -72,10 +70,9 @@ sap.ui.define([
                 this.getView().getModel("appView").setProperty("/firstTym", 'add');
                 this.mode = oEvent.getParameters().arguments.mode;
                 this.getView().getModel("appView").setProperty("/mode", this.mode)
-
-                this.onClear();
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
+
                     this.zcustomer_num = oEvent.getParameters().arguments.zcustomer_num;
 
                     this.zsales_orgnization = oEvent.getParameters().arguments.zsales_orgnization !== undefined ? oEvent.getParameters().arguments.zsales_orgnization : "";
@@ -252,12 +249,15 @@ sap.ui.define([
                     this.getView().getModel("Customers").setData({});
                 }
                 // this.getDmsData();
-                if (this.flagForFirstTime)
+                if (this.flagForFirstTime) {
                     window.setTimeout(function () {
+                        // this.handleRuleEngine();
                         this.handleRuleEngineConfiguration();
                     }.bind(this), 2000)
-                else
+                } else {
+                    // this.handleRuleEngine();
                     this.handleRuleEngineConfiguration();
+                }
 
             },
             getDmsData: function (evt) {
@@ -307,10 +307,9 @@ sap.ui.define([
                     }
                 });
             },
-
             handleRuleEngineConfiguration: function (oEvent) {
-                var busyDialog = new sap.m.BusyDialog();
-                busyDialog.open();
+                this.busyDialog = new sap.m.BusyDialog();
+                this.busyDialog.open();
                 // this.process = "CHANGE";
                 if (this.process == "Create Customer") {
                     this.process = "CREATE";
@@ -319,15 +318,16 @@ sap.ui.define([
                 } else {
                     this.process = "EXTEND";
                 }
-                setTimeout(function () {
-                    busyDialog.close();
-                }, 5000);
+                // setTimeout(function () {
+                //     busyDialog.close();
+                // }, 5000);
                 this.getView().getModel("appView").setProperty("/process", this.process);
                 var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
                 // var sCustomerType = this.getView().byId("orderData1").getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
                 // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
-                var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
-                // var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
+                // var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
+                debugger
+                var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
                 this.ruleId = "";
                 var aFilters = [];
                 aFilters.push(new sap.ui.model.Filter("Process", "EQ", this.process));
@@ -335,37 +335,39 @@ sap.ui.define([
                 aFilters.push(new sap.ui.model.Filter("ZbusinessPartnerId", "EQ", sBPGrouping));
                 if (this.process !== "" && sCustomerType !== "" && sBPGrouping !== "") {
                     var oModel = this.getView().getModel("RuleEngine");
+                    debugger
+                    // try {
+                    //     new Promise((resolve, reject) => {
                     oModel.read("/ZDD_GET_RULE_Details", {
-                        filters:aFilters,
+                        filters: aFilters,
                         urlParameters: {
                             "$top": 10000
                         },
                         success: function (oData, oResponse) {
-
                             var flatObj = {};
                             oData.results.forEach(function (obj) {
                                 var sField = "";
                                 var rField = "";
-    
+
                                 // if (!sField.includes(obj.fieldname)){
-                                sField += obj.fieldname.split(" ").join("");
-                                rField += obj.fieldname.split(" ").join("");
+                                sField += obj.Fieldname.split(" ").join("");
+                                rField += obj.Fieldname.split(" ").join("");
                                 // }else{
                                 //     sField += obj.customertab.split(" ").join("") + obj.fieldname.split(" ").join("");
                                 //     rField += obj.customertab.split(" ").join("") + obj.fieldname.split(" ").join(""); 
                                 // }
-    
+
                                 // if(obj.visibility){
                                 sField += "Visible";
-                                if (obj.visibility === "Y") {
+                                if (obj.Visibility === "Y") {
                                     flatObj[sField] = true;
                                 } else {
                                     flatObj[sField] = false;
                                 }
                                 // }
-                                if (obj.mandatory) {
+                                if (obj.Mandatory) {
                                     rField += "Mandatory";
-                                    if (obj.mandatory === "Y") {
+                                    if (obj.Mandatory === "Y") {
                                         flatObj[rField] = true;
                                     } else {
                                         flatObj[rField] = false;
@@ -378,39 +380,75 @@ sap.ui.define([
                             this.getView().getModel("fieldMappingModels").updateBindings(true);
                             console.log(this.getView().getModel("fieldMappingModels").oData);
                             this.getOwnerComponent().getModel().refresh(true);
-
-
-
-
-                       /*     for (var i = 0; i < oData.results.length; i++) {
-                                if (oData.results[i].process === this.process && oData.results[i].customer_type === sCustomerType.toUpperCase() && oData.results[i].zbusiness_partner_id === sBPGrouping.toUpperCase()) {
-                                    this.ruleId = oData.results[i].rule_id;
-                                    console.log(this.ruleId);
-
-                                }
-                            } */
-
-                         /*   if (this.ruleId == "" || this.ruleId == undefined) {
-                                MessageBox.confirm("Rule engine Configuration does not exist for the selected keys?", {
-                                    actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-                                    emphasizedAction: MessageBox.Action.OK,
-                                    onClose: function (sAction) {
-                                        if (sAction === "CANCEL") {
-                                            oFilterBar.getFilterItems()[1].getControl().setSelectedItem(null);
-                                        }
-                                        else {
-                                            this.onCreate(this.process, sCustomerType, sBPGrouping);
-                                        }
-                                    }.bind(this)
-                                });
-                            } else {
-                                this.onRead(this.ruleId);
-                            } */
+                            this.busyDialog.close();
+                            // resolve()
                         }.bind(this),
                         error: function (oError) { }
                     });
+                    //     })
+                    // } catch (err) {
+
+                    // }
                 }
             },
+
+            // handleRuleEngineConfiguration: function (oEvent) {
+            //     var busyDialog = new sap.m.BusyDialog();
+            //     busyDialog.open();
+            //     // this.process = "CHANGE";
+            //     if (this.process == "Create Customer") {
+            //         this.process = "CREATE";
+            //     } else if (this.process = "Change Customer") {
+            //         this.process = "CHANGE";
+            //     } else {
+            //         this.process = "EXTEND";
+            //     }
+            //     setTimeout(function () {
+            //         busyDialog.close();
+            //     }, 5000);
+            //     this.getView().getModel("appView").setProperty("/process", this.process);
+            //     var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+            //     // var sCustomerType = this.getView().byId("orderData1").getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
+            //     // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
+            //     var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
+            //     // var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
+            //     this.ruleId = "";
+            //     if (this.process !== "" && sCustomerType !== "" && sBPGrouping !== "") {
+            //         var oModel = this.getView().getModel("RuleEngine");
+            //         oModel.read("/Zdd_rule_engine", {
+            //             urlParameters: {
+            //                 "$top": 10000
+            //             },
+            //             success: function (oData, oResponse) {
+            //                 for (var i = 0; i < oData.results.length; i++) {
+            //                     if (oData.results[i].process === this.process && oData.results[i].customer_type === sCustomerType.toUpperCase() && oData.results[i].zbusiness_partner_id === sBPGrouping.toUpperCase()) {
+            //                         this.ruleId = oData.results[i].rule_id;
+            //                         console.log(this.ruleId);
+
+            //                     }
+            //                 }
+
+            //                 if (this.ruleId == "" || this.ruleId == undefined) {
+            //                     MessageBox.confirm("Rule engine Configuration does not exist for the selected keys?", {
+            //                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+            //                         emphasizedAction: MessageBox.Action.OK,
+            //                         onClose: function (sAction) {
+            //                             if (sAction === "CANCEL") {
+            //                                 oFilterBar.getFilterItems()[1].getControl().setSelectedItem(null);
+            //                             }
+            //                             else {
+            //                                 this.onCreate(this.process, sCustomerType, sBPGrouping);
+            //                             }
+            //                         }.bind(this)
+            //                     });
+            //                 } else {
+            //                     this.onRead(this.ruleId);
+            //                 }
+            //             }.bind(this),
+            //             error: function (oError) { }
+            //         });
+            //     }
+            // },
             onRead: function (ruleid) {
                 var oModel = this.getView().getModel("RuleEngine");
                 // this.getView().setBusy(true);
@@ -489,9 +527,8 @@ sap.ui.define([
             },
 
             saveRequest: function () {
-                debugger
                 var that = this;
-                this.buttonText = 'save';sdkh43hgfjhgjgjgkh
+                this.buttonText = 'save';
                 var oModel = this.getView().getModel();
                 var oCustomerDetailModel = this.getView().getModel("Customers");
                 delete oCustomerDetailModel.getData().to_zdd_sale;
@@ -499,7 +536,6 @@ sap.ui.define([
                 var oEntry = oCustomerDetailModel.getData();
 
                 // if (this.mode == "edit" && that.custNum) {
-                //Mohammad Sohail 13/06/2023: remove the that.custNum
                 if (this.mode == "edit") {
                     // oEntry.zrequest_no = req_no;
                     // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
@@ -632,7 +668,6 @@ sap.ui.define([
                     oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                     oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
                     delete oEntry.ztype_of_Entity;
-                    // let customerUpdateURL = "/ZDD_CUSTOMER(zcustomer_num=guid'" + oEntry.zcustomer_num + "')";
                     oModel.update(this.sPath, oEntry, {
                         success: function (oData, oResponse) {
                             // jQuery.sap.require("sap.m.MessageBox");
@@ -645,144 +680,8 @@ sap.ui.define([
                     });
 
                 } else {
-                    delete oEntry.zindividual_paymen;
-                    delete oEntry.ztelephone_country_number_exte;
-                    delete oEntry.zfax_country_number_extension;
-                    delete oEntry.zhouse_number;
-                    delete oEntry.zindividual_paymen;
-                    delete oEntry.zamount_insured;
-                    delete oEntry.to_comments;
-                    delete oEntry.to_salesarea;
-                    delete oEntry.zmobile_country_number;
-
-                    delete oEntry.BusinessPartnerDD;
-                    delete oEntry.BPRoles;
-                    delete oEntry.requests;
-                    delete oEntry.EntryCollection;
-
-                    oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
-                    // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
-                    //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
-                    //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
-                    // }
-                    if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
-                        oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
-                    }
-                    oEntry.zbusiness_partner_grouping = this.getView().getModel("appView").getProperty("/bpg").split(" ")[0];
-                    oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
-                    oEntry.ztype_of_customer = oEntry.zdescription;
-                    // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
-                    // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
-
-                    // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
-                    //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
-                    // }
-                    if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
-                        oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
-                    }
-                    // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
-                    //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
-                    //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
-                    // }
-                    // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
-                    //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
-                    // }
-                    // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
-                    //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
-                    // }
-
-
-                    // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
-                    // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
-                    // }
-
-                    var custData = this.getView().getModel("Customers").getData();
-                    if (custData.zdate_founded === undefined || custData.zdate_founded === null || custData.zdate_founded.length < 13) {
-                        oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
-                    }
-                    if (custData.zliquidationdate === undefined || custData.zliquidationdate === null || custData.zliquidationdate.length < 13) {
-                        oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
-                    }
-                    if (custData.zdate === undefined || custData.zdate === null || custData.zdate.length < 13) {
-                        oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
-                    }
-                    // if (custData.zvalidity_to === undefined || custData.zvalidity_to === null || custData.zvalidity_to.length < 13) {
-                    //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
-                    // }
-                    if (custData.zvalid_from === undefined || custData.zvalid_from === null || custData.zvalid_from.length < 13) {
-                        oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
-                    }
-                    if (custData.zvalid_to === undefined || custData.zvalid_to === null || custData.zvalid_to.length < 13) {
-                        oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
-                    }
-                    // if (custData.zentry_date === undefined || custData.zentry_date === null || custData.zentry_date.length < 13) {
-                    //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
-                    // }
-                    // if (custData.zduedate === undefined || custData.zduedate === null || custData.zduedate.length < 13) {
-                    //     oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
-                    // }
-                    //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                    if (custData.zupdated_date === undefined || custData.zupdated_date === null || custData.zupdated_date.length < 13) {
-                        oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
-                    }
-                    if (custData.zfinalizedon === undefined || custData.zfinalizedon === null || custData.zfinalizedon.length < 13) {
-                        oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
-                    }
-                    // if (custData.zlast_key_date === undefined || custData.zlast_key_date === null || custData.zlast_key_date.length < 13) {
-                    //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
-                    // }
-                    // if (custData.zpayment_on === undefined || custData.zpayment_on === null || custData.zpayment_on.length < 13) {
-                    //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
-                    // }
-                    if (custData.zcreated_date === undefined || custData.zcreated_date === null || custData.zcreated_date.length < 13) {
-                        oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                    }
-                    if (custData.zcl_validity_proposed_date === undefined || custData.zcl_validity_proposed_date === null || custData.zcl_validity_proposed_date.length < 13) {
-                        oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
-                    }
-                    // if (custData.zresubmission_on === undefined || custData.zresubmission_on === null || custData.zresubmission_on.length < 13) {
-                    //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
-                    // }
-                    if (custData.zvalid_passport_date === undefined || custData.zvalid_passport_date === null || custData.zvalid_passport_date.length < 13) {
-                        oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
-                    }
-                    if (custData.zvisa_valid_date === undefined || custData.zvisa_valid_date === null || custData.zvisa_valid_date.length < 13) {
-                        oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
-                    }
-                    // if (custData.znet_due_date === undefined || custData.znet_due_date === null || custData.znet_due_date.length < 13) {
-                    //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                    // }
-                    oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
-                    oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
-                    oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
-                    oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                    oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                    oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
-                    oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
-                    oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
-                    oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
-                    oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
-                    oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
-                    oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                    oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                    oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
-                    oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
-                    oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
-                    oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
-                    oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
-                    oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
-                    oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
-                    oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
-                    oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
-                    oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
-                    oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
-                    oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
-                    oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
-                    oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
-                    oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                    delete oEntry.ztype_of_Entity;
-
                     if (!oEntry.zbusiness_unit_name || !oEntry.zvertical || !oEntry.zcustomer_type || !oEntry.zchannel_group || !oEntry.zcustomer_legal_name || !oEntry.zcompany_code) {
+                        // MessageBox.error("Please fill Mandotry fields");
                         var mandatoryFields = [
                             { field: "zbusiness_unit_name", label: "Business Unit" },
                             { field: "zvertical", label: "Vertical" },
@@ -803,19 +702,157 @@ sap.ui.define([
                             MessageBox.error(errorMessage);
                         }
                     } else {
-                        this.getView().setBusy(true);
                         var req_no = Math.floor(1000 + Math.random() * 9000) + "";
                         oEntry.zrequest_no = req_no;
+                        // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
                         oEntry.zrequest_type = "Create Customer";
                         oEntry.zrequest_status = "In Draft";
+                        delete oEntry.zindividual_paymen;
+                        delete oEntry.ztelephone_country_number_exte;
+                        delete oEntry.zfax_country_number_extension;
+                        delete oEntry.zhouse_number;
+                        delete oEntry.zindividual_paymen;
+                        delete oEntry.zamount_insured;
+                        delete oEntry.to_comments;
+                        delete oEntry.to_salesarea;
+                        delete oEntry.zmobile_country_number;
+
+                        delete oEntry.BusinessPartnerDD;
+                        delete oEntry.BPRoles;
+                        delete oEntry.requests;
+                        delete oEntry.EntryCollection;
+
+                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                        // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
+                        //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
+                        //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
+                        // }
+                        if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
+                            oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
+                        }
+                        oEntry.zbusiness_partner_grouping = this.getView().getModel("appView").getProperty("/bpg").split(" ")[0];
+                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                        oEntry.ztype_of_customer = oEntry.zdescription;
+                        // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
+                        // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+
+                        // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
+                        //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
+                        // }
+                        if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
+                            oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
+                        }
+                        // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
+                        //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
+                        //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
+                        // }
+                        // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
+                        //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
+                        // }
+                        // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
+                        //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
+                        // }
+
+
+                        // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
+                        // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
+                        // }
+
+                        var custData = this.getView().getModel("Customers").getData();
+                        if (custData.zdate_founded === undefined || custData.zdate_founded === null || custData.zdate_founded.length < 13) {
+                            oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
+                        }
+                        if (custData.zliquidationdate === undefined || custData.zliquidationdate === null || custData.zliquidationdate.length < 13) {
+                            oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
+                        }
+                        if (custData.zdate === undefined || custData.zdate === null || custData.zdate.length < 13) {
+                            oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
+                        }
+                        // if (custData.zvalidity_to === undefined || custData.zvalidity_to === null || custData.zvalidity_to.length < 13) {
+                        //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
+                        // }
+                        if (custData.zvalid_from === undefined || custData.zvalid_from === null || custData.zvalid_from.length < 13) {
+                            oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
+                        }
+                        if (custData.zvalid_to === undefined || custData.zvalid_to === null || custData.zvalid_to.length < 13) {
+                            oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
+                        }
+                        // if (custData.zentry_date === undefined || custData.zentry_date === null || custData.zentry_date.length < 13) {
+                        //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
+                        // }
+                        // if (custData.zduedate === undefined || custData.zduedate === null || custData.zduedate.length < 13) {
+                        //     oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
+                        // }
+                        //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                        if (custData.zupdated_date === undefined || custData.zupdated_date === null || custData.zupdated_date.length < 13) {
+                            oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
+                        }
+                        if (custData.zfinalizedon === undefined || custData.zfinalizedon === null || custData.zfinalizedon.length < 13) {
+                            oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
+                        }
+                        // if (custData.zlast_key_date === undefined || custData.zlast_key_date === null || custData.zlast_key_date.length < 13) {
+                        //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
+                        // }
+                        // if (custData.zpayment_on === undefined || custData.zpayment_on === null || custData.zpayment_on.length < 13) {
+                        //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
+                        // }
+                        if (custData.zcreated_date === undefined || custData.zcreated_date === null || custData.zcreated_date.length < 13) {
+                            oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                        }
+                        if (custData.zcl_validity_proposed_date === undefined || custData.zcl_validity_proposed_date === null || custData.zcl_validity_proposed_date.length < 13) {
+                            oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
+                        }
+                        // if (custData.zresubmission_on === undefined || custData.zresubmission_on === null || custData.zresubmission_on.length < 13) {
+                        //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
+                        // }
+                        if (custData.zvalid_passport_date === undefined || custData.zvalid_passport_date === null || custData.zvalid_passport_date.length < 13) {
+                            oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
+                        }
+                        if (custData.zvisa_valid_date === undefined || custData.zvisa_valid_date === null || custData.zvisa_valid_date.length < 13) {
+                            oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
+                        }
+                        // if (custData.znet_due_date === undefined || custData.znet_due_date === null || custData.znet_due_date.length < 13) {
+                        //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                        // }
+                        oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
+                        oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
+                        oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
+                        oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                        oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                        oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
+                        oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
+                        oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
+                        oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
+                        oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
+                        oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
+                        oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                        oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                        oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
+                        oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
+                        oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
+                        oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
+                        oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
+                        oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
+                        oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
+                        oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
+                        oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
+                        oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
+                        oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
+                        oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
+                        oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
+                        oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
+                        oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                        delete oEntry.ztype_of_Entity;
 
                         oModel.create("/ZDD_CUSTOMER", oEntry, {
                             success: function (oData, oResponse) {
                                 that.reqestNo = req_no;
                                 that.custNum = oData.zcustomer_num;
-                                this.handleSalesData();
                                 this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
-                                this.getView().setBusy(true);
+                                //         jQuery.sap.require("sap.m.MessageBox");
+                                // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
+                                this.handleSalesData();
+
                             }.bind(this),
                             error: function (oError) {
                                 this.getView().setBusy(false);
@@ -1641,6 +1678,310 @@ sap.ui.define([
                     this.Incoterms.getBinding("items").filter([]);
                 }
             },
+
+            // //Value Help for Currency
+            // handleValueHelpForCurrency: function (evt) {
+            //     this.currencyField = evt.getSource();
+            //     this.currency.getBinding("items").filter([]);
+            //     this.currency.open();
+            // },
+            // handleValueHelpCurrencyClose: function () {
+            //     this.currency._dialog.close();
+            // },
+            // handleValueHelpCurrencyConfirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.currencyField.setValue(title + " - " + desc);
+            // },
+            // handleValueHelpCurrencySearch: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         var oFilter1 = new sap.ui.model.Filter("Waers", 'Contains', sValue);
+            //         this.currency.getBinding("items").filter([oFilter1]);
+            //     } else {
+            //         this.currency.getBinding("items").filter([]);
+            //     }
+            // },
+
+            //  //Value Help for Shipping Condition
+            //  handleValueHelpForShippingCondn: function (evt) {
+            //     this.ShpngCndn = evt.getSource();
+            //     this.ShippingCondn.getBinding("items").filter([]);
+            //     this.ShippingCondn.open();
+            // },
+            // handleValueHelpShippingCondnConfirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.ShpngCndn.setValue(title + " - " + desc);
+            //     this.ShippingCondn.getBinding("items").filter([]);
+            //     this.ShippingCondn.close();
+            // },
+            // handleValueHelpShippingCondnSearch: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Shipping", 'Contains', sValue);
+            //             this.ShippingCondn.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.ShippingCondn.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.ShippingCondn.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpShippingCondnClose: function (evt) {
+            //     this.ShippingCondn.close();
+            // },
+
+            // //Value Help for Tax Classification
+            // handleValueHelpForTaxClssfn: function (evt) {
+            //     this.TaxClass = evt.getSource();
+            //     this.TaxClassfn.getBinding("items").filter([]);
+            //     this.TaxClassfn.open();
+            // },
+            // handleValueHelpTaxClassfnConfirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.TaxClass.setValue(title + " - " + desc);
+            //     this.TaxClassfn.getBinding("items").filter([]);
+            //     this.TaxClassfn.close();
+            // },
+            // handleValueHelpTaxClassfnSearch: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Taxclassification", 'Contains', sValue);
+            //             this.TaxClassfn.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.TaxClassfn.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.TaxClassfn.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpTaxClassfnClose: function (evt) {
+            //     this.TaxClassfn.close();
+            // },
+            //  //Value Help for Tax Category
+            //  handleValueHelpForTaxCat: function (evt) {
+            //     this.TaxCat = evt.getSource();
+            //     this.TaxCategory.getBinding("items").filter([]);
+            //     this.TaxCategory.open();
+            // },
+            // handleValueHelpTaxCatConfirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.TaxCat.setValue(title + " - " + desc);
+            //     this.TaxCategory.getBinding("items").filter([]);
+            //     this.TaxCategory.close();
+            // },
+            // handleValueHelpTaxCatSearch: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Taxcategory", 'Contains', sValue);
+            //             this.TaxCategory.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.TaxCategory.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.TaxCategory.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpTaxCatClose: function (evt) {
+            //     this.TaxCategory.close();
+            // },
+
+            // //Value Help for Customer Group
+            // handleValueHelpForCusGrp: function (evt) {
+            //     this.cField = evt.getSource();
+            //     this.customerGrp.getBinding("items").filter([]);
+            //     this.customerGrp.open();
+            // },
+            // handleValueHelpcusGrpConfirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.cField.setValue(title + " - " + desc);
+            //     this.customerGrp.getBinding("items").filter([]);
+            //     this.customerGrp.close();
+            // },
+            // handleValueHelpcusGrpSearch: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Customergroup", 'Contains', sValue);
+            //             this.customerGrp.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.customerGrp.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.customerGrp.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpcusGrp1Close: function (evt) {
+            //     this.customerGrp.close();
+            // },
+
+            // //Value Help for Customer Group 1
+            // handleValueHelpForCusGrp1: function (evt) {
+            //     this.c1Field = evt.getSource();
+            //     this.customerGrp1.getBinding("items").filter([]);
+            //     this.customerGrp1.open();
+            // },
+            // handleValueHelpcusGrp1Confirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.c1Field.setValue(title + " - " + desc);
+            //     this.customerGrp1.getBinding("items").filter([]);
+            //     this.customerGrp1.close();
+            // },
+            // handleValueHelpcusGrp1Search: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Customergroup1", 'Contains', sValue);
+            //             this.customerGrp1.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.customerGrp1.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.customerGrp1.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpcusGrp1Close: function (evt) {
+            //     this.customerGrp1.close();
+            // },
+
+            // //Value Help for Customer Group 2
+            // handleValueHelpForCusGrp2: function (evt) {
+            //     this.c2Field = evt.getSource();
+            //     this.customerGrp2.getBinding("items").filter([]);
+            //     this.customerGrp2.open();
+            // },
+            // handleValueHelpcusGrp2Confirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.c2Field.setValue(title + " - " + desc);
+            //     this.customerGrp2.getBinding("items").filter([]);
+            //     this.customerGrp2.close();
+            // },
+            // handleValueHelpcusGrp2Search: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Customergroup2", 'Contains', sValue);
+            //             this.customerGrp2.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.customerGrp2.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.customerGrp2.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpcusGrp2Close: function (params) {
+            //     this.customerGrp2.close();
+            // },
+
+            // //Value Help for Customer Group 3
+            // handleValueHelpForCusGrp3: function (evt) {
+            //     this.c3Field = evt.getSource();
+            //     this.customerGrp3.getBinding("items").filter([]);
+            //     this.customerGrp3.open();
+            // },
+            // handleValueHelpcusGrp3Confirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.c3Field.setValue(title + " - " + desc);
+            //     this.customerGrp3.getBinding("items").filter([]);
+            //     this.customerGrp3.close();
+            // },
+            // handleValueHelpcusGrp3Search: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Customergroup3", 'Contains', sValue);
+            //             this.customerGrp3.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.customerGrp3.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.customerGrp3.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpcusGrp3Close: function (evt) {
+            //     this.customerGrp3.close();
+            // },
+
+            // //Value Help for Customer Group 4
+            // handleValueHelpForCusGrp4: function (evt) {
+            //     this.c4Field = evt.getSource();
+            //     this.customerGrp4.getBinding("items").filter([]);
+            //     this.customerGrp4.open();
+            // },
+            // handleValueHelpcusGrp4Confirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.c4Field.setValue(title + " - " + desc);
+            //     this.customerGrp4.getBinding("items").filter([]);
+            //     this.customerGrp4.close();
+            // },
+            // handleValueHelpcusGrp4Search: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Customergroup4", 'Contains', sValue);
+            //             this.customerGrp4.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.customerGrp4.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.customerGrp4.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpcusGrp4Close: function (params) {
+            //     this.customerGrp4.close();
+            // },
+
+            // //Value Help for Customer Group 5
+            // handleValueHelpForCusGrp5: function (evt) {
+            //     this.c5Field = evt.getSource();
+            //     this.customerGrp5.getBinding("items").filter([]);
+            //     this.customerGrp5.open();
+            // },
+            // handleValueHelpcusGrp5Confirm: function (evt) {
+            //     var title = evt.getParameter("selectedItems")[0].getProperty("title");
+            //     var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            //     this.c5Field.setValue(title + " - " + desc);
+            //     this.customerGrp5.getBinding("items").filter([]);
+            //     this.customerGrp5.close();
+            // },
+            // handleValueHelpcusGrp5Search: function (evt) {
+            //     var sValue = evt.getParameter("value");
+            //     if (sValue.length > 0) {
+            //         if (sValue.length == 2) {
+            //             var oFilter1 = new sap.ui.model.Filter("Customergroup5", 'Contains', sValue);
+            //             this.customerGrp5.getBinding("items").filter([oFilter1]);
+            //         } else {
+            //             var oFilter2 = new sap.ui.model.Filter("Description", 'Contains', sValue);
+            //             this.customerGrp5.getBinding("items").filter([oFilter2]);
+            //         }
+            //     } else {
+            //         this.customerGrp2.getBinding("items").filter([]);
+            //     }
+            // },
+            // handleValueHelpcusGrp5Close: function (params) {
+            //     this.customerGrp5.close();
+            // },
+
+            //Max length property
             handleSetMaxLength: function (evt) {
                 var val = evt.getSource().getValue().length;
                 var maxLen = evt.getSource().getMaxLength();
@@ -1682,112 +2023,11 @@ sap.ui.define([
                 console.log(evt);
             },
 
-            onClear: function () {
-                var that = this;
-                var State = true;
-                var salesRequired = true;
-                debugger
-
-
-                if (this.getView().getModel("appView").getProperty("/vertical") === 'Cash') {
-                    var simpleFormIdArr = ["orderData1", "orderData5", "orderData9", "orderData6", "orderData8",
-                        "orderData12", "orderData81", "orderData193", "orderData86", "orderData125"]
-                } else {
-                    var simpleFormIdArr = [
-                        "orderData1", "orderData5", "orderData9", "orderData6", "orderData8",
-                        "orderData12", "orderData81", "orderData193", "orderData86", "orderData125",
-                        "erpCustomersydata1", "erpCustomersydata3", "erpCustomersydata5", "erpCustomersydata7", "erpCustomersydata9",
-                        "erpCustomersydata11", "erpCustomersydata13", "erpCustomersydata15", "erpCustomersydata17", "erpCustomersydata19",
-                        "erpCustomersydata21",
-                        "Planned", "Planned2", "Planned3", "Planned4",
-                        "Planned6", "CreditAnalysisView", "orderData13", "CustomerBackgroundView", "DetailsOfExpectedView"
-                    ];
-                }
-                for (var j = 0; j < simpleFormIdArr.length; j++) {
-                    var content = this.getView().byId(simpleFormIdArr[j]).getAggregation("_views") !== null ? this.getView().byId(simpleFormIdArr[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
-                    var isVisible = this.getView().byId(simpleFormIdArr[j]).getParent().getParent().getVisible();
-
-                    if (isVisible) {
-                        for (var b = 0; b < content.length; b++) {
-                            if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
-                                if (content[b].getVisible()) {
-                                    if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getRequired() === true && content[b].getVisible() ===
-                                        true) {
-                                        if (content[b + 1].getMetadata().getName() == "sap.m.Input") {
-                                            content[b + 1].setValueState("None").setValueStateText("");
-                                            that.removeValidationError(content[b]);
-
-                                        } else if (content[b + 1].getMetadata().getName() == "sap.m.MultiInput") {
-
-                                            content[b + 1].setValueState("None").setValueStateText("");
-                                            that.removeValidationError(content[b]);
-
-                                        } else if (content[b + 1].getMetadata().getName() == "sap.m.Select") {
-
-                                            content[b + 1].setValueState("None").setValueStateText("");
-                                            that.removeValidationError(content[b]);
-
-                                        } else if (content[b + 1].getMetadata().getName() == "sap.m.DatePicker") {
-
-                                            content[b + 1].setValueState("None").setValueStateText("");
-                                            that.removeValidationError(content[b]);
-
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                // var custType = this.getView().getModel("appView").getProperty("/customerType");
-
-                var formId = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
-
-                if (formId.length !== 0) {
-                    for (var i = 0; i < formId.length; i++) {
-                        var salesFormContent = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems()[i].getItems()[0].getContent()[0].getItems()[0].getContent();
-                        var isSalesAreaVisible = this.getView().byId("salesAreadata17").getParent().getParent().getVisible();
-                        if (isSalesAreaVisible) {
-                            for (var b = 0; b < salesFormContent.length; b++) {
-                                if (salesFormContent[b].getMetadata().getName() != "sap.ui.core.Title") {
-                                    if (salesFormContent[b].getVisible()) {
-                                        if (salesFormContent[b].getMetadata().getName() == "sap.m.Label" && salesFormContent[b].getRequired() === true && salesFormContent[b].getVisible() ===
-                                            true) {
-                                            if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.Input") {
-
-                                                salesFormContent[b + 1].setValueState("None").setValueStateText("");
-                                                that.removeValidationError(salesFormContent[b]);
-
-                                            } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.MultiInput") {
-
-                                                salesFormContent[b + 1].setValueState("None").setValueStateText("");
-                                                that.removeValidationError(salesFormContent[b]);
-
-                                            } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.Select") {
-
-                                                salesFormContent[b + 1].setValueState("None").setValueStateText("");
-                                                that.removeValidationError(salesFormContent[b]);
-
-                                            } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.DatePicker") {
-
-                                                salesFormContent[b + 1].setValueState("None").setValueStateText("");
-                                                that.removeValidationError(salesFormContent[b]);
-
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
 
             handleValidateFormFields: function () {
                 var that = this;
                 var State = true;
                 var salesRequired = true;
-                debugger
 
 
                 if (this.getView().getModel("appView").getProperty("/vertical") === 'Cash') {
@@ -1861,6 +2101,17 @@ sap.ui.define([
                     }
                 }
                 var custType = this.getView().getModel("appView").getProperty("/customerType");
+                //     if(custType != 1){
+                //     if (this.getView().getModel("salesModel").getData().length > 0) {
+                //         salesRequired = false;
+                //         that.removeCustomValidationError({ "target": "SalesArea" });
+                //     } else {
+                //         that.registerCustomValidationError({ "table": "Sales Area", "target": "SalesArea", "model": that.getView().getModel("salesModel") });
+
+                //     }
+                // }
+
+                // var simpleFormId1 = ["salesAreadata17"];
 
                 var formId = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
 
@@ -1917,11 +2168,6 @@ sap.ui.define([
                     }
                 }
 
-
-
-
-
-
                 if (State === false) {
                     this.ValidationMesg = "Please fill the required fields";
                 }
@@ -1937,30 +2183,33 @@ sap.ui.define([
                 this.getView().getModel("appView").updateBindings(true);
             },
             onConfirm: function () {
-                var dmsPath = this.getOwnerComponent().getModel("DMS").sMetadataUrl;
-                $.ajax({
-                    type: "GET",
-                    // url: "/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/$metadata",
-                    url: dmsPath,
-                    processData: false,
-                    contentType: false,
-                    headers: {
+                try {
+                    var dmsPath = this.getOwnerComponent().getModel("DMS").sMetadataUrl;
+                    $.ajax({
+                        type: "GET",
+                        // url: "/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV/$metadata",
+                        url: dmsPath,
+                        processData: false,
+                        contentType: false,
+                        headers: {
 
-                        "X-CSRF-Token": "Fetch"
+                            "X-CSRF-Token": "Fetch"
 
-                    },
-                    success: function (data, response, header) {
-                        // handle success
-                        this.token = header.getResponseHeader("x-csrf-token")
-                        console.log(data);
-                        this.dms();
-                    }.bind(this),
-                    error: function (jqXHR, textStatus, errorThrown) {
-                        // handle error
-                    }
-                });
+                        },
+                        success: function (data, response, header) {
+                            // handle success
+                            this.token = header.getResponseHeader("x-csrf-token")
+                            console.log(data);
+                            this.dms();
+                        }.bind(this),
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            // handle error
+                        }
+                    });
 
+                } catch (err) {
 
+                }
             },
             dms: function (evt) {
                 var dmsData = this.getOwnerComponent().getModel("dmsModel").getData();

@@ -2,8 +2,8 @@
 	xmlns="sap.m"
 	xmlns:c="sap.ui.core"
 >
-<SelectDialog contentHeight="60%" showClearButton="true" title="Select Distribution Organization" class="sapUiPopupWithPadding"
+<SelectDialog contentHeight="60%" showClearButton="true" title="Select Distribution Channel" class="sapUiPopupWithPadding"
 		items="{path:'DistChannelModel>/'}" search="handleValueHelpDistribSearch" confirm="handleValueHelpDistributionConfirm" cancel="handleValueHelpDistributionClose" multiSelect="false">
-		<StandardListItem title="{DistChannelModel>Distributionchannel}" description="{DistChannelModel>Distributionchanneltext}"/>
+		<StandardListItem title="{DistChannelModel>DistributionChannel}" description="{DistChannelModel>DistributionChannelText}"/>
 	</SelectDialog>
 </c:FragmentDefinition>
