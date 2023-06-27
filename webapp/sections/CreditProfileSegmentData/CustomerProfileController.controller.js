@@ -12,35 +12,35 @@ sap.ui.define([
             /**
              * @override
              */
-            onInit: function() {
+            onInit: function () {
                 // Controller.prototype.onInit.apply(this, arguments);
                 if (!this.cs) {
                     this.cs = new sap.ui.xmlfragment("Iffco.clap.fragments.creditSegmentData", this);
                     this.getView().addDependent(this.creditSegment);
                     this.cs.setModel(this.getOwnerComponent().getModel());
                 }
-            
+
             },
-            handleSetMaxLength:function (evt) {
+            handleSetMaxLength: function (evt) {
                 var val = evt.getSource().getValue().length;
                 var maxLen = evt.getSource().getMaxLength();
-                if(val >= maxLen){
+                if (val >= maxLen) {
                     evt.getSource().setType("Text");
-                }else{
+                } else {
                     evt.getSource().setType("Number");
                 }
             },
-            handleCreditSegmentValue:function (evt) {
+            handleCreditSegmentValue: function (evt) {
                 this.getView().byId("cs").setValue()
             },
             handleValueHelpForCS: function (evt) {
                 this.creditSegmentField = evt.getSource();
-                if(this.getView().getModel("appView").getProperty("/cca")){
+                if (this.getView().getModel("appView").getProperty("/cca")) {
                     this.cs.getBinding("items").filter([new sap.ui.model.Filter("credit_control_area", "Contains", this.getView().getModel("appView").getProperty("/cca"))]);
                     this.cs.open();
-                    }else{
-                        MessageBox.error("Please select Credit Control Area");
-                    }
+                } else {
+                    MessageBox.error("Please select Credit Control Area");
+                }
             },
             handleValueHelpCSClose: function (params) {
                 this.cs._dialog.close();
@@ -65,6 +65,6 @@ sap.ui.define([
             //         this.creditSegment.getBinding("items").filter([]);
             //     }
             // },
-	});
+        });
 
-});
+    });

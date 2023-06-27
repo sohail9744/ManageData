@@ -30,6 +30,37 @@ sap.ui.define([
                 this.CompCode.getBinding("items").filter([]);
                 this.CompCode.open();
             },
+            handleValueHelpCompCodeSearch: function (evt) {
+                var sValue = evt.getParameter("value");
+                var filters = [];
+                if (sValue.length > 0) {
+                    var filter1 = new sap.ui.model.Filter({
+                        path: "Bukrs",
+                        operator: "Contains",
+                        value1: sValue
+                    });
+                    var filter2 = new sap.ui.model.Filter({
+                        path: "Butxt",
+                        operator: "Contains",
+                        value1: sValue
+                    });
+                    var sFilters = [filter1, filter2];
+                    filters.push(new sap.ui.model.Filter(sFilters, false));
+                    this.CompCode.getBinding("items").filter(filters, false);
+                } else {
+                    this.CompCode.getBinding("items").filter([]);
+                }
+            },
+            handleValueHelpCompCodeConfirm: function (evt) {
+                var title = evt.getParameter("selectedItems")[0].getProperty("title");
+                var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+                this.CompCodeField.setValue(title + " - " + desc);
+                this.CompCode.getBinding("items").filter([]);
+                this.CompCode.close();
+            },
+            handleValueHelpCompCodeClose: function (evt) {
+                this.CompCode.close();
+            },
             handleRequestnavigation: function(oEvent){
                 this.check2 = true;
                 var busyDialog = new sap.m.BusyDialog();

@@ -39,7 +39,7 @@
                                     </fb:FilterItem>
                                     <fb:FilterItem name="Company Code" label="Company Code">
                                         <fb:control>
-                                            <Input showValueHelp="true" valueHelpOnly="true" valueHelpRequest="handleValueHelpForCompCode" />
+                                            <Input showClearIcon="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="handleValueHelpForCompCode" />
                                         </fb:control>
                                     </fb:FilterItem>
                                     <fb:FilterItem name="License Code" label="License Code">

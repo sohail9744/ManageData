@@ -449,60 +449,7 @@ sap.ui.define([
             //         });
             //     }
             // },
-            onRead: function (ruleid) {
-                var oModel = this.getView().getModel("RuleEngine");
-                // this.getView().setBusy(true);
-                oModel.read("/ZDD_RULE_UPDATE_FIELDS", {
-                    filters: [new sap.ui.model.Filter("rule_id", "EQ", ruleid)],
-                    urlParameters: {
-                        "$top": 10000
-                    },
-
-                    success: function (oData, oResponse) {
-                        console.log(oData.results);
-                        var flatObj = {};
-                        oData.results.forEach(function (obj) {
-                            var sField = "";
-                            var rField = "";
-
-                            // if (!sField.includes(obj.fieldname)){
-                            sField += obj.fieldname.split(" ").join("");
-                            rField += obj.fieldname.split(" ").join("");
-                            // }else{
-                            //     sField += obj.customertab.split(" ").join("") + obj.fieldname.split(" ").join("");
-                            //     rField += obj.customertab.split(" ").join("") + obj.fieldname.split(" ").join(""); 
-                            // }
-
-                            // if(obj.visibility){
-                            sField += "Visible";
-                            if (obj.visibility === "Y") {
-                                flatObj[sField] = true;
-                            } else {
-                                flatObj[sField] = false;
-                            }
-                            // }
-                            if (obj.mandatory) {
-                                rField += "Mandatory";
-                                if (obj.mandatory === "Y") {
-                                    flatObj[rField] = true;
-                                } else {
-                                    flatObj[rField] = false;
-                                }
-                            }
-                        })
-                        console.log(flatObj);
-                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({}), "fieldMappingModels");
-                        this.getView().getModel("fieldMappingModels").oData = flatObj;
-                        this.getView().getModel("fieldMappingModels").updateBindings(true);
-                        console.log(this.getView().getModel("fieldMappingModels").oData);
-                        this.getOwnerComponent().getModel().refresh(true);
-
-                    }.bind(this),
-                    error: function (oError) {
-                        this.getView().setBusy(false);
-                    }.bind(this)
-                });
-            },
+          
             updateFeilds: function (evt) {
                 var oModel = this.getView().getModel("RuleEngine");
                 // this.getView().setBusy(true);
