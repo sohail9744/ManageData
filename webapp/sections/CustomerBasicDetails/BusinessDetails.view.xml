@@ -30,7 +30,7 @@
 
         <Label text="Customer Type" visible="{=${fieldMappingModels>/CustomerTypeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CustomerTypeMandatory} === true ? true : false}"/>
-          <MultiInput showClearIcon="true" value="{Customers>/zcustomer_type}" enabled="{=${Customers>/zrequest_no} ? false : true}" valueHelpRequest="handleValueHelpForCustomerType"
+          <MultiInput showClearIcon="true" value="{Customers>/zcustomer_type}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForCustomerType"
 		visible="{=${fieldMappingModels>/CustomerTypeVisible} === true ? true : false}" valueHelpOnly="true" />
 		
 

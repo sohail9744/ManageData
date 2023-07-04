@@ -5,7 +5,7 @@
 		<!-- 443 -->
 		<Label text="Postal Code / City" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CityMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpostal_code_city}" maxLength="10" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpostal_code}" maxLength="10" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"/>
         <Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
 		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="LAND1" value="{Customers>/zcountry}" valueHelpRequest="handleValueHelpForCountry"
@@ -23,8 +23,8 @@
 		<Label text="Transportation Zone" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TransportationZoneMandatory} === true ? true : false}"/>
 		<!-- <Input value="{Customers>/ztransportation_zone}" maxLength="10" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"/> -->
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" change="handleInputType" id="TRSPTNZNE" valueHelpRequest="handleValueHelpForTrsptnZne"
-														 valueHelpOnly="true" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"/>
+		<MultiInput value="{Customers>/ztransportation_zone}" showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" change="handleInputType" id="TRSPTNZNE" valueHelpRequest="handleValueHelpForTrsptnZne"
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"/>
 		<Label text="PO Box Postal Code /PO Box" visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/POBoxPostalCodeMandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcompany_postal_code}" maxLength="10" visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"/>

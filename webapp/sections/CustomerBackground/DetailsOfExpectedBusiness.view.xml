@@ -11,12 +11,12 @@
         
 		<Label text="Value" visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ValueMandatory} === true ? true : false}"/>
-		<Input value="{Customers>/zannual_value}" liveChange="handleSetMaxLength" maxLength="8" type="Number"  visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"/>
+		<Input value="{Customers>/zannual_value}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" liveChange="handleSetMaxLength" maxLength="8" type="Number"  visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"/>
 
 		<Label text="Currency" visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CreditlimitCurrencyMandatory} === true ? true : false}"/>
      <!-- <Input value="{Customers>/zcredit_limit_currency}"  visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/> -->
-		<MultiInput showClearIcon="true"  valueHelpRequest="handleValueHelpForCurrency" value="{Customers>/zcredit_limit_currency}"
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForCurrency" value="{Customers>/zcredit_limit_currency}"
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/>
 
 		<Label text="Actual Turnover" visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"
@@ -36,7 +36,7 @@
 
 		 <Label text="Sales Volume unit" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input  type="Number" value="{Customers>/zmonthly_sales_volume_unit}"
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_sales_volume_unit}"
 		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 
 		 <Label text="Actual Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
@@ -57,7 +57,7 @@
 
 		  <Label text="Sales Currency" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input  id="salesCuurency" type="Number" value="{Customers>/zcredit_limit_currency}"
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="salesCuurency" type="Number" value="{Customers>/zcredit_limit_currency}"
 		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 
 		  <Label text="Actual Turnover" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
@@ -73,11 +73,11 @@
 
 		<Label text="Avg GC/MT or GC%" visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/AvgGC-MTorGCMandatory} === true ? true : false}"/>
-		<Input value="{Customers>/zavg_gc_mt_or_gc}"  maxLength="20" visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zavg_gc_mt_or_gc}"  maxLength="20" visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"/>
 		
 		<Label text="Inco Term" visible="{=${fieldMappingModels>/IncoTermVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/IncoTermMandatory} === true ? true : false}"/>		
-		<MultiInput showClearIcon="true"  value="{Customers>/zinco_term}" maxLength="3" valueHelpRequest="handleValueHelpForIncoterms"
+		<MultiInput enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" showClearIcon="true"  value="{Customers>/zinco_term}" maxLength="3" valueHelpRequest="handleValueHelpForIncoterms"
 	 valueHelpOnly="true" visible="{=${fieldMappingModels>/IncoTermVisible} === true ? true : false}"/>
 
         

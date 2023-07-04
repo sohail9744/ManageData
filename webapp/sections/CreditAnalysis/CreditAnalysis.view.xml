@@ -78,10 +78,10 @@
  required="{=${fieldMappingModels>/NetProfitMandatory} === true ? true : false}"/>
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/znetprofit}" liveChange="handleSetMaxLength" type="Number" maxLength="20" visible="{=${fieldMappingModels>/NetProfitVisible} === true ? true : false}"/>
         
-        <Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
+        <Label text="Country" visible="{=${fieldMappingModels>/CountryVisibleCreditAnalysis} === true ? true : false}"
+ required="{=${fieldMappingModels>/CountryMandatoryCountryVisibleCreditAnalysis} === true ? true : false}"/>
         <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcountry2}" maxLength="20" valueHelpRequest="handleValueHelpForCountryRating"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/>
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/CountryVisibleCreditAnalysis} === true ? true : false}"/>
         
         <Label text="Country Rating" visible="{=${fieldMappingModels>/CountryRatingVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CountryRatingMandatory} === true ? true : false}"/>

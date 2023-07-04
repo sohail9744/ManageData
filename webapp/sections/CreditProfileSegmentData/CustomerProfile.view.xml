@@ -29,8 +29,7 @@
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/CreditSegmentVisible} === true ? true : false}"/>
 		<Label text="Relationship to BP" visible="{=${fieldMappingModels>/RelationshiptoBPVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/RelationshiptoBPMandatory} === true ? true : false}"/>
- 		 <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcredit_segment}" valueHelpRequest="handleValueHelpForBP"
+ 		 <MultiInput showValueHelp="true" showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcredit_segment}" valueHelpRequest="handleValueHelpForBP"
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/CreditSegmentVisible} === true ? true : false}"/>
-		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zrelationship_to_bp}" visible="{=${fieldMappingModels>/RelationshiptoBPVisible} === true ? true : false}"/> -->
 	</forms:SimpleForm>
 </mvc:View>

@@ -1,7 +1,7 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
 	<SelectDialog contentHeight="60%" showClearButton="true" title="Select Credit Control Area" class="sapUiPopupWithPadding"
-		items="{path:'CCAModel>/'}" search="handleValueHelpCCASearch"
+		items="{path:'/ZDD_CREDIT_CONTROL_VH'}" search="handleValueHelpCCASearch"
 		confirm="handleValueHelpCCAConfirm" cancel="handleValueHelpCCAClose" multiSelect="false">
-		<StandardListItem title="{CCAModel>credit_control_area}" description="{CCAModel>cca_description}" />
+		<StandardListItem title="{credit_control_area}" description="{cca_description}" />
 	</SelectDialog>
 </core:FragmentDefinition>

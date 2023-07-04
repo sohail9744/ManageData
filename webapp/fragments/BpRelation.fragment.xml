@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog contentHeight="60%" showClearButton="true" title="Select BP Relation" class="sapUiPopupWithPadding"
+		items="{path:'/ZDD_BU_CC_VH'}" search="handleValueHelpBpSearch"
+		confirm="handleValueHelpBpConfirm" cancel="handleValueHelpBpClose" multiSelect="false">
+		<StandardListItem title="{cc}"/>
+	</SelectDialog>
+</core:FragmentDefinition>

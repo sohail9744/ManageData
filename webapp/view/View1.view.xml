@@ -25,7 +25,7 @@
                 <f:header>
                     <f:DynamicPageHeader>
                         <f:content>
-                            <fb:FilterBar id="filterbar" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+                            <fb:FilterBar id="filterbar" reset="onReset" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
                                 <fb:filterItems>
 								<fb:FilterItem name="Request Number" label="Request Number">
                                         <fb:control>
@@ -62,16 +62,6 @@
                                             <Input />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <!-- <fb:FilterItem name="Business Unit" label="Business Unit">
-                                        <fb:control>
-                                            <MultiComboBox name="Business Unit" selectionChange=".onSelectionChange" items="{
-												path: '/ZDD_BusinessUnit_VH',
-												templateShareable: true
-											}">
-                                                <core:Item key="{businessunit}" text="{businessunit}" />
-                                            </MultiComboBox>
-                                        </fb:control>
-                                    </fb:FilterItem> -->
                                     <fb:FilterItem name="Request Type" label="Request Type">
                                         <fb:control>
                                             <MultiComboBox name="Request Type" selectedKeys="All" selectionChange=".onSelectionChange" items="{

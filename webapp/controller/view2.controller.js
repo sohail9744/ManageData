@@ -326,7 +326,6 @@ sap.ui.define([
                 // var sCustomerType = this.getView().byId("orderData1").getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
                 // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
                 // var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
-                debugger
                 var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
                 this.ruleId = "";
                 var aFilters = [];
@@ -335,7 +334,7 @@ sap.ui.define([
                 aFilters.push(new sap.ui.model.Filter("ZbusinessPartnerId", "EQ", sBPGrouping));
                 if (this.process !== "" && sCustomerType !== "" && sBPGrouping !== "") {
                     var oModel = this.getView().getModel("RuleEngine");
-                    debugger
+
                     // try {
                     //     new Promise((resolve, reject) => {
                     oModel.read("/ZDD_GET_RULE_Details", {
@@ -344,36 +343,53 @@ sap.ui.define([
                             "$top": 10000
                         },
                         success: function (oData, oResponse) {
+                            
                             var flatObj = {};
-                            oData.results.forEach(function (obj) {
+                            oData.results.forEach(function (obj, index) {
                                 var sField = "";
                                 var rField = "";
 
-                                // if (!sField.includes(obj.fieldname)){
                                 sField += obj.Fieldname.split(" ").join("");
                                 rField += obj.Fieldname.split(" ").join("");
-                                // }else{
-                                //     sField += obj.customertab.split(" ").join("") + obj.fieldname.split(" ").join("");
-                                //     rField += obj.customertab.split(" ").join("") + obj.fieldname.split(" ").join(""); 
-                                // }
-
-                                // if(obj.visibility){
+                                
+                                if(obj.Visibility){
                                 sField += "Visible";
+                               if (!Object.keys(flatObj).includes(sField)){
                                 if (obj.Visibility === "Y") {
                                     flatObj[sField] = true;
                                 } else {
                                     flatObj[sField] = false;
                                 }
-                                // }
+                            }else{
+                                 sField +=obj.Customersub1.split(" ").join("");
+                                // sField += obj.replace(":", "").split(" ").join("");
+                                if (obj.Visibility === "Y") {
+                                    flatObj[sField] = true;
+                                } else {
+                                    flatObj[sField] = false;
+                                }
+                            }
+                                }
                                 if (obj.Mandatory) {
                                     rField += "Mandatory";
-                                    if (obj.Mandatory === "Y") {
-                                        flatObj[rField] = true;
-                                    } else {
-                                        flatObj[rField] = false;
+
+                                    if (!Object.keys(flatObj).includes(rField)){
+                                        if (obj.Mandatory === "Y") {
+                                            flatObj[rField] = true;
+                                        } else {
+                                            flatObj[rField] = false;
+                                        }
+                                    }else{
+                                        rField +=obj.Customersub1.split(" ").join("");
+                                        if (obj.Mandatory === "Y") {
+                                            flatObj[rField] = true;
+                                        } else {
+                                            flatObj[rField] = false;
+                                        }
                                     }
+     
                                 }
-                            })
+                            }.bind(this)),
                             console.log(flatObj);
                             this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({}), "fieldMappingModels");
                             this.getView().getModel("fieldMappingModels").oData = flatObj;
@@ -390,66 +406,8 @@ sap.ui.define([
 
                     // }
                 }
+                this.busyDialog.close();
             },
-
-            // handleRuleEngineConfiguration: function (oEvent) {
-            //     var busyDialog = new sap.m.BusyDialog();
-            //     busyDialog.open();
-            //     // this.process = "CHANGE";
-            //     if (this.process == "Create Customer") {
-            //         this.process = "CREATE";
-            //     } else if (this.process = "Change Customer") {
-            //         this.process = "CHANGE";
-            //     } else {
-            //         this.process = "EXTEND";
-            //     }
-            //     setTimeout(function () {
-            //         busyDialog.close();
-            //     }, 5000);
-            //     this.getView().getModel("appView").setProperty("/process", this.process);
-            //     var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
-            //     // var sCustomerType = this.getView().byId("orderData1").getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
-            //     // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
-            //     var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
-            //     // var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
-            //     this.ruleId = "";
-            //     if (this.process !== "" && sCustomerType !== "" && sBPGrouping !== "") {
-            //         var oModel = this.getView().getModel("RuleEngine");
-            //         oModel.read("/Zdd_rule_engine", {
-            //             urlParameters: {
-            //                 "$top": 10000
-            //             },
-            //             success: function (oData, oResponse) {
-            //                 for (var i = 0; i < oData.results.length; i++) {
-            //                     if (oData.results[i].process === this.process && oData.results[i].customer_type === sCustomerType.toUpperCase() && oData.results[i].zbusiness_partner_id === sBPGrouping.toUpperCase()) {
-            //                         this.ruleId = oData.results[i].rule_id;
-            //                         console.log(this.ruleId);
-
-            //                     }
-            //                 }
-
-            //                 if (this.ruleId == "" || this.ruleId == undefined) {
-            //                     MessageBox.confirm("Rule engine Configuration does not exist for the selected keys?", {
-            //                         actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
-            //                         emphasizedAction: MessageBox.Action.OK,
-            //                         onClose: function (sAction) {
-            //                             if (sAction === "CANCEL") {
-            //                                 oFilterBar.getFilterItems()[1].getControl().setSelectedItem(null);
-            //                             }
-            //                             else {
-            //                                 this.onCreate(this.process, sCustomerType, sBPGrouping);
-            //                             }
-            //                         }.bind(this)
-            //                     });
-            //                 } else {
-            //                     this.onRead(this.ruleId);
-            //                 }
-            //             }.bind(this),
-            //             error: function (oError) { }
-            //         });
-            //     }
-            // },
-          
             updateFeilds: function (evt) {
                 var oModel = this.getView().getModel("RuleEngine");
                 // this.getView().setBusy(true);

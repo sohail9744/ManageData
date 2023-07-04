@@ -26,7 +26,7 @@ sap.ui.define([
                 if (!this.TransprtZone) {
                     this.TransprtZone = new sap.ui.xmlfragment("Iffco.clap.fragments.TrsptnZone", this);
                     this.getView().addDependent(this.TransprtZone);
-                    this.TransprtZone.setModel(this.getOwnerComponent().getModel("S4D"));
+                    // this.TransprtZone.setModel(this.getOwnerComponent().getModel("S4D"));
                 }
                 if (!this.Language) {
                     this.Language = new sap.ui.xmlfragment("Iffco.clap.fragments.Language", this);
@@ -146,8 +146,8 @@ sap.ui.define([
                 this.trnsptZonField = evt.getSource();
                 this.val = this.getView().byId("LAND1").getValue();
                 if (this.val) {
-                    this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val.split(" - ")[0])]);
-                    // this.TransprtZone.getBinding("items").filter([]);
+                    // this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val.split(" - ")[0])]);
+                    this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val)]);
                     this.TransprtZone.open();
                 } else {
                     sap.m.MessageBox.error("Please select the Country");

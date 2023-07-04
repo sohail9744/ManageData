@@ -21,6 +21,9 @@ sap.ui.define([
                 }
 
             },
+            handleValueHelpForBP: function () {
+                alert("BP relation value help triggered");
+            },
             handleSetMaxLength: function (evt) {
                 var val = evt.getSource().getValue().length;
                 var maxLen = evt.getSource().getMaxLength();

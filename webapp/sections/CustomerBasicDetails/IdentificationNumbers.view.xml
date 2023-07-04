@@ -74,11 +74,13 @@
  required="{=${fieldMappingModels>/EntryDateMandatory} === true ? true : false}"/>
 		<DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zentry_date}" visible="{=${fieldMappingModels>/EntryDateVisible} === true ? true : false}"  valueFormat="MM.dd.yyyy" change="handleLiveChange" displayFormat="long"/>
 		
-		<Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcountry}" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/>
+		<Label text="Country" visible="{=${fieldMappingModels>/CountryVisibleIdentificationNumbers} === true ? true : false}"
+ required="{=${fieldMappingModels>/CountryMandatoryIdentificationNumbers} === true ? true : false}"/>
+		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcountry}" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/> -->
+		<Input enabled="false" value="{Customers>/zcountry}" visible="{=${fieldMappingModels>/CountryVisibleIdentificationNumbers} === true ? true : false}"/>
 		<Label text="Region" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/RegionMandatory} === true ? true : false}"/>
+		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/> -->
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/>
 		
 	</forms:SimpleForm>

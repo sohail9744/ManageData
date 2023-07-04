@@ -172,9 +172,31 @@ sap.ui.define([
             this.businessUnit.open();
         },
         handleValueHelpBusinessunitConfirm: function (evt) {
-            debugger
             this.businessUntVal = evt.getParameter("selectedItems")[0].getProperty("title");
             this.businessUnitField.setValue(this.businessUntVal);
+            if (this.getOwnerComponent().getModel("salesDataModel").getData().length !== 0) {
+                var oModel = this.getOwnerComponent().getModel();
+                oModel.read("/ZDD_BU_CC_VH", {
+                    success: function (oData, oResponse) {
+                        var bpRelData = [];
+                        oData.results.forEach(function (obj) {
+                            if (obj.Businessunit === this.businessUntVal) {
+                                bpRelData.push(obj);
+                            }
+                        }.bind(this));
+                        var bpValue = this.getOwnerComponent().getModel("salesDataModel").getData()
+                        for (let m = 0; m < bpValue.length; m++) {
+                            bpValue[m].zrelationship_to_bp = bpRelData[0].cc
+                        }
+                        this.getOwnerComponent().getModel("salesDataModel").updateBindings(true);
+                    }.bind(this),
+
+                    error: function (oError) { }
+
+                });
+
+            }
+
         },
         handleValueHelpBusinessunitClose: function () {
             this.businessUnit._dialog.close();
