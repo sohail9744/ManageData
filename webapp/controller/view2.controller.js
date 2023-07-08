@@ -805,7 +805,8 @@ sap.ui.define([
                     delete oCustomerDetailModel.getData().to_zdd_comments;
                     var oEntry = oCustomerDetailModel.getData();
 
-                    if (this.mode == "edit" || this.custNum) {
+                    // if (this.mode == "edit" || this.custNum) {
+                        if(this.mode == "edit") {
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
                         oEntry.zrequest_type = "Create Customer";
                         oEntry.zrequest_status = "In Progress";

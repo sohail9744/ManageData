@@ -7,7 +7,7 @@ sap.ui.define([
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
-     */
+     */ //master
     function (Controller, Filter, FilterOperator, Fragment, formatter) {
         "use strict";
 
