@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog contentHeight="60%" showClearButton="true" title="Select Sub Channel" class="sapUiPopupWithPadding"
+		items="{/ZDD_SUBCHANNELS_VH}" search="handleValueHelpSubChannelSearch"
+		confirm="handleValueHelpSubChannelConfirm" cancel="handleValueHelpSubChannelClose" multiSelect="false">
+		<StandardListItem title="{subchannel}" />
+	</SelectDialog>
+</core:FragmentDefinition>

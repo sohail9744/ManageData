@@ -1,0 +1,13 @@
+<mvc:View controllerName="Iffco.clap.sections.SalesArea.AccountingController" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:forms="sap.ui.layout.form" xmlns:mvc="sap.ui.core.mvc" height="100%">
+	
+	<l:VerticalLayout class="sapUiContentPadding" width="100%">
+		<l:content>
+
+		<Button text="Add Sales Area" id="add" enabled="{=${appView>/addSales} === true ? true : false}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" icon="sap-icon://add" type="Transparent" press="handleCreate" />
+		<Button text="Display Sales Area" tooltip = "click here" visible="{=${appView>/mode} === false ? true : false}" id="generateSales" press="handleGenerateSales"/>
+			 <VBox id="container"> </VBox>
+			
+
+		</l:content>
+	</l:VerticalLayout>
+</mvc:View>

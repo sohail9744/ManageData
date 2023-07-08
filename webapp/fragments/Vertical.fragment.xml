@@ -1,0 +1,7 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<SelectDialog contentHeight="60%" showClearButton="true" title="Select Vertical" class="sapUiPopupWithPadding"
+		items="{VerticalModel>/}" search="handleValueHelpVerticalSearch"
+		confirm="handleValueHelpVerticalConfirm" cancel="handleValueHelpVerticalClose" multiSelect="false">
+		<StandardListItem title="{VerticalModel>vertical}" />
+	</SelectDialog>
+</core:FragmentDefinition>

@@ -1,0 +1,10 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<SelectDialog contentHeight="60%" showClearButton="true" title="Select Division" class="sapUiPopupWithPadding"
+		items="{path:'DivModel>/'}" search="handleValueHelpDivisionSearch"
+		confirm="handleValueHelpDivisionConfirm" cancel="handleValueHelpDivisionClose" multiSelect="false">
+		<StandardListItem title="{DivModel>Division}" description="{DivModel>Divisiontext}"/>
+	</SelectDialog>
+</c:FragmentDefinition>

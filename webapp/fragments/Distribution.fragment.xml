@@ -1,0 +1,9 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<SelectDialog contentHeight="60%" showClearButton="true" title="Select Distribution Channel" class="sapUiPopupWithPadding"
+		items="{path:'/ZDD_DISTRI_CHAN_VH'}" search="handleValueHelpDistribSearch" confirm="handleValueHelpDistributionConfirm" cancel="handleValueHelpDistributionClose" multiSelect="false">
+		<StandardListItem title="{DistributionChannel}" description="{DistributionChannelText}"/>
+	</SelectDialog>
+</c:FragmentDefinition>

@@ -1,0 +1,30 @@
+<mvc:View controllerName="Iffco.clap.sections.CustomerBasicDetails.CommunicationDataController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="PO Box" visible="{=${fieldMappingModels>/POBoxVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/POBoxMandatory} === true ? true : false}"/>
+ 
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpo_box_no_pin_code}" type="Number" liveChange="handleSetMaxLength" maxLength="10" visible="{=${fieldMappingModels>/POBoxVisible} === true ? true : false}"/>
+		<Label text="Telephone" visible="{=${fieldMappingModels>/TelephoneNumberVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/TelephoneNumberMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Country" maxLength="16" value="{Customers>/ztele_country}" visible="{=${fieldMappingModels>/TelephoneCountryVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Number" maxLength="16" type="Number" liveChange="handleSetMaxLength" value="{Customers>/ztele_number}" visible="{=${fieldMappingModels>/TelephoneNumberVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Extension" maxLength="16" value="{Customers>/ztele_extension}" visible="{=${fieldMappingModels>/TelephoneExtensionVisible} === true ? true : false}"/>
+		
+		<Label text="Mobile" visible="{=${fieldMappingModels>/MobileNoVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/MobileMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Country" value="{Customers>/zmobile_country}" maxLength="16" visible="{=${fieldMappingModels>/MobileNoVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Number" type="Number" liveChange="handleSetMaxLength" value="{Customers>/zmobile_number}" maxLength="14" visible="{=${fieldMappingModels>/MobileNoVisible} === true ? true : false}"/>
+		
+		<Label text="Fax" />
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Country" maxLength="31" value="{Customers>/zfax_country}" visible="{=${fieldMappingModels>/FaxCountryVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Number" maxLength="31" value="{Customers>/zfax_number}" visible="{=${fieldMappingModels>/FaxNumberVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" placeholder="Extension" maxLength="31" value="{Customers>/zfax_extension}" visible="{=${fieldMappingModels>/FaxExtensionVisible} === true ? true : false}"/>
+		<Label text="Email" visible="{=${fieldMappingModels>/EmailVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/EmailMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zemail_id}" maxLength="30" change="handleValidateEmail" visible="{=${fieldMappingModels>/EmailVisible} === true ? true : false}"/>
+		<Label text="Website" visible="{=${fieldMappingModels>/WebsiteVisible} === true ? true : false}"
+ required="{=${fieldMappingModels>/WebsiteMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zwebsite}" visible="{=${fieldMappingModels>/WebsiteVisible} === true ? true : false}"/>
+
+	</forms:SimpleForm>
+</mvc:View>

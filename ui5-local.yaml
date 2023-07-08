@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://sap.github.io/ui5-tooling/schema/ui5.yaml.json
+
+specVersion: "2.5"
+metadata:
+  name: Iffco.clap
+type: application
+framework:
+  name: SAPUI5
+  version: 1.105.3
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: sap.ushell
+    - name: sap.f
+    - name: sap.ui.comp
+    - name: sap.ui.generic.app
+    - name: sap.suite.ui.generic.template
+    - name: themelib_sap_horizon
+server:
+  customMiddleware:
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+        backend:
+          - path: /sap
+            url: https://ec1a78af-5702-4e45-810c-8adc11be0ea7.abap.eu10.hana.ondemand.com
+            destination: ABAP_DEST
+            scp: true
+          - path: /sap
+            url: http://idevs4ha1.iffco.com:8001
+            client: '110'
+            destination: S4D
+          - path: /sap/opu/odata/sap/ZIFFCO_VALUEHELP_SRV
+            url: http://idevs4ha1.iffco.com:8001
+            client: '110'
+            destination: S4D
+          - path: /sap/opu/odata/sap/ZIFFCO_VALUEHELP_SRV
+            url: http://idevs4ha1.iffco.com:8001
+            client: '110'
+            destination: S4D
+          - path: /sap/opu/odata/sap/ZIFFCO_VALUEHELP_SRV
+            url: http://idevs4ha1.iffco.com:8001
+            client: '110'
+            destination: S4D
+          - path: /sap/opu/odata/sap/API_CV_ATTACHMENT_SRV
+            url: http://idevs4ha1.iffco.com:8001
+            client: '110'
+            destination: S4D
+          - path: /srv-api
+            url: https://iffcotech-limited-fzc-iffcodev-iffcodev-serviceapi-srv.cfapps.eu10.hana.ondemand.com
+            destination: srv-api
+    - name: sap-fe-mockserver
+      beforeMiddleware: csp
+      configuration:
+        mountPath: /
+        services:
+          - urlPath: /sap/opu/odata/sap/ZSB_CLAP
+            metadataPath: ./webapp/localService/metadata.xml
+            mockdataPath: ./webapp/localService/data
+            generateMockData: true
+        annotations: []
+    - name: fiori-tools-preview
+      afterMiddleware: fiori-tools-appreload
+      configuration:
+        component: Iffco.clap
+        ui5Theme: sap_horizon

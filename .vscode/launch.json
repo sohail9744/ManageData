@@ -1,0 +1,31 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "clap-config1",
+      "cwd": "${workspaceFolder}",
+      "runtimeArgs": [
+        "fiori",
+        "run"
+      ],
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "args": [
+        "--open",
+        "index.html"
+      ],
+      "windows": {
+        "runtimeExecutable": "npx.cmd"
+      },
+      "console": "internalConsole",
+      "internalConsoleOptions": "openOnSessionStart",
+      "outputCapture": "std",
+      "env": {
+        "run.config": "{\"handlerId\":\"fiori_tools\",\"runnableId\":\"/home/user/projects/clap\"}",
+        "FIORI_TOOLS_BACKEND_CONFIG": "[{\"path\":\"/sap/opu/odata/sap/ZIFFCO_VALUEHELP_SRV\",\"url\":\"http://idevs4ha1.iffco.com:8001\",\"client\":\"110\",\"destination\":\"S4D\"},{\"path\":\"/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV\",\"url\":\"http://idevs4ha1.iffco.com:8001\",\"client\":\"110\",\"destination\":\"S4D\"},{\"path\":\"/sap\",\"url\":\"https://ec1a78af-5702-4e45-810c-8adc11be0ea7.abap.eu10.hana.ondemand.com\",\"destination\":\"ABAP_DEST\",\"scp\":true},{\"path\":\"/srv-api\",\"url\":\"https://iffcotech-limited-fzc-iffcodev-iffcodev-serviceapi-srv.cfapps.eu10.hana.ondemand.com\",\"destination\":\"srv-api\"}]",
+        "FIORI_TOOLS_URL_PARAMS": "sap-ui-xx-viewCache=false"
+      }
+    }
+  ]
+}

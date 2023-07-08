@@ -1,0 +1,143 @@
+<mvc:View controllerName="Iffco.clap.sections.CustomerBasicDetails.IdentifyProofController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns:u="sap.ui.unified" xmlns:core="sap.ui.core" xmlns="sap.m" >
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
+		<Label text="Partnership identity by-Pass" visible="{=${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true ? true : false}"
+ required="{=${fieldMappingModels>/Partnershipidentityby-PassMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpartnership_identity_by_pass}" maxLength="20" visible="{=${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true ? true : false}"/>
+		
+		<Label text = "Partnership deed" visible="{=${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true ? true : false}"
+ required="{=${fieldMappingModels>/PartnershipdeedMandatory} === true ? true : false}"/>
+ <u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+ value="{getDmsModel>/licenseAttachment}" visible="{=${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true ? true : false}"
+  id="licenseAttachment"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />
+        
+		<Label text="Sponsor's Passport" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true  || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ required="{=${fieldMappingModels>/SponsorsPassportMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/sponsorsPassport}" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true  || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ id="sponsorsPassport"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+		
+		<Label text="Commercial License" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true  || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ required="{=${fieldMappingModels>/CommercialLicenseMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/commercialLicense}" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true  || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ id="commercialLicense"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />	
+        <Label text="Company identity by-Pass" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ required="{=${fieldMappingModels>/Companyidentityby-PassMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcompany_identity_by_pass}" maxLength="4" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"/>
+
+        <Label text="Owners Identity -pass(Anyone)" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ required="{=${fieldMappingModels>/OwnersIdentity-passMandatory} === true ? true : false}"/>
+	<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+       value="{getDmsModel>/ownershipIdentityByPass}" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}" 
+       id="ownershipIdentityByPass"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />	
+		
+        <Label text="Certifications of Incorporation" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ required="{=${fieldMappingModels>/CertificationsofIncorporationMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+ value="{getDmsModel>/certificationsOfIncorporati}" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}" 
+id="certificationsOfIncorporati"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+		
+        <Label text="Memorandum and articles of associations" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ required="{=${fieldMappingModels>/MemorandumandarticlesofassociationsMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/memorandumArticlesOfAssoci}" visible="{=${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity7} === true || ${appView>/TypeOfEntity8} === true ? true : false}"
+ id="memorandumArticlesOfAssoci"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+		
+        <Label text="Passport Copy" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ required="{=${fieldMappingModels>/PassportCopyMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/passportCopy}" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ id="passportCopy"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+		
+        <Label text="Valid Passport Date" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ required="{=${fieldMappingModels>/ValidPassportDateMandatory} === true ? true : false}"/>
+ <DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zvalid_passport_date}" valueFormat="MM.dd.yyyy" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"/>
+		
+        <Label text="Visa Copy" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false }"
+ required="{=${fieldMappingModels>/VisaCopyMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/visaCopy}" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ id="visaCopy"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+		
+        <Label text="Valid Visa Date" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ required="{=${fieldMappingModels>/ValidVisaDateMandatory} === true ? true : false}"/>
+ <DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+ value="{Customers>/zvisa_valid_date}" valueFormat="MM.dd.yyyy" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"/>
+		
+        <Label text="Route audit is performed?" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"
+ required="{=${fieldMappingModels>/Routeauditisperformed?Mandatory} === true ? true : false}"/>
+ <CheckBox id="spclAtnt" selected="{=${Customers>/zroute_audit_is_performed} === 'Y' ? true : false}" 
+ visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }" />
+
+        <Label text="National ID Card" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ required="{=${fieldMappingModels>/NationalIDCardMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/nationalIdCard}" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ id="nationalIdCard"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+		
+        <Label text="Document authenticated by chamber of commerce" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"
+ required="{=${fieldMappingModels>/DocumentauthenticatedbychamberofcommerceMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+              value="{Customers>/zdoc_auth_by_chr_cmc}" maxLength="4" visible="{=${appView>/TypeOfEntity3} === true || ${appView>/TypeOfEntity4} === true || ${appView>/TypeOfEntity6} === true || ${appView>/TypeOfEntity9} === true ? true : false}"/>
+
+        <Label text="Route code" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"
+ required="{=${fieldMappingModels>/RoutecodeMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+              value="{Customers>/zroute_code}" maxLength="4" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"/>
+		
+         <Label text="KYC Form attachments with signature" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"
+ required="{=${fieldMappingModels>/KYCFormattachmentswithsignatureMandatory} === true ? true : false}"/>
+<u:FileUploader enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+value="{getDmsModel>/kycAtchWithSign}" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }" 
+id="kycAtchWithSign"
+    name="fileUploader"
+    buttonText="Upload File"
+    fileType="pdf"
+    sendXHR="true" change="onConfirm" />		
+	
+        <Label text="Latitude" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"
+ required="{=${fieldMappingModels>/LatitudeMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" 
+              value="{Customers>/zlatitude}" maxLength="4" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"/>
+
+        <Label text="Longitude" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"
+ required="{=${fieldMappingModels>/LongitudeMandatory} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlongitude}" maxLength="4" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"/>
+    </forms:SimpleForm>
+</mvc:View>

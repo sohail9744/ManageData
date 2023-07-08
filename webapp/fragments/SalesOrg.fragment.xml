@@ -1,0 +1,10 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<SelectDialog contentHeight="60%" showClearButton="true" title="Select Sales Organization" class="sapUiPopupWithPadding"
+		items="{path:'/ZDD_SALES_ORG_VH'}" search="handleValueHelpSalesOrgSearch"
+		confirm="handleValueHelpSalesOrgConfirm" cancel="handleValueHelpSalesOrgClose" multiSelect="false">
+		<StandardListItem title="{SalesOrg}" description="{SalesOrgText}"/>
+	</SelectDialog>
+</c:FragmentDefinition>
