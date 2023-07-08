@@ -169,7 +169,7 @@
 					</ObjectPageSubSection> 
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="erpCustomersSection" title="ERP Customers">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? true : true}" id="erpCustomersSection" title="ERP Customers">
                 <subSections>
                     <ObjectPageSubSection id="erpCustomersydata" title="Accounting Information">
                         <blocks>

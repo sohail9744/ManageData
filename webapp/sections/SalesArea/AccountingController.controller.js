@@ -776,6 +776,7 @@ sap.ui.define([
                         this.getView().getModel("salesDataModel").updateBindings(true);
 
                     }
+                    this.getView().getModel("appView").setProperty("/addSales", true);
                 } else {
                     MessageBox.information("There is no sales area to generate");
                 }
@@ -1629,7 +1630,7 @@ sap.ui.define([
             this.cs._dialog.close();
         },
         onChangeBP: function (evt) {
-            debugger
+            
             this.bpRealtionInputField = evt.getSource();
             const bpId = this.getView().getModel("Customers").getData().zbusiness_unit_name;
             if (bpId) {

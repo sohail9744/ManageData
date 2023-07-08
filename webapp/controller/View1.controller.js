@@ -28,7 +28,7 @@ sap.ui.define([
                 oRouter.getRoute("RouteView1").attachPatternMatched(this._onRouteMatched, this);
             },
             _onRouteMatched: function (oEvent) {
-                debugger
+                // debugger
                 var oView = this.getView();
                 // if (oView.getDomRef() && oView.getParent() && oEvent.getParameter("name") === "RouteView1") {
                     let oTable = oView.byId("table");
@@ -223,6 +223,9 @@ sap.ui.define([
 
             handleNewCustomer: function (oEvent) {
                 this.check2 = true;
+                this.getView().getModel("appView").setProperty("/addSales", true);
+                this.getView().getModel("appView").setProperty("/selectedType", "Secured Credit Limit");
+                
                 var busyDialog = new sap.m.BusyDialog();
                 busyDialog.open();
                 var oRouter = this.getOwnerComponent().getRouter();

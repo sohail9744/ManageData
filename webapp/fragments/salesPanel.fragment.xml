@@ -228,7 +228,7 @@
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zexchange_rate_type}" maxLength="4" visible="{=${fieldMappingModels>/ExchangeRateTypeVisible} === true ? true : false}"/>
 		<Label text="PP Customer Procedure" visible="{=${fieldMappingModels>/PPCustomerProcedureVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/PPCustomerProcedureMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpp_customer_procedure} - {salesDataModel>zpp_customer_procedure_text}" maxLength="2" visible="{=${fieldMappingModels>/PPCustomerProcedureVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpp_customer_procedure}" maxLength="2" visible="{=${fieldMappingModels>/PPCustomerProcedureVisible} === true ? true : false}"/>
 
 
 		<Label text="Delivery Priority" visible="{=${fieldMappingModels>/DeliveryPriorityVisible} === true ? true : false}"
@@ -244,7 +244,7 @@
 		<Label text="Delivery Plant" visible="{=${fieldMappingModels>/DeliveryPlantVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/DeliveryPlantMandatory} === true ? true : false}" />
         <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zdelivery_plant} - {salesDataModel>zdelivery_plant_text}" maxLength="4" visible="{=${fieldMappingModels>/DeliveryPlantVisible} === true ? true : false}" /> -->
-        <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zdelivery_plant} - {salesDataModel>zdelivery_plant_text}" valueHelpRequest="handleValueHelpForDelvryPlant"
+        <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zdelivery_plant}" valueHelpRequest="handleValueHelpForDelvryPlant"
         valueHelpOnly="true" visible="{=${fieldMappingModels>/DeliveryPlantVisible} === true ? true : false}"/>
 		<Label text="Order Combination"  visible="{=${fieldMappingModels>/OrderCombinationVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/OrderCombinationMandatory} === true ? true : false}" />

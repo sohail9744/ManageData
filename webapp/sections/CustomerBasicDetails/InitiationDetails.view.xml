@@ -1,9 +1,9 @@
 <mvc:View controllerName="Iffco.clap.sections.CustomerBasicDetails.InitiationDetailsController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
-    <forms:SimpleForm editable="false" layout="ColumnLayout">
+    <forms:SimpleForm enabled="false" layout="ColumnLayout">
         <Label text="Request ID" visible="{=${Customers>/zrequest_no} ? true : false}"/>
-        <Input value="{Customers>/zrequest_no}" editable="false" visible="{=${Customers>/zrequest_no} ? true : false}" />
+        <Input value="{Customers>/zrequest_no}" enabled="false" visible="{=${Customers>/zrequest_no} ? true : false}" />
         <Label text="Request Type" />
-        <Input value = "{= ${Customers>/zrequest_type} !== '' ? 'Create Customer' : '{Customers>/zrequest_type}'}" editable="false" maxLength="20"/>
+        <Input value = "{= ${Customers>/zrequest_type} !== '' ? 'Create Customer' : '{Customers>/zrequest_type}'}" enabled="false" maxLength="20"/>
         <!-- <Label text="Description" /> -->
         <!-- <RadioButtonGroup selectedIndex="0" select="onDescriptionSelect" >
             <RadioButton id="0"  selected="{= ${Customers>/zdescription} === 'Credit' || ${appView>/customerType} === 0 ? true : false}" text="Credit"/>
@@ -31,16 +31,16 @@
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zreason}" visible="{=${fieldMappingModels>/ReasonVisible} === true ? true : false}"/>
         <Label text="Status" visible="{=${fieldMappingModels>/StatusVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/StatusMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zstatus}" maxLength="10" editable="false" visible="{=${fieldMappingModels>/StatusVisible} === true ? true : false}"/>
+        <Input value="{Customers>/zstatus}" maxLength="10" enabled="false" visible="{=${fieldMappingModels>/StatusVisible} === true ? true : false}"/>
 
         <Label text="Created On/By" visible="{=${fieldMappingModels>/CreatedOnVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CreatedOnMandatory} === true ? true : false}" />
-        <DatePicker  editable="false" value="{Customers>/zcreated_date}" visible="{=${fieldMappingModels>/CreatedOnVisible} === true ? true : false}"  valueFormat="MM.dd.yyyy" displayFormat="long" />
+        <DatePicker  enabled="false" value="{Customers>/zcreated_date}" visible="{=${fieldMappingModels>/CreatedOnVisible} === true ? true : false}"  valueFormat="MM.dd.yyyy" displayFormat="long" />
         <Label text="Updated On/By" visible="{=${fieldMappingModels>/ChangedOnVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ChangedOnMandatory} === true ? true : false}"/>
-        <DatePicker editable="false" value="{Customers>/zupdated_date}" visible="{=${fieldMappingModels>/ChangedOnVisible} === true ? true : false}"  valueFormat="MM.dd.yyyy" displayFormat="long"/>
+        <DatePicker enabled="false" value="{Customers>/zupdated_date}" visible="{=${fieldMappingModels>/ChangedOnVisible} === true ? true : false}"  valueFormat="MM.dd.yyyy" displayFormat="long"/>
         <Label text="Finished On/By" visible="{=${fieldMappingModels>/FinalizedOnVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/FinalizedOnMandatory} === true ? true : false}"/>
-        <DatePicker editable="false" value="{Customers>/zfinalizedon}" visible="{=${fieldMappingModels>/FinalizedOnVisible} === true ? true : false}"/>
+        <DatePicker enabled="false" value="{Customers>/zfinalizedon}" visible="{=${fieldMappingModels>/FinalizedOnVisible} === true ? true : false}"/>
     </forms:SimpleForm>
 </mvc:View>

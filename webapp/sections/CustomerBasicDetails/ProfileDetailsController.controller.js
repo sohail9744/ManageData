@@ -84,7 +84,7 @@ sap.ui.define([
                     // filters.push(new sap.ui.model.Filter(sFilters, false));
                     // this.Country.getBinding("items").filter(filters, false);
                     var filter1 = new sap.ui.model.Filter("Land1", sap.ui.model.FilterOperator.EQ, sValue);
-                    var filter2 = new sap.ui.model.Filter("Landx", sap.ui.model.FilterOperator.Contains, sValue);
+                    var filter2 = new sap.ui.model.Filter("Landx", sap.ui.model.FilterOperator.EQ, sValue);
                     var oFilter = new sap.ui.model.Filter({
                         filters: [filter1, filter2],
                         and: false
@@ -119,12 +119,12 @@ sap.ui.define([
                 if (sValue.length > 0) {
                     var filter1 = new sap.ui.model.Filter({
                         path: "Bland",
-                        operator: "Contains",
+                        operator: "EQ",
                         value1: sValue
                     });
                     var filter2 = new sap.ui.model.Filter({
                         path: "Bezei",
-                        operator: "Contains",
+                        operator: "EQ",
                         value1: sValue
                     });
                     var sFilters = [filter1, filter2];
@@ -165,12 +165,12 @@ sap.ui.define([
                 if (sValue.length > 0) {
                     var filter1 = new sap.ui.model.Filter({
                         path: "Zone1",
-                        operator: "Contains",
+                        operator: "EQ",
                         value1: sValue
                     });
                     var filter2 = new sap.ui.model.Filter({
                         path: "Vtext",
-                        operator: "Contains",
+                        operator: "EQ",
                         value1: sValue
                     });
                     var sFilters = [filter1, filter2];
@@ -209,12 +209,12 @@ sap.ui.define([
                 if (sValue.length > 0) {
                     var filter1 = new sap.ui.model.Filter({
                         path: "Languages",
-                        operator: "Contains",
+                        operator: "EQ",
                         value1: sValue
                     });
                     var filter2 = new sap.ui.model.Filter({
                         path: "Description",
-                        operator: "Contains",
+                        operator: "EQ",
                         value1: sValue
                     });
                     var sFilters = [filter1, filter2];
@@ -237,7 +237,7 @@ sap.ui.define([
             handleValueHelpTypOfEntitySearch: function (evt) {
                 var sValue = evt.getParameter("value");
                 if (sValue.length > 0) {
-                    var oFilter1 = new sap.ui.model.Filter("ztype_of_entity", 'Contains', sValue);
+                    var oFilter1 = new sap.ui.model.Filter("ztype_of_entity", 'EQ', sValue);
                     this.entityType.getBinding("items").filter([oFilter1]);
                 } else {
                     this.entityType.getBinding("items").filter([]);

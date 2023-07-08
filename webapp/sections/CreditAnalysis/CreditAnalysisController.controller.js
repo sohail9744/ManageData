@@ -29,7 +29,7 @@ sap.ui.define([
 
                 // var oFilter1 = new sap.ui.model.Filter("country", 'Contains', title);
                 this.getView().getModel().read("/zdd_country_vh",{
-                    filters: [new sap.ui.model.Filter("country", "Contains", title)],
+                    filters: [new sap.ui.model.Filter("country", "EQ", title)],
                     success: function (oData, oResponse) {
                         this.getView().byId("ctryRtng").setValue(oData.results[0].rating);
                         console.log(oData);
@@ -70,7 +70,7 @@ sap.ui.define([
         handleValueHelpCountryRatingSearch:function (evt) {
             var sValue = evt.getParameter("value");
                 if (sValue.length > 0) {
-                        var oFilter1 = new sap.ui.model.Filter("country", 'Contains', sValue);
+                        var oFilter1 = new sap.ui.model.Filter("country", 'EQ', sValue);
                         this.CountryRating.getBinding("items").filter([oFilter1]);        
                 } else {
                     this.CountryRating.getBinding("items").filter([]);
