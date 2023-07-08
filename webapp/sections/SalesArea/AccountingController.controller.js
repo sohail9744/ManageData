@@ -414,12 +414,12 @@ sap.ui.define([
             var filters = [];
             if (sValue.length > 0) {
                 var filter1 = new sap.ui.model.Filter({
-                    path: "SalesOrg",
+                    path: "Salesorg",
                     operator: "Contains",
                     value1: sValue
                 });
                 var filter2 = new sap.ui.model.Filter({
-                    path: "SalesOrgText",
+                    path: "Salesorgtext",
                     operator: "Contains",
                     value1: sValue
                 });
@@ -456,12 +456,12 @@ sap.ui.define([
             var filters = [];
             if (sValue.length > 0) {
                 var filter1 = new sap.ui.model.Filter({
-                    path: "DistributionChannel",
+                    path: "Distributionchannel",
                     operator: "Contains",
                     value1: sValue
                 });
                 var filter2 = new sap.ui.model.Filter({
-                    path: "DistributionChannelText",
+                    path: "Distributionchanneltext",
                     operator: "Contains",
                     value1: sValue
                 });
@@ -1471,19 +1471,31 @@ sap.ui.define([
         handleValueHelpTaxCatConfirm: function (evt) {
             var title = evt.getParameter("selectedItems")[0].getProperty("title");
             this.taxCatTitle = title;
-            // var desc = evt.getParameter("selectedItems")[0].getProperty("description");
-            this.TaxCat.setValue(title);
+            var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            this.TaxCat.setValue(title + " - " + desc);
             this.TaxCategory.getBinding("items").filter([]);
             this.TaxCategory.close();
         },
         handleValueHelpTaxCatSearch: function (evt) {
             var sValue = evt.getParameter("value");
-          if (sValue.length > 0) {
-            var oFilter1 = new sap.ui.model.Filter("Taxcategory", "Contains", sValue);
-            this.TaxCategory.getBinding("items").filter([oFilter1]);
-          } else {
-            this.TaxCategory.getBinding("items").filter([]);
-          }
+            var filters = [];
+            if (sValue.length > 0) {
+                var filter1 = new sap.ui.model.Filter({
+                    path: "Taxcategory",
+                    operator: "Contains",
+                    value1: sValue
+                });
+                var filter2 = new sap.ui.model.Filter({
+                    path: "Description",
+                    operator: "Contains",
+                    value1: sValue
+                });
+                var sFilters = [filter1, filter2];
+                filters.push(new sap.ui.model.Filter(sFilters, false));
+                this.TaxCategory.getBinding("items").filter(filters, false);
+            } else {
+                this.TaxCategory.getBinding("items").filter([]);
+            }
         },
         handleValueHelpTaxCatClose: function (evt) {
             this.TaxCategory.close();
@@ -1492,8 +1504,7 @@ sap.ui.define([
         //Value Help for Tax Classification
         handleValueHelpForTaxClssfn: function (evt) {
             this.TaxClass = evt.getSource();
-            var taxVal = this.salesPanel.getItems()[0].getContent()[0].getItems()[0].getContent()[114].getValue();
-            if (taxVal) {
+            if (this.taxCatTitle.length > 0) {
                 this.TaxClassfn.getBinding("items").filter([new sap.ui.model.Filter("Taxcategory", "EQ", this.taxCatTitle)]);
                 this.TaxClassfn.open();
             } else {
@@ -1508,7 +1519,6 @@ sap.ui.define([
             this.TaxClassfn.close();
         },
         handleValueHelpTaxClassfnSearch: function (evt) {
-            var val = this.getView().byId("TaxCategory").getValue();
             var sValue = evt.getParameter("value");
             var filters = [];
             if (sValue.length > 0) {
@@ -1524,11 +1534,7 @@ sap.ui.define([
                 });
                 var sFilters = [filter1, filter2];
                 filters.push(new sap.ui.model.Filter(sFilters, false));
-                if (val.length > 0) {
-                    filters.push(new sap.ui.model.Filter("Taxcategory", "Contains", val));
-                    filters.push(new sap.ui.model.Filter("Description", "Contains", val));
-                }
-                this.TaxClassfn.getBinding("items").filter(filters, true);
+                this.TaxClassfn.getBinding("items").filter(filters, false);
             } else {
                 // var val = this.getView().byId("LAND1").getValue();
                 // this.TaxClassfn.getBinding("items").filter([new sap.ui.model.Filter("Taxcategory", "EQ", val.split(" - ")[0])]);
@@ -1624,7 +1630,7 @@ sap.ui.define([
             this.cs._dialog.close();
         },
         onChangeBP: function (evt) {
-            debugger
+            
             this.bpRealtionInputField = evt.getSource();
             const bpId = this.getView().getModel("Customers").getData().zbusiness_unit_name;
             if (bpId) {
@@ -1668,13 +1674,8 @@ sap.ui.define([
 
         handleValueHelpForIndusType: function (evt) {
             this.indusTypeField = evt.getSource();
-            var infoCat = this.salesPanel.getItems()[0].getContent()[0].getItems()[0].getContent()[147].getValue().split(" - ")[0];
-            if(infoCat){
-            this.indusType.getBinding("items").filter([new sap.ui.model.Filter("InformationCat", 'EQ', infoCat)]);
+            this.indusType.getBinding("items").filter([new sap.ui.model.Filter("InformationCat", 'Contains', this.infoCatValue)]);
             this.indusType.open();
-            }else{
-                sap.m.MessageBox.error("Please select the Information Category first.")
-            }
         },
         handleValueHelpIndusTypeConfirm: function (evt) {
             this.indusTypeValue = evt
@@ -1684,9 +1685,8 @@ sap.ui.define([
                 .getParameter("selectedItems")[0]
                 .getProperty("description");
             this.indusTypeField.setValue(this.indusTypeValue);
-            this.salesPanel.getItems()[0].getContent()[0].getItems()[0].getContent()[151].setValue(desc);
             this.furtherInfo.getContent()[0].getContent()[3].setValue(desc);
-            //this.getView().byId("nameOfType").setValue(desc);
+            // this.getView().byId("nameOfType").setValue(desc);
         },
         handleValueHelpIndusTypeClose: function (evt) {
             this.indusType._dialog.close();
@@ -1713,7 +1713,6 @@ sap.ui.define([
         handleValueHelpIndusTypeSearch: function (evt) {
             var sValue = evt.getParameter("value");
             var filters = [];
-            var infoCat = this.salesPanel.getItems()[0].getContent()[0].getItems()[0].getContent()[147].getValue().split(" - ")[0];
             if (sValue.length > 0) {
                 var filter1 = new sap.ui.model.Filter({
                     path: "InformationType",
@@ -1727,13 +1726,9 @@ sap.ui.define([
                 });
                 var sFilters = [filter1, filter2];
                 filters.push(new sap.ui.model.Filter(sFilters, false));
-                if (infoCat) {
-                    filters.push(new sap.ui.model.Filter("InformationCat", "EQ", infoCat));
-                }
-                this.indusType.getBinding("items").filter(filters, true);
+                this.indusType.getBinding("items").filter(filters, false);
             } else {
-                // this.indusType.getBinding("items").filter([]);
-                this.indusType.getBinding("items").filter([new sap.ui.model.Filter("InformationCat", 'EQ', infoCat)]);
+                this.indusType.getBinding("items").filter([]);
             }
         },
         handleValueHelpInfoCatSearch: function (evt) {

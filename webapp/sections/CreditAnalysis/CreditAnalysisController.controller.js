@@ -27,7 +27,7 @@ sap.ui.define([
             var title = evt.getParameter("selectedItems")[0].getProperty("title");
                 this.CountryRatingField.setValue(title);
 
-                // var oFilter1 = new sap.ui.model.Filter("country", 'EQ', title);
+                // var oFilter1 = new sap.ui.model.Filter("country", 'Contains', title);
                 this.getView().getModel().read("/zdd_country_vh",{
                     filters: [new sap.ui.model.Filter("country", "EQ", title)],
                     success: function (oData, oResponse) {

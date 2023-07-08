@@ -138,6 +138,6 @@ id="kycAtchWithSign"
 
         <Label text="Longitude" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"
  required="{=${fieldMappingModels>/LongitudeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlongitude}" maxLength="4" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/0/zlongitude}" maxLength="4" visible="{= ${appView>/TypeOfEntity1} === true || ${appView>/TypeOfEntity2} === true || ${appView>/TypeOfEntity3} === true ||  ${appView>/TypeOfEntity4} === true ||  ${appView>/TypeOfEntity5} === true ||  ${appView>/TypeOfEntity6} === true ||  ${appView>/TypeOfEntity7} === true ||  ${appView>/TypeOfEntity8} === true ||  ${appView>/TypeOfEntity9} === true? true : false }"/>
     </forms:SimpleForm>
 </mvc:View>

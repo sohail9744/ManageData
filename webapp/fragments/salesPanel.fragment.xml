@@ -109,9 +109,8 @@
 		
 		<Label text="Payment Terms" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/PaymentTermsMandatory} === true ? true : false}"/>
-		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpayment_terms}" maxLength="4" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"/> -->
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpayment_terms}" valueHelpRequest="handleValueHelpForPayTerms"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpayment_terms}" maxLength="4" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"/>
+
 		<Label text="Credit Control Area" visible="{=${fieldMappingModels>/CreditControlAreaVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CreditControlAreaMandatory} === true ? true : false}"/>
 		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zcredit_control_area}" valueHelpRequest="handleValueHelpForCreditControl"
@@ -262,10 +261,10 @@
 		<!-- <Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zcountry}" maxLength="20" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/> -->
-		<Label text = "Tax category"  visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"
+		<Label text = "Tax category" visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TaxCategoryMandatory} === true ? true : false}"/>
 		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>ztaxcategory}" visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"/> -->
-		<MultiInput id="TaxCategory" showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForTaxCat" value="{salesDataModel>ztaxcategory}"
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForTaxCat" value="{salesDataModel>ztaxcategory}"
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/TaxCategoryVisible} === true ? true : false}"/>
 		<Label text="Tax Classification" visible="{=${fieldMappingModels>/TaxclassificationVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TaxclassificationMandatory} === true ? true : false}"/>
@@ -341,7 +340,7 @@
 			<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zinfo_type}" valueHelpRequest="handleValueHelpForIndusType"
 		valueHelpOnly="true" />
 				<Label text="Name of Type" />
- <Input value="{salesDataModel>zname_of_type}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="nameType" />
+ <Input value="{salesDataModel>zname_of_type}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" />
 		<Label text = "Relevance for check credit" />
 		<CheckBox selected="{=${salesDataModel>zrelevant} === 'Y' ? true : false}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" />
 		<Label text="Individual Step" />

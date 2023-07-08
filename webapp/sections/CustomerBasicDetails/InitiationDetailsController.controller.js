@@ -228,16 +228,10 @@ sap.ui.define([
             this.handleRuleEngineConfiguration();
         },
         handleValueHelpVerticalSearch: function (evt) {
-            var val = this.getView().byId("BU").getValue();
             var sValue = evt.getParameter("value");
-            var filters = [];
             if (sValue.length > 0) {
                 var oFilter2 = new sap.ui.model.Filter("vertical", 'Contains', sValue);
-                filters.push(new sap.ui.model.Filter("vertical", 'Contains', sValue));
-                if (val.length > 0) {
-                    filters.push(new sap.ui.model.Filter("businessunit", "EQ", val));
-                }
-                this.vertical.getBinding("items").filter(filters, true);;
+                this.vertical.getBinding("items").filter([oFilter2]);
             } else {
                 this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", this.businessUntVal)]);
             }

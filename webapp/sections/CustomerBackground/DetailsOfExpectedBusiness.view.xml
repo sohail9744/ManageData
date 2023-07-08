@@ -3,7 +3,7 @@
 	 <core:Title text="Annual Sales Revenue"/>
 		<Label text="Volume" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zannual_volume}" type="Number" maxLength="20" liveChange="handleSetMaxLength"  visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"/>
+		<Input value="{Customers>/zannual_volume}" type="Number" maxLength="20" liveChange="handleSetMaxLength"  visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"/>
 		
 		<Label text="Actual Volume" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"/>

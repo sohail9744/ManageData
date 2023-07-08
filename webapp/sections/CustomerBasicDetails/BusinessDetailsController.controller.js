@@ -1,10 +1,9 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
   'sap/ui/model/Filter',
-'sap/ui/model/FilterOperator',
-"sap/m/MessageBox"
+'sap/ui/model/FilterOperator'
 ], function(
-	Controller, Filter, FilterOperator,MessageBox
+	Controller, Filter, FilterOperator
 ) {
 	"use strict";
 
@@ -129,7 +128,7 @@ sap.ui.define([
             // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
             var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
             this.ruleId = "";
-            var aFilters = [];
+                                                                                                                                               var aFilters = [];
                 aFilters.push(new sap.ui.model.Filter("Process", "EQ", process));
                 aFilters.push(new sap.ui.model.Filter("CustomerType", "EQ", sCustomerType));
                 aFilters.push(new sap.ui.model.Filter("ZbusinessPartnerId", "EQ", sBPGrouping));
@@ -200,15 +199,14 @@ sap.ui.define([
                   }.bind(this),
                   error: function (oError) { }
               });
-              
+              this.getView().setBusy(false);
             }    
-            this.getView().setBusy(false);       
+            this.getView().setBusy(false);
         },
         onRead: function (ruleid) {
             this.getView().setBusy(true);
             var oModel = this.getView().getModel("RuleEngine");
             // this.getView().setBusy(true);
-            if (this.ruleId != "" || this.ruleId != undefined) {
             oModel.read("/ZDD_RULE_UPDATE_FIELDS", {
                 filters: [new sap.ui.model.Filter("rule_id", "Contains", ruleid)],
                 urlParameters: {
@@ -253,7 +251,6 @@ sap.ui.define([
                     this.getView().setBusy(false);
                 }.bind(this)
             });
-          }
         },
 
         // Customer type value help
@@ -364,18 +361,10 @@ sap.ui.define([
             this.channelField.setValue(this.chnlValue + " " + desc);
           },
           handleValueHelpChannelSearch: function (evt) {
-            var val = this.getView().byId("channelGrpId").getValue();
             var sValue = evt.getParameter("value");
-            var filters = [];
             if (sValue.length > 0) {
-              var oFilter1 = new sap.ui.model.Filter("channel", sap.ui.model.FilterOperator.Contains, sValue);
-              filters.push(new sap.ui.model.Filter(oFilter1, false));
-              if (val.length > 0) {
-                //var oFilter2 = new sap.ui.model.Filter("channelgroup",sap.ui.model.FilterOperator.EQ,val)
-                filters.push(new sap.ui.model.Filter("channelgroup",sap.ui.model.FilterOperator.EQ,val));
-            }
-            
-              this.channel.getBinding("items").filter(filters, true);
+              var oFilter1 = new sap.ui.model.Filter("channel", "Contains", sValue);
+              this.channel.getBinding("items").filter([oFilter1]);
             } else {
               this.channel.getBinding("items").filter([]);
             }
@@ -409,20 +398,10 @@ sap.ui.define([
             this.subChannelField.setValue(this.subChnlValue + " " + desc);
           },
           handleValueHelpSubChannelSearch: function (evt) {
-            var val = this.getView().byId("channelGrpId").getValue();
-            var val1 = this.getView().byId("channelId").getValue();
-            var filters = [];
             var sValue = evt.getParameter("value");
             if (sValue.length > 0) {
               var oFilter1 = new sap.ui.model.Filter("subchannel", "Contains", sValue);
-              filters.push(new sap.ui.model.Filter(oFilter1, false));
-              if (val.length > 0) {
-                filters.push(new sap.ui.model.Filter("channelgroup", "EQ", val));
-              }
-             if (val1.length > 0) {
-              filters.push(new sap.ui.model.Filter("channel", "EQ", val1));
-              }
-              this.subChannel.getBinding("items").filter(filters, true);
+              this.subChannel.getBinding("items").filter([oFilter1]);
             } else {
               this.subChannel.getBinding("items").filter([]);
             }

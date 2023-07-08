@@ -72,12 +72,12 @@ sap.ui.define([
                 if (sValue.length > 0) {
                     // var filter1 = new sap.ui.model.Filter({
                     //     path: "Land1",
-                    //     operator: "EQ",
+                    //     operator: "Contains",
                     //     value1: sValue
                     // });
                     // var filter2 = new sap.ui.model.Filter({
                     //     path: "Landx",
-                    //     operator: "EQ",
+                    //     operator: "Contains",
                     //     value1: sValue
                     // });
                     // var sFilters = [filter1, filter2];
@@ -146,13 +146,9 @@ sap.ui.define([
                 this.trnsptZonField = evt.getSource();
                 this.val = this.getView().byId("LAND1").getValue();
                 if (this.val) {
-                    if (this.val.includes(' - ')) {
-                        this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val.split(" - ")[0])]);
-                        this.TransprtZone.open();
-                    } else {
-                        this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val)]);
-                        this.TransprtZone.open();
-                    }
+                    // this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val.split(" - ")[0])]);
+                    this.TransprtZone.getBinding("items").filter([new sap.ui.model.Filter("Land1", "EQ", this.val)]);
+                    this.TransprtZone.open();
                 } else {
                     sap.m.MessageBox.error("Please select the Country");
                 }

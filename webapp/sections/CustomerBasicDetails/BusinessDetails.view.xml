@@ -17,7 +17,7 @@
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztitle}" visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"/>
         <Label text="First Name" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/NameMandatory} === true ? true : false}"/>
-		<Input id="firstName" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zfirst_name}" maxLength="40" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zfirst_name}" maxLength="40" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"/>
         <Label text="Last Name" visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"
  required="{=${fieldMappingModels>/Name2Mandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlast_name}" maxLength="40" visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"/>
@@ -41,17 +41,17 @@
 
 		
 
-		<Label text="Channel Group"  visible="{=${fieldMappingModels>/ChannelGroupVisible} === true ? true : false}"
+		<Label text="Channel Group" visible="{=${fieldMappingModels>/ChannelGroupVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ChannelGroupMandatory} === true ? true : false}"/>
  <MultiInput showClearIcon="true" id="channelGrpId" enabled="{=${Customers>/zrequest_no} ? false : true}" value="{Customers>/zchannel_group}" maxLength="20" visible="{=${fieldMappingModels>/ChannelGroupVisible} === true ? true : false}" valueHelpRequest="handleValueHelpForChannelGrp"
 		valueHelpOnly="true" />
 		
-		<Label text="Channel" id="Channel" visible="{=${fieldMappingModels>/ChannelVisible} === true ? true : false}"
+		<Label text="Channel" visible="{=${fieldMappingModels>/ChannelVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ChannelMandatory} === true ? true : false}"/>
 		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="channelId" value="{Customers>/zchannel}" maxLength="20" visible="{=${fieldMappingModels>/ChannelVisible} === true ? true : false}" valueHelpRequest="handleValueHelpForChannel"
 		valueHelpOnly="true" />
 
-		<Label text="Sub Channel" id="SubChannel" visible="{=${fieldMappingModels>/Sub-ChannelVisible} === true ? true : false}"
+		<Label text="Sub Channel" visible="{=${fieldMappingModels>/Sub-ChannelVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/Sub-ChannelMandatory} === true ? true : false}"/>
 		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="subChannelId" value="{Customers>/zsub_channel}" maxLength="20" visible="{=${fieldMappingModels>/Sub-ChannelVisible} === true ? true : false}" valueHelpRequest="handleValueHelpForSubChannel"
 		valueHelpOnly="true" />

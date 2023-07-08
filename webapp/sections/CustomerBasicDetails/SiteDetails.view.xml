@@ -5,7 +5,7 @@
 		<Input value="{Customers>/zlegal_entity}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="2" visible="{=${fieldMappingModels>/LegalEntityVisible} === true ? true : false}"/>
 		<Label text="Legal Name" visible="{=${fieldMappingModels>/LegalNameVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/LegalNameMandatory} === true ? true : false}"/>
-       <MultiInput showClearIcon="true" value="{Customers>/zcustomer_legal_name}" enabled="{=${Customers>/zrequest_no} ? false : true}" valueHelpRequest="handleValueHelpForLegalName"
+        <MultiInput showClearIcon="true" value="{Customers>/zcustomer_legal_name}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForLegalName"
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/LegalNameVisible} === true ? true : false}"/>
 		<Label text="Legal Form" visible="{=${fieldMappingModels>/LegalFormVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/LegalFormMandatory} === true ? true : false}"/>

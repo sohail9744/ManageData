@@ -332,8 +332,8 @@ sap.ui.define([
         },
         handleValueHelpValueAdjstmntConfirm: function (evt) {
             var title = evt.getParameter("selectedItems")[0].getProperty("title");
-            // var desc = evt.getParameter("selectedItems")[0].getProperty("description");
-            this.ValueAdjustmentField.setValue(title);
+            var desc = evt.getParameter("selectedItems")[0].getProperty("description");
+            this.ValueAdjustmentField.setValue(title + " - " + desc);
             this.ValueAdjustment.getBinding("items").filter([]);
             this.ValueAdjustment.close();
         },

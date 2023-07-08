@@ -11,7 +11,7 @@ sap.ui.define(
             zcustNum:"",
             zsalesOrg:"",
             ztext:"",
-            selectedType: 0,
+            selectedType: 'Secured Credit Limit',
             newCustId:"",
             custType:"Credit",
             customerType: 0,
