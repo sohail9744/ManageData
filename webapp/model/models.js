@@ -37,7 +37,10 @@ sap.ui.define([
                     "Status":[
                         {"value": "All"},
                         {"value": "In Draft"},
-                        {"value": "In Progress"}
+                        {"value": "In Progress"},
+                        {"value": "Completed"},
+                        {"value": "Rejected"}
+
                         // {"value": "Sendback to Initiator"},
                         // {"value": "Credit Controller Pending"},
                         // {"value": "Credit COntroller Approved"},

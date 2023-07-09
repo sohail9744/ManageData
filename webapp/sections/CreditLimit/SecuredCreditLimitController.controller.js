@@ -41,22 +41,31 @@ sap.ui.define([
         },
         handleValueHelpForBank:function (evt) {
             this.bankField = evt.getSource();
+            var bankCountryOdataVal = this.getView().getModel("Customers").getData().zlc_issuance_bankcountry;
             
                 this.bank.getBinding("items").filter([]);
-                if(this.bankCountryVal !== undefined){
+                if(this.bankCountryVal){
                 this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", this.bankCountryVal)]);
                 this.bank.open();
-                }else{
+                }else if(bankCountryOdataVal){
+                    this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", bankCountryOdataVal)]);
+                    this.bank.open();
+                    } else{
                     MessageBox.error("Please Select Bank Country first");
                 }
         },
         handleValueHelpForBank1:function (evt) {
             this.bankField1 = evt.getSource();
+            var bankCountry1OdataVal = this.getView().getModel("Customers").getData().zlc_confirming_bank_country;
                 this.bank1.getBinding("items").filter([]);
                 if(this.bankCountryVal1 !== undefined){
                 this.bank1.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", this.bankCountryVal1)]);
                 this.bank1.open();
-                }else{
+                }else if(bankCountry1OdataVal){
+                    this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", bankCountry1OdataVal)]);
+                    this.bank.open();
+                    }
+                else{
                     MessageBox.error("Please Select Bank Country first");
                 }
         },

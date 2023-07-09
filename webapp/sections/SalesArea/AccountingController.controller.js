@@ -189,6 +189,10 @@ sap.ui.define([
                 this.getView().addDependent(this.indusType);
                 this.indusType.setModel(this.getOwnerComponent().getModel());
             }
+            if (!this.paymentTerms) {
+                this.paymentTerms = new sap.ui.xmlfragment("Iffco.clap.fragments.PaymentTerms", this);
+                this.getView().addDependent(this.paymentTerms);
+            }
 
         },
         onAfterRendering: function (oEvent) {
@@ -199,6 +203,29 @@ sap.ui.define([
             that.handleDistbChanlModel();
             that.handleTaxClsModel();
         },
+        //   Payment terms value help 
+        handleValueHelpForPaymentTerms:function (evt) {
+            this.paymentTermsField = evt.getSource();
+                this.paymentTerms.getBinding("items").filter([]);
+                this.paymentTerms.open();
+        },
+        handleValueHelpPaymentTermsConfirm:function (evt){
+            var title = evt.getParameter("selectedItems")[0].getProperty("title");
+                this.paymentTermsField.setValue(title);
+        },
+        handleValueHelpPaymentTermsClose:function () {
+            this.paymentTerms.close();
+        },
+        handleValueHelpPaymentTermsSearch:function (evt) {
+            var sValue = evt.getParameter("value");
+                if (sValue.length > 0) {
+                        var oFilter1 = new sap.ui.model.Filter("paymentterm", 'Contains', sValue);
+                        this.paymentTerms.getBinding("items").filter([oFilter1]);
+                } else {
+                    this.paymentTerms.getBinding("items").filter([]);
+                }
+        },
+        // 
 
         //Creating a model for the get service of Division field in order to remove duplicate records.
         handleDivisionModel: function (evt) {
@@ -433,9 +460,12 @@ sap.ui.define([
 
         handleValueHelpForDistChannel: function (evt) {
             this.distributionField = evt.getSource();
+             this.salesOrgOdataVal = this.getView().getModel("salesDataModel").getData()[0].zsales_orgnization;
             if (this.salesTitle) {
                 this.distribution.getBinding("items").filter([new sap.ui.model.Filter("SalesOrg", "EQ", this.salesTitle)]);
-
+                this.distribution.open();
+            } else if(this.salesOrgOdataVal){
+                this.distribution.getBinding("items").filter([new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgOdataVal)]);
                 this.distribution.open();
             } else {
                 MessageBox.error("Please select Sales organization");
@@ -475,12 +505,15 @@ sap.ui.define([
 
         handleValueHelpForDivision: function (evt) {
             this.divisionField = evt.getSource();
+            this.distriOdataVal = this.getView().getModel("salesDataModel").getData()[0].zdistribution_channel;
 
             if (this.distributionTitle) {
                 this.division.getBinding("items").filter([new sap.ui.model.Filter("Distributionchannel", "EQ", this.distributionTitle)]);
-
                 this.division.open();
-            } else {
+            } else if(this.distriOdataVal){
+                this.division.getBinding("items").filter([new sap.ui.model.Filter("Distributionchannel", "EQ", this.distriOdataVal)]);
+                this.division.open();
+            }else {
                 MessageBox.error("Please select Distribution Channel");
             }
         },
@@ -1116,12 +1149,15 @@ sap.ui.define([
         //Value Help for Credit Control
         handleValueHelpForCreditControl: function (evt) {
             this.CCAField = evt.getSource();
+            // var ccaOdataVal = this.getView().getModel("Customers").getData().zdistribution_channel;
             if (this.getView().getModel("appView").getProperty("/distributionChannel")) {
-
                 this.CCA.getBinding("items").filter([new sap.ui.model.Filter("DistributionChannel", "EQ", this.getView().getModel("appView").getProperty("/distributionChannel")),
                 new sap.ui.model.Filter("SalesOrg", "EQ", this.salesTitle)]);
                 this.CCA.open();
-
+            } else if(this.distriOdataVal){
+                this.CCA.getBinding("items").filter([new sap.ui.model.Filter("DistributionChannel", "EQ", this.distriOdataVal),
+                new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgOdataVal)]);
+                this.CCA.open();
             } else {
                 MessageBox.error("Please select Distribution channel first");
             }
@@ -1618,9 +1654,14 @@ sap.ui.define([
 
         handleValueHelpForCS: function (evt) {
             this.creditSegmentField = evt.getSource();
+             this.ccaOdataVal = this.getView().getModel("salesDataModel").getData()[0].zcredit_control_area;
             if (this.getView().getModel("appView").getProperty("/cca")) {
                 this.cs.getBinding("items").filter([new sap.ui.model.Filter("credit_control_area", "EQ", this.getView().getModel("appView").getProperty("/cca")),
                 new sap.ui.model.Filter("SalesOrg", "EQ", this.salesTitle)]);
+                this.cs.open();
+            }else if(this.ccaOdataVal){
+                this.cs.getBinding("items").filter([new sap.ui.model.Filter("credit_control_area", "EQ", this.ccaOdataVal),
+                new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgOdataVal)]);
                 this.cs.open();
             } else {
                 MessageBox.error("Please select the credit control area first");

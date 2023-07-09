@@ -292,12 +292,12 @@
                             <CreditLimit:CreditLimit id="Planned" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual2" visible="{= ${appView>/selectedType} === 0 ? true : false || ${appView>/selectedType} === 2 ? true : false}" title="Secured credit Limit">
+                    <ObjectPageSubSection id="plannedandactual2" visible="{= ${Customers>/zcredit_limit_type} === 'Secured Credit' ? true : false || ${appView>/selectedType} === 'Secured Credit Limit' ? true : false || ${appView>/selectedType} === 'Both' ? true : false}" title="Secured credit Limit">
                         <blocks>
                             <CreditLimit:SecuredCreditLimit id="Planned2" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual3" visible="{= ${appView>/selectedType} === 1 ? true : false || ${appView>/selectedType} === 2 ? true : false}" title="Unsecured credit Limit">
+                    <ObjectPageSubSection id="plannedandactual3" visible="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit' ? true : false || ${appView>/selectedType} === 'UnSecured Credit Limit' ? true : false || ${appView>/selectedType} === 'Both' ? true : false}" title="Unsecured credit Limit">
                         <blocks>
                             <CreditLimit:UnsecuredCreditLimit id="Planned3" />
                         </blocks>

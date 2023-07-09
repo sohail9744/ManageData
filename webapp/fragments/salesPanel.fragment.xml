@@ -109,7 +109,10 @@
 		
 		<Label text="Payment Terms" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/PaymentTermsMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpayment_terms}" maxLength="4" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"/>
+ <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zpayment_terms}" maxLength="4" visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"/>
+		<!-- <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+		 value="{salesDataModel>zpayment_terms}" valueHelpRequest="handleValueHelpForPaymentTerms"  maxLength="4"
+		 visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}" valueHelpOnly="true"/> -->
 
 		<Label text="Credit Control Area" visible="{=${fieldMappingModels>/CreditControlAreaVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CreditControlAreaMandatory} === true ? true : false}"/>

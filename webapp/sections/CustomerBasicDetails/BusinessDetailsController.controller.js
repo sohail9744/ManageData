@@ -339,10 +339,14 @@ sap.ui.define([
           handleValueHelpForChannel: function (evt) {
             this.channelField = evt.getSource();
             var val = this.getView().byId("channelGrpId").getValue();
+            var channelGrpOdataVal = this.getView().getModel("Customers").getData().zchannel_group;
             if (val) {
               this.channel
                 .getBinding("items")
                 .filter([new sap.ui.model.Filter("channelgroup", "Contains", val)]);
+              this.channel.open();
+            }else if(channelGrpOdataVal){
+              this.channel.getBinding("items").filter([new sap.ui.model.Filter("channelgroup", "Contains", channelGrpOdataVal)]);
               this.channel.open();
             } else {
               sap.m.MessageBox.error("Please select the Channel Group");
@@ -374,6 +378,7 @@ sap.ui.define([
             this.subChannelField = evt.getSource();
             var val = this.getView().byId("channelGrpId").getValue();
             var val1 = this.getView().byId("channelId").getValue();
+            var channelOdataVal = this.getView().getModel("Customers").getData().zchannel_group;
             if (val1) {
               this.subChannel.getBinding("items").filter([new sap.ui.model.Filter("channel", "EQ", val1)]);
               this.subChannel.open();

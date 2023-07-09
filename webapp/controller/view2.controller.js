@@ -71,6 +71,7 @@ sap.ui.define([
                 this.mode = oEvent.getParameters().arguments.mode;
                 this.getView().getModel("appView").setProperty("/mode", this.mode);
                 this.onClear();
+                this.onClearFiles();
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
 
@@ -405,6 +406,7 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) { }
                     });
+                    // this.onClear();
                     //     })
                     // } catch (err) {
 
@@ -444,6 +446,16 @@ sap.ui.define([
                 delete oCustomerDetailModel.getData().to_zdd_comments;
                 var oEntry = oCustomerDetailModel.getData();
 
+                var creditLimitType = this.getView().getModel("appView").getProperty("/selectedType");
+
+                    if(creditLimitType === "Secured Credit Limit" || creditLimitType === "Secured Credit"){
+                        oEntry.zcredit_limit_type = "Secured Credit";
+                    }else if(creditLimitType === "UnSecured Credit Limit" || creditLimitType === "UnSecured Credit"){
+                        oEntry.zcredit_limit_type = "UnSecured Credit";
+                    }else{
+                        oEntry.zcredit_limit_type = "Both";
+                    }
+
                 // if (this.mode == "edit" && that.custNum) {
                 if (this.mode == "edit") {
                     // oEntry.zrequest_no = req_no;
@@ -465,13 +477,15 @@ sap.ui.define([
                     delete oEntry.requests;
                     delete oEntry.EntryCollection;
 
-                    if(this.getView().getModel("appView").getProperty("/selectedType") === "Secured Credit Limit"){
-                        oEntry.zcredit_limit_type = "Secured Credit";
-                    }else if(this.getView().getModel("appView").getProperty("/selectedType") === "Secured Credit Limit"){
-                        oEntry.zcredit_limit_type = "UnSecured Credit";
-                    }else{
-                        oEntry.zcredit_limit_type = "Both";
-                    }
+                    // var creditLimitType = this.getView().getModel("appView").getProperty("/selectedType");
+
+                    // if(creditLimitType === "Secured Credit Limit" || creditLimitType === "Secured Credit"){
+                    //     oEntry.zcredit_limit_type = "Secured Credit";
+                    // }else if(creditLimitType === "UnSecured Credit Limit" || creditLimitType === "UnSecured Credit"){
+                    //     oEntry.zcredit_limit_type = "UnSecured Credit";
+                    // }else{
+                    //     oEntry.zcredit_limit_type = "Both";
+                    // }
 
                     // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
                     // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
@@ -805,6 +819,16 @@ sap.ui.define([
                     delete oCustomerDetailModel.getData().to_zdd_comments;
                     var oEntry = oCustomerDetailModel.getData();
 
+                    var creditLimitType = this.getView().getModel("appView").getProperty("/selectedType");
+
+                    if(creditLimitType === "Secured Credit Limit" || creditLimitType === "Secured Credit"){
+                        oEntry.zcredit_limit_type = "Secured Credit";
+                    }else if(creditLimitType === "UnSecured Credit Limit" || creditLimitType === "UnSecured Credit"){
+                        oEntry.zcredit_limit_type = "UnSecured Credit";
+                    }else{
+                        oEntry.zcredit_limit_type = "Both";
+                    }
+
                     // if (this.mode == "edit" || this.custNum) {
                         if(this.mode == "edit") {
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
@@ -825,7 +849,7 @@ sap.ui.define([
                         delete oEntry.requests;
                         delete oEntry.EntryCollection;
 
-                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                        // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
                         // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
                         //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
                         //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
@@ -1312,9 +1336,12 @@ sap.ui.define([
                         obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
                         obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
                         obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
-
+            
                         var salesVal = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
                         var checkBoxValue = salesVal.length > 0 ? salesVal[index].getItems()[0].getContent()[0].getItems()[0].getContent() : "";
+                        
+                    //    delete obj.zpayment_terms;
+                        
                         // if(checkBoxValue.length > 0){
                         //     obj.zblockedincm = checkBoxValue[123].getSelected() ? 'Y' : 'N';
                         //     obj.zspecialattention = checkBoxValue[125].getSelected() ? 'Y' : 'N';
@@ -1430,6 +1457,7 @@ sap.ui.define([
                         }
 
                         delete obj.Flag;
+                        // delete obj.zpayment_terms;
                         batchSalesChanges.push(oModel.createBatchOperation(salesUpdatePath, "PUT", obj));
                     } else if (obj.Flag === 'D') {
                         var salesDeletePath = "/ZDD_CUST_SALESAREAS(zcustomer_num=guid'" + obj.zcustomer_num + "',zsales_orgnization='" + obj.zsales_orgnization + "',zsales_area_id='" + obj.zsales_area_id + "')";
@@ -1952,11 +1980,9 @@ sap.ui.define([
                 this.getView().getModel("appView").setProperty("/selectedType", evt.getSource().getSelectedButton().getText());
                 this.getView().getModel("appView").updateBindings();
                 // that.selectedType = evt.getSource().getSelectedButton().getText();
-                this.toggleSubsection();
+                
             },
-            toggleSubsection: function (evt) {
-                console.log(evt);
-            },
+            
             onClear: function () {
                 var that = this;
                 var State = true;
@@ -2008,8 +2034,14 @@ sap.ui.define([
                                             content[b + 1].setValueState("None");
                                             that.removeValidationError(content[b]);
 
+                                        }else if(content[b + 1].getMetadata().getName() == 'sap.ui.unified.FileUploader'){
+                                            // content[b + 1].setValue("");
+                                            content[b + 1].setValueState("None");
+                                            that.removeValidationError(content[b]);
                                         }
-                                    }
+                                    } 
+                                    
+                                    
                                 }
                             }
                         }
@@ -2017,8 +2049,12 @@ sap.ui.define([
                 }
                 var custType = this.getView().getModel("appView").getProperty("/customerType");
 
-                var formId = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
+                var formId = this.getView().byId("salesAreadata17").getAggregation("_views") ? this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems() : null;
+                
 
+                // var formId = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
+                  
+                if(formId){
                 for (var i = 0; i < formId.length; i++) {
                     var salesFormContent = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems()[i].getItems()[0].getContent()[0].getItems()[0].getContent();
                     var isSalesAreaVisible = this.getView().byId("salesAreadata17").getParent().getParent().getVisible();
@@ -2049,6 +2085,33 @@ sap.ui.define([
                                             that.removeValidationError(salesFormContent[b]);
 
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            },
+            onClearFiles : function () {
+                var simpleFormIdArr = ["CreditAnalysisView", "Planned2", "orderData193", "orderData13"];
+
+                for (var j = 0; j < simpleFormIdArr.length; j++) {
+                    var content = this.getView().byId(simpleFormIdArr[j]).getAggregation("_views") !== null ? this.getView().byId(simpleFormIdArr[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
+                    var isVisible = this.getView().byId(simpleFormIdArr[j]).getParent().getParent().getVisible();
+
+                    if (isVisible) {
+                        for (var b = 0; b < content.length; b++) {
+                            if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
+                                if (content[b].getVisible()) {
+                                    if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getVisible() ===
+                                        true) {
+                                        if (content[b + 1].getMetadata().getName() == "sap.ui.unified.FileUploader") {
+                                            if (content[b + 1].getValue() !== "") {
+                                                content[b + 1].clear();
+                                                
+                                            } 
+                                        } 
                                     }
                                 }
                             }
