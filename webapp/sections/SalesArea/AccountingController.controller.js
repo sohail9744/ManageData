@@ -1539,11 +1539,15 @@ sap.ui.define([
 
         //Value Help for Tax Classification
         handleValueHelpForTaxClssfn: function (evt) {
+          var taxCatOdataVal = this.getView().getModel("SalesDataModel").getData() ? this.getView().getModel("SalesDataModel").getData()[0].ztaxcategory : "";
             this.TaxClass = evt.getSource();
-            if (this.taxCatTitle.length > 0) {
+            if (this.taxCatTitle) {
                 this.TaxClassfn.getBinding("items").filter([new sap.ui.model.Filter("Taxcategory", "EQ", this.taxCatTitle)]);
                 this.TaxClassfn.open();
-            } else {
+            } else if (taxCatOdataVal) {
+                this.TaxClassfn.getBinding("items").filter([new sap.ui.model.Filter("Taxcategory", "EQ", taxCatOdataVal)]);
+                this.TaxClassfn.open();
+            }else {
                 sap.m.MessageBox.error("Please select the Tax Category");
             }
         },
