@@ -566,9 +566,9 @@ sap.ui.define([
                     if (this.getView().getModel("Customers").getData().zvisa_valid_date === null || this.getView().getModel("Customers").getData().zvisa_valid_date.length < 13) {
                         oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
                     }
-                     if (this.getView().getModel("Customers").getData().znet_due_date === null || this.getView().getModel("Customers").getData().znet_due_date.length < 13) {
-                        oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                    }
+                    //  if (this.getView().getModel("Customers").getData().znet_due_date === null || this.getView().getModel("Customers").getData().znet_due_date.length < 13) {
+                    //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                    // }
 
                     oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
                     oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
@@ -598,7 +598,7 @@ sap.ui.define([
                     oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                     oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                     oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                    delete oEntry.ztype_of_Entity;
+                    // delete oEntry.ztype_of_Entity;
                     oModel.update(this.sPath, oEntry, {
                         success: function (oData, oResponse) {
                             // jQuery.sap.require("sap.m.MessageBox");
@@ -654,7 +654,7 @@ sap.ui.define([
                         delete oEntry.requests;
                         delete oEntry.EntryCollection;
 
-                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                        // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
                         // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
                         //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
                         //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
@@ -785,7 +785,7 @@ sap.ui.define([
                         oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                        delete oEntry.ztype_of_Entity;
+                        // delete oEntry.ztype_of_Entity;
 
                         oModel.create("/ZDD_CUSTOMER", oEntry, {
                             success: function (oData, oResponse) {
@@ -939,9 +939,9 @@ sap.ui.define([
                         if (custData.zvisa_valid_date && custData.zvisa_valid_date.length < 13) {
                             oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
                         }
-                        if (custData.znet_due_date && custData.znet_due_date.length < 13) {
-                            oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                        }
+                        // if (custData.znet_due_date && custData.znet_due_date.length < 13) {
+                        //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                        // }
 
                         delete oEntry.to_credit;
                         oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
@@ -972,7 +972,7 @@ sap.ui.define([
                         oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                        delete oEntry.ztype_of_Entity;
+                        // delete oEntry.ztype_of_Entity;
                         oModel.update(this.sPath, oEntry, {
                             success: function (oData, oResponse) {
                                 // jQuery.sap.require("sap.m.MessageBox");
@@ -1059,7 +1059,7 @@ sap.ui.define([
 
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
 
-                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                        // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
                         // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
                         //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
                         //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
@@ -1132,9 +1132,9 @@ sap.ui.define([
                         if (custData.zvisa_valid_date && custData.zvisa_valid_date.length < 13) {
                             oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
                         }
-                        if (custData.znet_due_date && custData.znet_due_date.length < 13) {
-                            oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                        }
+                        // if (custData.znet_due_date && custData.znet_due_date.length < 13) {
+                        //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                        // }
                         oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
                         oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
                         oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
@@ -1163,7 +1163,7 @@ sap.ui.define([
                         oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                        delete oEntry.ztype_of_Entity;
+                        // delete oEntry.ztype_of_Entity;
                         oModel.create("/ZDD_CUSTOMER", oEntry, {
                             success: function (oData, oResponse) {
                                 this.custNum = oData.zcustomer_num;
@@ -1298,6 +1298,7 @@ sap.ui.define([
                         // obj.zprice_group_text = obj.zprice_group ? obj.zprice_group.split(" - ")[1] : "";
                         // obj.zcredit_control_area = obj.zcredit_control_area ? obj.zcredit_control_area.split(" - ")[0] : "";
                         obj.zpricelist = obj.zpricelist ? obj.zpricelist.split(" - ")[0] : "";
+                        obj.zcredit_segment = obj.zcredit_segment ? obj.zcredit_segment.split(" - ")[0] : "";
                         // obj.zpricelist_text = obj.zpricelist ? obj.zpricelist.split(" - ")[1] : "";
 
                         obj.zprice_procedured_term = obj.zprice_procedured_term ? obj.zprice_procedured_term.split(" - ")[0] : "";
@@ -1401,6 +1402,7 @@ sap.ui.define([
                         obj.zprice_group = obj.zprice_group ? obj.zprice_group.split(" - ")[0] : "";
 
                         obj.zpricelist = obj.zpricelist ? obj.zpricelist.split(" - ")[0] : "";
+                        obj.zcredit_segment = obj.zcredit_segment ? obj.zcredit_segment.split(" - ")[0] : "";
 
 
                         obj.zprice_procedured_term = obj.zprice_procedured_term ? obj.zprice_procedured_term.split(" - ")[0] : "";

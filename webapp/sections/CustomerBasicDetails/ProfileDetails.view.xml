@@ -36,11 +36,10 @@
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcompany_postal_code}" maxLength="10" visible="{=${fieldMappingModels>/CompanyPostalCodeVisible} === true ? true : false}"/>
         <Label text="Type of Entity" visible="{=${fieldMappingModels>/TypeofEntityVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TypeofEntityMandatory} === true ? true : true}"/>
-		<MultiInput showClearIcon="true" id="entityId" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztype_of_Entity}" valueHelpRequest="handleValueHelpForEntityType"
+		<MultiInput showClearIcon="true" id="entityId" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztype_of_entity}" valueHelpRequest="handleValueHelpForEntityType"
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/TypeofEntityVisible} === true ? true : false}" change="onEntityConfirm"/>
-		<Label text="Customer Internal Rating" visible="{=${fieldMappingModels>/154} === true ? true : false}"
- required="{=${fieldMappingModels>/154} === true ? true : false}"/>
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztype_of_Entity}" valueHelpRequest="handleValueHelpForEntityType"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/154} === true ? true : false}"/>
+		<!-- <Label text="Customer Internal Rating" />
+		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcustomer_internal_rating}" valueHelpRequest="handleValueHelpForEntityType"
+		valueHelpOnly="true" /> -->
 	</forms:SimpleForm>
 </mvc:View>

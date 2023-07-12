@@ -48,7 +48,7 @@ sap.ui.define([], function () {
             // console.log(evt);
             // console.log(totalAmt);
             
-            if(this.getView().getModel("appView").getProperty("/selectedType") === 0 || this.getView().getModel("appView").getProperty("/selectedType") === 2){
+            if(this.getView().getModel("appView").getProperty("/selectedType") === 'Secured Credit Limit' || this.getView().getModel("appView").getProperty("/selectedType") === 'Both'){
                 var totalCredit = 0;
             if (amt1 && parseInt(amt1) && parseInt(amt1) > 0)
                 totalCredit += parseInt(amt1);
@@ -83,7 +83,7 @@ sap.ui.define([], function () {
           return sumOfSecUnsecAmt.toString();
         },
         getTotalUnsecuredAmount:function (amt1, amt2, amt3, amt4, amt5, amt6) {
-            if(this.getView().getModel("appView").getProperty("/selectedType") === 1 || this.getView().getModel("appView").getProperty("/selectedType") === 2){
+            if(this.getView().getModel("appView").getProperty("/selectedType") === 'Unsecured Secured Limit' || this.getView().getModel("appView").getProperty("/selectedType") === 'Both'){
                 var totalUnsecuredCredit = 0;
                 if (amt1 && parseInt(amt1) && parseInt(amt1) > 0)
                 totalUnsecuredCredit += parseInt(amt1);

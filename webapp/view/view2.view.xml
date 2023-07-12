@@ -396,8 +396,9 @@
                 <m:Button type="Emphasized" text="Back" press="onBack"/>
                 <m:ToolbarSpacer />
                 <!-- <m:Button type="Emphasized"  text="{i18n>Validate}" press="saveRequest" /> -->
-                <m:Button type="Emphasized"  text="{i18n>Save}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="saveRequest" />
-                <m:Button type="Emphasized"  text="{i18n>Submit}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="submitRequest" />
+                <!-- visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" -->
+                <m:Button type="Emphasized" text="{i18n>Save}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="saveRequest" />
+                <m:Button type="Emphasized" text="{i18n>Submit}" press="submitRequest" />
             </m:OverflowToolbar>
         </footer>
     </ObjectPageLayout>
