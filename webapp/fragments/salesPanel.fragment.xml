@@ -12,7 +12,7 @@
 		</headerToolbar>
 				<content>	
 				<VBox >
-				<forms:SimpleForm editable="false" layout="ColumnLayout"> 
+				<forms:SimpleForm editable="true" layout="ColumnLayout"> 
 
 				<core:Title text="Sales Area Fields"/>
 				

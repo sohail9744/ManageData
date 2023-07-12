@@ -1574,6 +1574,7 @@ sap.ui.define([
             this.TaxClassfn.close();
         },
         handleSetMaxLength: function (evt) {
+            debugger
             var val = evt.getSource().getValue().length;
             var maxLen = evt.getSource().getMaxLength();
             if (val >= maxLen) {
