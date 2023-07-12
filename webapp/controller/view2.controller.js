@@ -46,6 +46,28 @@ sap.ui.define([
                 }
 
             },
+            onAfterRendering: function() {
+                var oSubSectionContainer = this.getView().byId("plannedandactual4").$().parent()[0];
+          
+                var observer = new IntersectionObserver(this._handleIntersection.bind(this), {
+                  threshold: 0.5 // Adjust the threshold as needed
+                });
+          
+                observer.observe(oSubSectionContainer);
+              },
+          
+              _handleIntersection: function(entries, observer) {
+                var salesDataLength = this.getView().getModel("salesDataModel").getData();
+
+                if(salesDataLength.length !== 0){
+                    var aSalesData = this.getView().getModel("salesDataModel").getData();
+                    var totalValue = 0;
+                    for (var i = 0; i < aSalesData.length; i++) {
+                        totalValue += Number(aSalesData[i].zlimit);
+                    }
+                    this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", totalValue);
+                }
+              },
             _onRouteMatched: function (oEvent) {
                 var that = this;
                 this.busyDialog = new sap.m.BusyDialog();
@@ -986,16 +1008,16 @@ sap.ui.define([
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
                         if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
                             oEntry.zbusiness_partner_grouping = "Z070";
-                          }
-                          else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
+                        }
+                        else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
                             oEntry.zbusiness_partner_grouping = "BP01"
-                          }
-                          else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
+                        }
+                        else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
                             oEntry.zbusiness_partner_grouping = "BP02"
-                          }
-                          else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
+                        }
+                        else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
                             oEntry.zbusiness_partner_grouping = "BP08"
-                          }
+                        }
                         // delete oEntry.ztype_of_Entity;
                         oModel.update(this.sPath, oEntry, {
                             success: function (oData, oResponse) {

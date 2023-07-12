@@ -1574,14 +1574,24 @@ sap.ui.define([
             this.TaxClassfn.close();
         },
         handleSetMaxLength: function (evt) {
-            debugger
-            var val = evt.getSource().getValue().length;
+            var val = evt.getSource().getValue();
+                  
             var maxLen = evt.getSource().getMaxLength();
-            if (val >= maxLen) {
+            if (val.length >= maxLen) {
                 evt.getSource().setType("Text");
             } else {
                 evt.getSource().setType("Number");
             }
+            // var salesDataLength = this.getView().getModel("salesDataModel").getData().length
+            // if(salesDataLength === 0){
+            //     this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", val)
+            // } else{
+            //     var currentTotal = this.getView().getModel("Customers").getProperty("/ztotal_secured_limit") || 0;
+            //     var newValue = parseFloat(val);
+            //     currentTotal += newValue;
+            //     this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", currentTotal);
+            // }
+         
         },
         handleDeleteSalesArea: function (evt) {
             var that = this;
