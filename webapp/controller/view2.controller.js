@@ -65,7 +65,21 @@ sap.ui.define([
                     for (var i = 0; i < aSalesData.length; i++) {
                         totalValue += Number(aSalesData[i].zlimit);
                     }
-                    this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", totalValue);
+
+                    let creditButton = this.getView().getModel("appView").getProperty("/selectedType");
+                    if(creditButton === "Secured Credit Limit"){
+                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", totalValue);
+                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", 0);
+                    }
+                    if(creditButton === "Both"){
+                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "");
+                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", "");
+                    }
+                    if(creditButton === "UnSecured Credit Limit"){
+                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", 0);
+                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", totalValue);
+                    }
+                    this.getView().getModel("Customers").setProperty("/ztotal_credit_amount", totalValue);
                 }
               },
             _onRouteMatched: function (oEvent) {
