@@ -4,10 +4,14 @@
         <Label text="Bank Name" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankNameVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankNameMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zirr_bank_guarantee_name}" maxLength="20" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankNameVisible} === true ? true : false}" />
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDVisible} === true ? true : false}"
+        <!-- <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDVisible} === true ? true : false}"
+         required="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDMandatory} === true ? true : false}" />
+        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zirr_bank_guarantee_amt}" liveChange="handleSetMaxLength" change="handleCalcuate" maxLength="8" type="Number" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDVisible} === true ? true : false}" /> -->
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zirr_bank_guarantee_amt}" liveChange="handleSetMaxLength" change="handleCalcuate" maxLength="8" type="Number" visible="{=${fieldMappingModels>/IrrevocableBankGuaranteeBankAmountAEDVisible} === true ? true : false}" />
-        
+
+
         <core:Title text="Irrevocable LC from Approved Bank" />
         <Label text="LC Issuance Bank Country" visible="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankLCIssuanceBankCountryVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankLCIssuanceBankCountryMandatory} === true ? true : false}" />
@@ -17,7 +21,7 @@
         required="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankLCIssuanceBankMandatory} === true ? true : false}" />
         <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlc_issuance_bank}" valueHelpRequest="handleValueHelpForBank"
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankLCIssuanceBankVisible} === true ? true : false}"/>
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankAmountAEDVisible} === true ? true : false}"
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankAmountAEDVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankAmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlc_issuance_amount}" liveChange="handleSetMaxLength" change="handleCalcuate" maxLength="8" type="Number" visible="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankAmountAEDVisible} === true ? true : false}" />
 
@@ -34,7 +38,7 @@
 		valueHelpOnly="true" visible="{=${fieldMappingModels>/IrrevocableLCfromApprovedBankLCIssuanceBankVisible} === true ? true : false}"/>
        
 
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/IrrevocableConfirmedLCAmountAEDVisible} === true ? true : false}"
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/IrrevocableConfirmedLCAmountAEDVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/IrrevocableConfirmedLCAmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlc_confirming_amount}" change="handleCalcuate" liveChange="handleSetMaxLength" type="Number" maxLength="8" visible="{=${fieldMappingModels>/IrrevocableConfirmedLCAmountAEDVisible} === true ? true : false}" />
         
@@ -42,7 +46,7 @@
         <Label text="Insurer" visible="{=${fieldMappingModels>/CreditRiskInsuranceInsurerVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/CreditRiskInsuranceInsurerMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcri_insurer}" maxLength="20" visible="{=${fieldMappingModels>/CreditRiskInsuranceInsurerVisible} === true ? true : false}" />
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDVisible} === true ? true : false}"
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcri_amount}" change="handleCalcuate" maxLength="10" liveChange="handleSetMaxLength" type="Number" visible="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDVisible} === true ? true : false}" />
         <Label text="CRI Buyer ID" visible="{=${fieldMappingModels>/CreditRiskInsuranceCRIBuyerIDVisible} === true ? true : false}" required="{=${fieldMappingModels>/CreditRiskInsuranceCRIBuyerIDMandatory} === true ? true : false}" />
@@ -61,12 +65,12 @@
         <Label text="Name of Company" visible="{=${fieldMappingModels>/NameofCompanyVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/NameofCompanyMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zclassa_name_of_the_company}" maxLength="20" visible="{=${fieldMappingModels>/NameofCompanyVisible} === true ? true : false}" />
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/AmountAEDVisible} === true ? true : false}" 
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/AmountAEDVisible} === true ? true : false}" 
         required="{=${fieldMappingModels>/AmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zclassa_customer_amount}" change="handleCalcuate" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/AmountAEDVisible} === true ? true : false}" />
         
         <core:Title text="Cash Deposit/Advance" />
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDVisible} === true ? true : false}"
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcash_deposit_adv_amount}" change="handleCalcuate" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDVisible} === true ? true : false}" />
        
@@ -74,7 +78,7 @@
         <Label text="Bank Name" visible="{=${fieldMappingModels>/AvalizationDraftBankNameVisible} === true ? true : false}"
          required="{=${fieldMappingModels>/AvalizationDraftBankNameMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zavalization_draft_bank_name}" maxLength="20" visible="{=${fieldMappingModels>/AvalizationDraftBankNameVisible} === true ? true : false}" />
-        <Label text="{= 'Amount (' + ${salesDataModel>/0/zsales_currency} + ')'}" visible="{=${fieldMappingModels>/AvalizationDraftAmountAEDVisible} === true ? true : false}" required="{=${fieldMappingModels>/AvalizationDraftAmountAEDMandatory} === true ? true : false}" />
+        <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/AvalizationDraftAmountAEDVisible} === true ? true : false}" required="{=${fieldMappingModels>/AvalizationDraftAmountAEDMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zavalization_draft_amount}" change="handleCalcuate" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/AvalizationDraftAmountAEDVisible} === true ? true : false}" />
     </forms:SimpleForm>
 </mvc:View>
