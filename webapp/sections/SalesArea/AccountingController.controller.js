@@ -1324,7 +1324,8 @@ sap.ui.define([
             var desc = evt.getParameter("selectedItems")[0].getProperty("description");
             this.currencyField.setValue(title + " - " + desc);
             this.Currency.getBinding("items").filter([]);
-            this.Currency.close();
+            // this.Currency.close();/
+            this.Currency._dialog.close()
         },
         handleValueHelpCurrencySearch: function (evt) {
             var sValue = evt.getParameter("value");
