@@ -81,7 +81,7 @@
 		<Label text="Region" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/RegionMandatory} === true ? true : false}"/>
 		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/> -->
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/>
+		<Input enabled="false" value="{Customers>/zstate}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/>
 		
 	</forms:SimpleForm>
 </mvc:View>

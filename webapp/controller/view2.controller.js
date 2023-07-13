@@ -633,6 +633,8 @@ sap.ui.define([
                     else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
                         oEntry.zbusiness_partner_grouping = "BP08"
                     }
+
+                    oEntry.zregion = oEntry.zstate;
                     oModel.update(this.sPath, oEntry, {
                         success: function (oData, oResponse) {
                             // jQuery.sap.require("sap.m.MessageBox");
@@ -820,6 +822,8 @@ sap.ui.define([
                         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
                         // delete oEntry.ztype_of_Entity;
+
+                        oEntry.zregion = oEntry.zstate;
 
                         oModel.create("/ZDD_CUSTOMER", oEntry, {
                             success: function (oData, oResponse) {
@@ -1018,6 +1022,7 @@ sap.ui.define([
                         else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
                             oEntry.zbusiness_partner_grouping = "BP08"
                         }
+                        oEntry.zregion = oEntry.zstate;
                         // delete oEntry.ztype_of_Entity;
                         oModel.update(this.sPath, oEntry, {
                             success: function (oData, oResponse) {
@@ -1222,6 +1227,7 @@ sap.ui.define([
                         else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
                             oEntry.zbusiness_partner_grouping = "BP08"
                         }
+                        oEntry.zregion = oEntry.zstate;
                         oModel.create("/ZDD_CUSTOMER", oEntry, {
                             success: function (oData, oResponse) {
                                 this.custNum = oData.zcustomer_num;
