@@ -68,18 +68,18 @@ sap.ui.define([
 
                     let creditButton = this.getView().getModel("appView").getProperty("/selectedType");
                     if(creditButton === "Secured Credit Limit"){
-                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", totalValue);
-                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", 0);
+                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", totalValue.toString());
+                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit","0");
                     }
                     if(creditButton === "Both"){
                         this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "");
                         this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", "");
                     }
                     if(creditButton === "UnSecured Credit Limit"){
-                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", 0);
-                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", totalValue);
+                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "0");
+                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", totalValue.toString());
                     }
-                    this.getView().getModel("Customers").setProperty("/ztotal_credit_amount", totalValue);
+                    this.getView().getModel("Customers").setProperty("/ztotal_credit_amount", totalValue.toString());
                 }
               },
             _onRouteMatched: function (oEvent) {
@@ -1511,13 +1511,41 @@ sap.ui.define([
                         obj.zinfo_type = obj.zinfo_type ? obj.zinfo_type.split(" - ")[0] : "";
                         obj.zblock_reason = obj.zblock_reason ? obj.zblock_reason.split(" - ")[0] : "";
 
-                        obj.zresubmission_on = obj.zresubmission_on ? this.dateFormatter(obj.zresubmission_on) : null;
-                        obj.zdate_from = obj.zdate_from ? this.dateFormatter(obj.zdate_from) : null;
-                        obj.zdate_to = obj.zdate_to ? this.dateFormatter(obj.zdate_to) : null;
-                        obj.zentered_on = obj.zentered_on ? this.dateFormatter(obj.zentered_on) : null;
-                        obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
-                        obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
-                        obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
+                        if (obj.zresubmission_on === null || typeof obj.zresubmission_on === 'string') {
+                            obj.zresubmission_on = obj.zresubmission_on ? this.dateFormatter(obj.zresubmission_on) : null;
+                          }
+              
+                          if (obj.zdate_from === null || typeof obj.zdate_from === 'string') {
+                            obj.zdate_from = obj.zdate_from ? this.dateFormatter(obj.zdate_from) : null;
+                          }
+              
+                          if (obj.zdate_to === null || typeof obj.zdate_to === 'string') {
+                            obj.zdate_to = obj.zdate_to ? this.dateFormatter(obj.zdate_to) : null;
+                          }
+              
+                          if (obj.zentered_on === null || typeof obj.zentered_on === 'string') {
+                            obj.zentered_on = obj.zentered_on ? this.dateFormatter(obj.zentered_on) : null;
+                          }
+              
+                          if (obj.zdeleted_on === null || typeof obj.zdeleted_on === 'string') {
+                            obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
+                          }
+              
+                          if (obj.zvalidity_to === null || typeof obj.zvalidity_to === 'string') {
+                            obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
+                          }
+              
+                          if (obj.zresubmission_date === null || typeof obj.zresubmission_date === 'string') {
+                            obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
+                          }
+
+                        // obj.zresubmission_on = obj.zresubmission_on ? this.dateFormatter(obj.zresubmission_on) : null;
+                        // obj.zdate_from = obj.zdate_from ? this.dateFormatter(obj.zdate_from) : null;
+                        // obj.zdate_to = obj.zdate_to ? this.dateFormatter(obj.zdate_to) : null;
+                        // obj.zentered_on = obj.zentered_on ? this.dateFormatter(obj.zentered_on) : null;
+                        // obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
+                        // obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
+                        // obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
                         var salesVal = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
                         var checkBoxValue = salesVal.length > 0 ? salesVal[index].getItems()[0].getContent()[0].getItems()[0].getContent() : "";
                         if (checkBoxValue.length > 0) {

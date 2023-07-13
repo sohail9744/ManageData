@@ -813,6 +813,7 @@ sap.ui.define([
                     this.getView().getModel("appView").setProperty("/addSales", true);
                 } else {
                     MessageBox.information("There is no sales area to generate");
+                    
                 }
             } else {
                 MessageBox.information("Sales area is already generated");
