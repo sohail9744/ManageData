@@ -24,13 +24,11 @@
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zannual_actual_turnover}" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"/>
 
 	<core:Title text="Monthly Expected Highest Sales"/>
-         <Label text="Sales Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
+         <Label text="Sales Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_sales_volume}"
 		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 
-		 <Label text="Acutal Sales Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
+		 <Label text="Acutal Sales Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_sales_volume}"
 		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 

@@ -79,7 +79,7 @@
                         </blocks>
                         
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdatahistory" title="History">
+                    <ObjectPageSubSection id="orderdatahistory" visible="false" title="History">
                         <blocks>
                             <Summary:RequestHistory id="orderData01" />
                         </blocks>

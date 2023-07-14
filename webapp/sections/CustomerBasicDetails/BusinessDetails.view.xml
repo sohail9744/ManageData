@@ -15,7 +15,7 @@
         <Label text="Title" visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TitleMandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztitle}" visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"/>
-        <Label text="First Name" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"
+        <Label text="Name" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/NameMandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zfirst_name}" maxLength="40" visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"/>
         <Label text="Last Name" visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"
