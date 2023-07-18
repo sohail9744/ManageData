@@ -318,7 +318,7 @@
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zlimit_define}" maxLength="35" visible="{=${fieldMappingModels>/LimitdefineVisible} === true ? true : false}"/>
 		<Label text="Limit" visible="{=${fieldMappingModels>/LimitVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/LimitMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{salesDataModel>zlimit}" maxLength="13" type="Number" liveChange="handleSetMaxLength" visible="{=${fieldMappingModels>/LimitVisible} === true ? true : false}"/>
+		<Input value="{parts: ['salesDataModel>zlimit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="13" visible="{=${fieldMappingModels>/LimitVisible} === true ? true : false}"/>
 		
 		<Label text="Validity to" visible="{=${fieldMappingModels>/ValiditytoVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ValiditytoMandatory} === true ? true : false}"/>

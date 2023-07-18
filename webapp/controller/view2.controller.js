@@ -55,6 +55,26 @@ sap.ui.define([
           
                 observer.observe(oSubSectionContainer);
               },
+
+              handleAmtFields: function (evt) {
+                this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt = this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt ?  this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt.toString() : "0";
+                this.getView().getModel("Customers").getData().zlc_issuance_amount = this.getView().getModel("Customers").getData().zlc_issuance_amount ? this.getView().getModel("Customers").getData().zlc_issuance_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zlc_confirming_amount = this.getView().getModel("Customers").getData().zlc_confirming_amount ? this.getView().getModel("Customers").getData().zlc_confirming_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zcri_amount = this.getView().getModel("Customers").getData().zcri_amount ? this.getView().getModel("Customers").getData().zcri_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zclassa_customer_amount = this.getView().getModel("Customers").getData().zclassa_customer_amount ? this.getView().getModel("Customers").getData().zclassa_customer_amount.toString() : "0";  
+                this.getView().getModel("Customers").getData().zcash_deposit_adv_amount = this.getView().getModel("Customers").getData().zcash_deposit_adv_amount ? this.getView().getModel("Customers").getData().zcash_deposit_adv_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zavalization_draft_amount = this.getView().getModel("Customers").getData().zavalization_draft_amount ? this.getView().getModel("Customers").getData().zavalization_draft_amount.toString() : "0";
+               
+            //    Unsecured amt fields
+                this.getView().getModel("Customers").getData().zopen_clean_credit_amount = this.getView().getModel("Customers").getData().zopen_clean_credit_amount ? this.getView().getModel("Customers").getData().zopen_clean_credit_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zcad_amount = this.getView().getModel("Customers").getData().zcad_amount ? this.getView().getModel("Customers").getData().zcad_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zpoc_in_hand_amount = this.getView().getModel("Customers").getData().zpoc_in_hand_amount ? this.getView().getModel("Customers").getData().zpoc_in_hand_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zundated_or_security_deposit_c = this.getView().getModel("Customers").getData().zundated_or_security_deposit_c ? this.getView().getModel("Customers").getData().zundated_or_security_deposit_c.toString() : "0";
+                this.getView().getModel("Customers").getData().zcri_insurer_amount = this.getView().getModel("Customers").getData().zcri_insurer_amount ? this.getView().getModel("Customers").getData().zcri_insurer_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zuncfrmd_lc_nonapvd_bnkamt = this.getView().getModel("Customers").getData().zuncfrmd_lc_nonapvd_bnkamt ? this.getView().getModel("Customers").getData().zuncfrmd_lc_nonapvd_bnkamt.toString() : "0";
+                // this.getView().getModel("Customers").getData().zlc_issuance_amount = this.getView().getModel("Customers").getData().zlc_issuance_amount.toString();
+
+            },
           
               _handleIntersection: function(entries, observer) {
                 var salesDataLength = this.getView().getModel("salesDataModel").getData();
@@ -63,7 +83,11 @@ sap.ui.define([
                     var aSalesData = this.getView().getModel("salesDataModel").getData();
                     var totalValue = 0;
                     for (var i = 0; i < aSalesData.length; i++) {
+                        if(aSalesData[i].zlimit){
                         totalValue += Number(aSalesData[i].zlimit);
+                        }else{
+                            aSalesData[i].zlimit = '0';
+                        }
                     }
 
                     let creditButton = this.getView().getModel("appView").getProperty("/selectedType");
@@ -72,8 +96,8 @@ sap.ui.define([
                         this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit","0");
                     }
                     if(creditButton === "Both"){
-                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "");
-                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", "");
+                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "0");
+                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", "0");
                     }
                     if(creditButton === "UnSecured Credit Limit"){
                         this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "0");
@@ -491,6 +515,7 @@ sap.ui.define([
                 } else {
                     oEntry.zcredit_limit_type = "Both";
                 }
+                this.handleAmtFields();
 
                 // if (this.mode == "edit" && that.custNum) {
                 if (this.mode == "edit") {
@@ -683,6 +708,22 @@ sap.ui.define([
                             MessageBox.error(errorMessage);
                         }
                     }
+                    else if(!oEntry.zirr_bank_guarantee_amt.charCodeAt() >= 48 && !oEntry.zirr_bank_guarantee_amt.charCodeAt() <= 57
+                        || !oEntry.zlc_issuance_amount.charCodeAt() >= 48 && !oEntry.zlc_issuance_amount.charCodeAt() <= 57
+                        || !oEntry.zlc_confirming_amount.charCodeAt() >= 48 && !oEntry.zlc_confirming_amount.charCodeAt() <= 57
+                        || !oEntry.zcri_amount.charCodeAt() >= 48 && !oEntry.zcri_amount.charCodeAt() <= 57
+                        || !oEntry.zclassa_customer_amount.charCodeAt() >= 48 && !oEntry.zclassa_customer_amount.charCodeAt() <= 57
+                        || !oEntry.zcash_deposit_adv_amount.charCodeAt() >= 48 && !oEntry.zcash_deposit_adv_amount.charCodeAt() <= 57
+                        || !oEntry.zavalization_draft_amount.charCodeAt() >= 48 && !oEntry.zavalization_draft_amount.charCodeAt() <= 57
+                        || !oEntry.zopen_clean_credit_amount.charCodeAt() >= 48 && !oEntry.zopen_clean_credit_amount.charCodeAt() <= 57
+                        || !oEntry.zcad_amount.charCodeAt() >= 48 && !oEntry.zcad_amount.charCodeAt() <= 57
+                        || !oEntry.zpoc_in_hand_amount.charCodeAt() >= 48 && !oEntry.zpoc_in_hand_amount.charCodeAt() <= 57
+                        || !oEntry.zundated_or_security_deposit_c.charCodeAt() >= 48 && !oEntry.zundated_or_security_deposit_c.charCodeAt() <= 57
+                        || !oEntry.zcri_insurer_amount.charCodeAt() >= 48 && !oEntry.zcri_insurer_amount.charCodeAt() <= 57
+                        || !oEntry.zuncfrmd_lc_nonapvd_bnkamt.charCodeAt() >= 48 && !oEntry.zuncfrmd_lc_nonapvd_bnkamt.charCodeAt() <= 57
+                        ){                            
+                            sap.m.MessageBox.error("Please enter amount!!!");
+                        }
                     else {
                         var req_no = Math.floor(1000 + Math.random() * 9000) + "";
                         oEntry.zrequest_no = req_no;
@@ -1415,6 +1456,7 @@ sap.ui.define([
                         obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
                         obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
                         obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
+                        obj.zlimit = obj.zlimit ? obj.zlimit.toString() : '0';
 
                         var salesVal = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
                         var checkBoxValue = salesVal.length > 0 ? salesVal[index].getItems()[0].getContent()[0].getItems()[0].getContent() : "";
@@ -1563,6 +1605,7 @@ sap.ui.define([
                             obj.zspecialattention = 'N';
                             obj.zrelevant = 'N';
                         }
+                        obj.zlimit = obj.zlimit ? obj.zlimit.toString() : '0';
 
                         delete obj.Flag;
                         // delete obj.zpayment_terms;

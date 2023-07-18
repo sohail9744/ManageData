@@ -5,7 +5,7 @@
 		<Input value="{Customers>/ztotal_secured_limit}" liveChange="handleSetMaxLength" maxLength="14" type="Number" visible="{=${fieldMappingModels>/TotalCreditLimitVisible} === true ? true : false}"/> -->
 		<Label text="{= ${salesDataModel>/0/zsales_currency} ? 'Total Secured Credit Limit (' + ${salesDataModel>/0/zsales_currency} + ')' : 'Total Secured Credit Amount'}" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TotalSecuredCreditLimitMandatory} === true ? true : false}"/>
-		<Input enabled="false" value="{Customers>/ztotal_secured_limit}" liveChange="handleSetMaxLength" maxLength="14" type="Number" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"/>
+		<Input value="{parts: ['Customers>/ztotal_secured_limit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="false" maxLength="14" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"/>
 		<!-- <Input value="{parts: [{path: 'Customers>/zirr_bank_guarantee_amt'},
 		{path:'Customers>/zlc_issuance_amount'},
 		 {path:'Customers>/zlc_confirming_amount'},
@@ -17,7 +17,7 @@
 		
 		<Label text="{= ${salesDataModel>/0/zsales_currency} ? 'Total UnSecured Credit Amount (' + ${salesDataModel>/0/zsales_currency} + ')' : 'Total UnSecured Credit Amount'}" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TotalUnsecuredCreditLimitMandatory} === true ? true : false}"/>
-		<Input enabled="false" value="{Customers>/ztotal_unsecured_limit}" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"/>
+		<Input value="{parts: ['Customers>/ztotal_unsecured_limit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="false" maxLength="20" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"/>
 		
 		<!-- <Input value="{parts: [{path: 'Customers>/zopen_clean_credit_amount'},
 		 {path:'Customers>/zcad_amount'},
@@ -30,7 +30,7 @@
 
 		<Label text="{= ${salesDataModel>/0/zsales_currency} ? 'Total Credit Amount (' + ${salesDataModel>/0/zsales_currency} + ')' : 'Total Credit Amount'}" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TotalCreditAmountMandatory} === true ? true : false}"/>
-		<Input enabled="false" value="{Customers>/ztotal_credit_amount}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/>
+		<Input value="{parts: ['Customers>/ztotal_credit_amount', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="false" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/>
 		<!-- <Input value="{parts: [{path: 'Customers>/ztotal_secured_limit'},	
  {path:'Customers>/ztotal_unsecured_limit'}],
   formatter:'.formatter.getTotalCreditAmount'}"

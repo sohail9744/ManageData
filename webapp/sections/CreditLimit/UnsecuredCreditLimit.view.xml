@@ -3,22 +3,22 @@
         <core:Title text="Open Credit / Clean Credit" />
         <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/OpenCredit-CleanCreditAmountSARVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/OpenCredit-CleanCreditAmountSARMandatory} === true ? true : false}"/>
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zopen_clean_credit_amount}" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/OpenCredit-CleanCreditAmountSARVisible} === true ? true : false}"/>
+        <Input value="{parts: ['Customers>/zopen_clean_credit_amount', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="20" visible="{=${fieldMappingModels>/OpenCredit-CleanCreditAmountSARVisible} === true ? true : false}"/>
         
         <core:Title text="CAD" />
         <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/CADAmountSARVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CADAmountSARMandatory} === true ? true : false}"/>
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcad_amount}" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/CADAmountSARVisible} === true ? true : false}"/>
+        <Input value="{parts: ['Customers>/zcad_amount', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="20" visible="{=${fieldMappingModels>/CADAmountSARVisible} === true ? true : false}"/>
         
         <core:Title text="PDC in hand" />
         <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/PDCinhandAmountSARVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/PDCinhandAmountSARMandatory} === true ? true : false}"/>
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpoc_in_hand_amount}" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/PDCinhandAmountSARVisible} === true ? true : false}"/>
+        <Input value="{parts: ['Customers>/zpoc_in_hand_amount', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="20" visible="{=${fieldMappingModels>/PDCinhandAmountSARVisible} === true ? true : false}"/>
         
         <core:Title text="Undated Cheque / Security Deposit Cheque" />
         <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/UndatedCheque-SecurityDepositChequeAmountSARVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/UndatedCheque-SecurityDepositChequeAmountSARMandatory} === true ? true : false}"/>
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zundated_or_security_deposit_c}" maxLength="40" visible="{=${fieldMappingModels>/UndatedCheque-SecurityDepositChequeAmountSARVisible} === true ? true : false}"/>
+        <Input value="{parts: ['Customers>/zundated_or_security_deposit_c', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="40" visible="{=${fieldMappingModels>/UndatedCheque-SecurityDepositChequeAmountSARVisible} === true ? true : false}"/>
         
         <core:Title text="CRI (only Insolvency risk)" />
         <Label text="Insurer" visible="{=${fieldMappingModels>/CRIonlyInsolvencyriskInsurerVisible} === true ? true : false}"
@@ -26,7 +26,7 @@
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcri_insurer}" maxLength="20" visible="{=${fieldMappingModels>/CRIonlyInsolvencyriskInsurerVisible} === true ? true : false}"/>
         <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/CRIAmountVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CRIAmountMandatory} === true ? true : false}"/>
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcri_insurer_amount}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/CRIAmountVisible} === true ? true : false}"/>
+        <Input value="{parts: ['Customers>/zcri_insurer_amount', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="10" visible="{=${fieldMappingModels>/CRIAmountVisible} === true ? true : false}"/>
         
         <core:Title text="Unconfirmed LC from Non-Approved Bank" />
         <Label text="Bank Name" visible="{=${fieldMappingModels>/UnconfirmedLCfromNon-ApprovedBankNameVisible} === true ? true : false}"
@@ -34,41 +34,8 @@
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zuncfrmd_lc_nonapvd_bnkname}" maxLength="20" visible="{=${fieldMappingModels>/UnconfirmedLCfromNon-ApprovedBankNameVisible} === true ? true : false}"/>
         <Label text="{= ${salesDataModel>/0/sales_currency} ? 'Amount (' + ${salesDataModel>/0/sales_currency} + ')' : 'Amount'}" visible="{=${fieldMappingModels>/UnconfirmedLCfromNon-ApprovedBankAmountSARVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/UnconfirmedLCfromNon-ApprovedBankAmountSARMandatory} === true ? true : false}"/>
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zuncfrmd_lc_nonapvd_bnkamt}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/UnconfirmedLCfromNon-ApprovedBankAmountSARVisible} === true ? true : false}"/>
+        <Input value="{parts: ['Customers>/zuncfrmd_lc_nonapvd_bnkamt', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" maxLength="10" visible="{=${fieldMappingModels>/UnconfirmedLCfromNon-ApprovedBankAmountSARVisible} === true ? true : false}"/>
 
-        <!-- <core:Title text="Credit Risk Insurance (CRI) [With attachments]" />
-        <Label text="Insurer" visible="{=${fieldMappingModels>/CreditRiskInsuranceInsurerVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/139} === true ? true : false}"/>
-        <Input value="{Customers>/zcri_insurer}" maxLength="20" visible="{=${fieldMappingModels>/CreditRiskInsuranceInsurerVisible} === true ? true : false}"/>
-        <Label text="Amount (AED)" visible="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zcri_amount}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/CreditRiskInsuranceAmountAEDVisible} === true ? true : false}"/>
-        <Label text="CRI Buyer ID" visible="{=${fieldMappingModels>/CreditRiskInsuranceCRIBuyerIDVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CreditRiskInsuranceCRIBuyerIDMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zcri_buyerid}" maxLength="20" visible="{=${fieldMappingModels>/CreditRiskInsuranceCRIBuyerIDVisible} === true ? true : false}"/>
-        <Label text="Approval Mail Attachment" visible="{=${fieldMappingModels>/CreditRiskInsuranceApprovalMailAttachmentVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CreditRiskInsuranceApprovalMailAttachmentMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zcri_approval_mail_attach}" maxLength="20" visible="{=${fieldMappingModels>/CreditRiskInsuranceApprovalMailAttachmentVisible} === true ? true : false}"/>
-        
-        <core:Title text="Corporate Guarantee from Parent co. of Class A customer" />
-        <Label text="Name of Company" visible="{=${fieldMappingModels>/NameofCompanyVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/NameofCompanyMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zclassa_name_of_the_company}" maxLength="20" visible="{=${fieldMappingModels>/NameofCompanyVisible} === true ? true : false}"/>
-        <Label text="Amount (AED)" visible="{=${fieldMappingModels>/AmountAEDVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/AmountAEDMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zclassa_customer_amount}" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/AmountAEDVisible} === true ? true : false}"/>
        
-        <core:Title text="Cash Deposit/Advance" />
-        <Label text="Amount (AED)" visible="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zcash_deposit_adv_amount}" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/CashDeposit-AdvanceAmountAEDVisible} === true ? true : false}"/>
-        
-        <core:Title text="Avalization Draft (accepted by Customer and duly accepted by Customer Bank)" />
-        <Label text="Bank Name" visible="{=${fieldMappingModels>/AvalizationDraftBankNameVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/AvalizationDraftBankNameMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zavalization_draft_bank_name}" maxLength="20" visible="{=${fieldMappingModels>/AvalizationDraftBankNameVisible} === true ? true : false}"/>
-        <Label text="Amount (AED)" visible="{=${fieldMappingModels>/AvalizationDraftAmountAEDVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/AvalizationDraftAmountAEDMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zavalization_draft_amount}" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/AvalizationDraftAmountAEDVisible} === true ? true : false}"/> -->
     </forms:SimpleForm>
 </mvc:View>

@@ -1,13 +1,16 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-    "sap/m/MessageBox"
+    "sap/m/MessageBox",
+    "Iffco/clap/formatter/formatter"
 ], function(
 	Controller,
-    MessageBox
+    MessageBox,
+    formatter
 ) {
 	"use strict";
 
 	return Controller.extend("Iffco.clap.sections.CreditLimit.SecuredCreditLimitController", {
+        formatter: formatter,
         onInit: function() {
             // Controller.prototype.onInit.apply(this, arguments);
             if (!this.bankCountry) {
@@ -150,16 +153,26 @@ sap.ui.define([
               this.getView().getModel("dmsModel").updateBindings(true);
             this.firstTime=false;
         },
-        handleSetMaxLength:function (evt) {
-            var val = evt.getSource().getValue().length;
-            var maxLen = evt.getSource().getMaxLength();
-            if(val >= maxLen){
-                evt.getSource().setType("Text");
-            }else{
-                evt.getSource().setType("Number");
-            }
+        handleNo:function (evt) {
+            var val = evt.getSource().getValue();
+            // var maxLen = evt.getSource().getMaxLength();
+            // if(val >= maxLen){
+            //     evt.getSource().setType("Text");
+            // }else{
+            //     evt.getSource().setType("Number");
+            // }
+            // zirr_bank_guarantee_amt;
+            // var fieldName  = evt.getSource().mBindingInfos.value.parts[0].path.split("/")[1];
+            // this.getView().getModel("Customers").getData.zirr_bank_guarantee_amt;
+            var fieldName = "/" + evt.getSource().mBindingInfos.value.parts[0].path.split("/")[1];
+            this.getView().getModel("Customers").setProperty(fieldName, val.toString());
+            this.getView().getModel("Customers").updateBindings(true);
+            console.log(this.getView().getModel("Customers").getProperty(fieldName));
+
         },
         handleCalcuate:function (evt) {
+            var val = evt.getSource().getValue();
+            return val.toString();
         //     var that = this;
         //     // this.getView().getModel("appView").setProperty("scl", evt.getSource().getValue());
         //     if(a == undefined){
@@ -168,6 +181,10 @@ sap.ui.define([
         //     a+=parseInt(evt.getSource().getValue());
         //     console.log(a);
         //     }
+        },
+        restrictChar:function (e) {
+            
+            console.log(e);
         }
 
 
