@@ -61,7 +61,7 @@ sap.ui.define([
             console.log("ty");
             // var process = "CREATE";
             var process = this.getView().getModel("appView").getProperty("/process");
-            var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+            var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
             // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
             var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
             this.ruleId = "";

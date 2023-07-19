@@ -387,7 +387,7 @@ sap.ui.define([
                 //     busyDialog.close();
                 // }, 5000);
                 this.getView().getModel("appView").setProperty("/process", this.process);
-                var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
                 // var sCustomerType = this.getView().byId("orderData1").getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
                 // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
                 // var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
@@ -500,6 +500,8 @@ sap.ui.define([
             saveRequest: function () {
                 var that = this;
                 this.buttonText = 'save';
+                var amtFieldState = this.handleAmtFieldsValidation();
+                if(amtFieldState === true){
                 var oModel = this.getView().getModel();
                 var oCustomerDetailModel = this.getView().getModel("Customers");
                 delete oCustomerDetailModel.getData().to_zdd_sale;
@@ -515,7 +517,8 @@ sap.ui.define([
                 } else {
                     oEntry.zcredit_limit_type = "Both";
                 }
-                this.handleAmtFields();
+                
+                // this.handleAmtFields();
 
                 // if (this.mode == "edit" && that.custNum) {
                 if (this.mode == "edit") {
@@ -556,7 +559,7 @@ sap.ui.define([
                     if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
                         oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
                     }
-                    oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                    oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
                     oEntry.ztype_of_customer = oEntry.zdescription;
                     //oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
                     // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
@@ -707,24 +710,8 @@ sap.ui.define([
                             var errorMessage = "Please fill in the following mandatory fields: " + missingFields.join(", ");
                             MessageBox.error(errorMessage);
                         }
-                    }
-                    else if(!oEntry.zirr_bank_guarantee_amt.charCodeAt() >= 48 && !oEntry.zirr_bank_guarantee_amt.charCodeAt() <= 57
-                        || !oEntry.zlc_issuance_amount.charCodeAt() >= 48 && !oEntry.zlc_issuance_amount.charCodeAt() <= 57
-                        || !oEntry.zlc_confirming_amount.charCodeAt() >= 48 && !oEntry.zlc_confirming_amount.charCodeAt() <= 57
-                        || !oEntry.zcri_amount.charCodeAt() >= 48 && !oEntry.zcri_amount.charCodeAt() <= 57
-                        || !oEntry.zclassa_customer_amount.charCodeAt() >= 48 && !oEntry.zclassa_customer_amount.charCodeAt() <= 57
-                        || !oEntry.zcash_deposit_adv_amount.charCodeAt() >= 48 && !oEntry.zcash_deposit_adv_amount.charCodeAt() <= 57
-                        || !oEntry.zavalization_draft_amount.charCodeAt() >= 48 && !oEntry.zavalization_draft_amount.charCodeAt() <= 57
-                        || !oEntry.zopen_clean_credit_amount.charCodeAt() >= 48 && !oEntry.zopen_clean_credit_amount.charCodeAt() <= 57
-                        || !oEntry.zcad_amount.charCodeAt() >= 48 && !oEntry.zcad_amount.charCodeAt() <= 57
-                        || !oEntry.zpoc_in_hand_amount.charCodeAt() >= 48 && !oEntry.zpoc_in_hand_amount.charCodeAt() <= 57
-                        || !oEntry.zundated_or_security_deposit_c.charCodeAt() >= 48 && !oEntry.zundated_or_security_deposit_c.charCodeAt() <= 57
-                        || !oEntry.zcri_insurer_amount.charCodeAt() >= 48 && !oEntry.zcri_insurer_amount.charCodeAt() <= 57
-                        || !oEntry.zuncfrmd_lc_nonapvd_bnkamt.charCodeAt() >= 48 && !oEntry.zuncfrmd_lc_nonapvd_bnkamt.charCodeAt() <= 57
-                        ){                            
-                            sap.m.MessageBox.error("Please enter amount!!!");
-                        }
-                    else {
+                    }else {
+                        this.handleAmtFields();
                         var req_no = Math.floor(1000 + Math.random() * 9000) + "";
                         oEntry.zrequest_no = req_no;
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
@@ -765,7 +752,7 @@ sap.ui.define([
                         else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
                             oEntry.zbusiness_partner_grouping = "BP08"
                         }
-                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
                         oEntry.ztype_of_customer = oEntry.zdescription;
                         // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
                         // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
@@ -896,6 +883,9 @@ sap.ui.define([
                         });
                     }
                 }
+            }else{
+                MessageBox.error(this.amtValidationMesg);
+            }
             },
             submitRequest: function () {
                 var that = this;
@@ -906,6 +896,8 @@ sap.ui.define([
                 // if(emailState !== 'Error' && validFromState !== 'Error' && validToState !== 'Error'){
                 var state = this.handleValidateFormFields();
                 if (state == true) {
+                    var amtFieldState = this.handleAmtFieldsValidation();
+                if(amtFieldState === true){
                     var oModel = this.getView().getModel();
                     var oCustomerDetailModel = this.getView().getModel("Customers");
                     delete oCustomerDetailModel.getData().to_zdd_sale;
@@ -951,7 +943,7 @@ sap.ui.define([
                             oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
                         }
                         //oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
-                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
                         oEntry.ztype_of_customer = oEntry.zdescription;
                         // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
                         // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
@@ -1084,7 +1076,7 @@ sap.ui.define([
                                 // jQuery.sap.require("sap.m.MessageBox");
                                 // sap.m.MessageBox.success("Customer Id " + this.getView().getModel("Customers").getData().zrequest_no + " saved Successfully");
                                 this.handleSalesData();
-                                if (oEntry.zdescription !== 'Cash') {
+                                if (oEntry.zdescription !== 'CASH') {
                                     var sCreatedAt = "";
                                     if (oEntry.zcreated_date) {
                                         if (oEntry.zcreated_date.getDate() < 10) {
@@ -1174,7 +1166,7 @@ sap.ui.define([
                             oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
                         }
                         // oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
-                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
                         oEntry.ztype_of_customer = oEntry.zdescription;
                         // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
                         // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
@@ -1292,7 +1284,7 @@ sap.ui.define([
                                 // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
                                 this.handleSalesData();
                                 this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
-                                if (oData.zdescription !== 'Cash') {
+                                if (oData.zdescription !== 'CASH') {
                                     var sCreatedAt = "";
                                     if (oData.zcreated_date) {
                                         if (oData.zcreated_date.getDate() < 10) {
@@ -1352,7 +1344,10 @@ sap.ui.define([
                             }
                         });
                     }
-                } else {
+                }else{
+                    MessageBox.error(this.amtValidationMesg);
+                }
+             }else {
                     that.getView().setBusy(false);
                     MessageBox.error(this.ValidationMesg);
                 }
@@ -2140,7 +2135,7 @@ sap.ui.define([
                 var salesRequired = true;
 
 
-                if (this.getView().getModel("appView").getProperty("/vertical") === 'Cash') {
+                if (this.getView().getModel("appView").getProperty("/vertical") === 'CASH') {
                     var simpleFormIdArr = ["orderData1", "orderData5", "orderData9", "orderData6", "orderData8",
                         "orderData12", "orderData81", "orderData193", "orderData86", "orderData125"]
                 } else {
@@ -2270,13 +2265,49 @@ sap.ui.define([
                     }
                 }
             },
+            handleAmtFieldsValidation: function () {
+                var amtFieldState = true;
+                
+                var simpleForms = ["Planned2", "Planned3"];
+                for (var j = 0; j < simpleForms.length; j++) {
+                var content = this.getView().byId(simpleForms[j]).getAggregation("_views") !== null ? this.getView().byId(simpleForms[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
+                var isVisible = this.getView().byId(simpleForms[j]).getParent().getParent().getVisible();
+                if (isVisible) {
+                    for (var b = 0; b < content.length; b++) {
+                        if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
+                            if (content[b].getVisible()) {
+                                if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getVisible() ===
+                                    true) {
+                                    if (content[b + 1].getMetadata().getName() == "sap.m.Input") {
+                                        if (content[b + 1].getValueState() == "Error") {
+                                            // content[b + 1].setValueState("Error").setValueStateText("");
+                                            amtFieldState = false;
+                                            this.registerValidationError(content[b]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            
+            }
+
+            if (amtFieldState === false) {
+                this.amtValidationMesg = "Please check the amount fields";
+            }
+
+            return amtFieldState;
+                
+                
+            },
             handleValidateFormFields: function () {
                 var that = this;
                 var State = true;
                 var salesRequired = true;
 
 
-                if (this.getView().getModel("appView").getProperty("/vertical") === 'Cash') {
+                if (this.getView().getModel("appView").getProperty("/vertical") === 'CASH') {
                     var simpleFormIdArr = ["orderData1", "orderData5", "orderData9", "orderData6", "orderData8",
                         "orderData12", "orderData81", "orderData193", "orderData86", "orderData125"]
                 } else {

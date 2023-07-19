@@ -6,8 +6,8 @@
         <Input value = "{= ${Customers>/zrequest_type} !== '' ? 'Create Customer' : '{Customers>/zrequest_type}'}" enabled="false" maxLength="20"/>
         <!-- <Label text="Description" /> -->
         <!-- <RadioButtonGroup selectedIndex="0" select="onDescriptionSelect" >
-            <RadioButton id="0"  selected="{= ${Customers>/zdescription} === 'Credit' || ${appView>/customerType} === 0 ? true : false}" text="Credit"/>
-            <RadioButton id="1" text="Cash" selected="{= ${Customers>/zdescription} === 'Cash' || ${appView>/customerType} === 1 ? true : false}"/>
+            <RadioButton id="0"  selected="{= ${Customers>/zdescription} === 'CREDIT' || ${appView>/customerType} === 0 ? true : false}" text="CREDIT"/>
+            <RadioButton id="1" text="CASH" selected="{= ${Customers>/zdescription} === 'CASH' || ${appView>/customerType} === 1 ? true : false}"/>
         </RadioButtonGroup> -->
 
         <Label text="Business Unit" visible="{=${fieldMappingModels>/BusinessUnitVisible} === true ? true : false}"

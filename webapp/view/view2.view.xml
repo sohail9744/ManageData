@@ -58,7 +58,7 @@
                 </layout:HorizontalLayout>
 
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:Label text="Customer Type :{=${appView>/vertical} === 'Cash' ? 'Cash' : 'Credit'}" />
+                    <m:Label text="Customer Type :{=${appView>/vertical} === 'CASH' ? 'CASH' : 'CREDIT'}" />
                     <m:VBox>
                         <m:Label text="Credit Limit" />
                         <!-- <m:ProgressIndicator percentValue="90" displayValue="30%" /> -->
@@ -169,7 +169,7 @@
 					</ObjectPageSubSection> 
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? true : true}" id="erpCustomersSection" title="ERP Customers">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? true : true}" id="erpCustomersSection" title="ERP Customers">
                 <subSections>
                     <ObjectPageSubSection id="erpCustomersydata" title="Accounting Information">
                         <blocks>
@@ -250,7 +250,7 @@
                     
                 </subSections>
             </ObjectPageSection>
-            <!-- <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="CreditProfileSection" title="Credit profile">
+            <!-- <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditProfileSection" title="Credit profile">
                 <subSections>
                     <ObjectPageSubSection id="CreditProfileData" title="Credit Profile">
                         <blocks>
@@ -285,7 +285,7 @@
                  
                 </subSections>
             </ObjectPageSection> -->
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="PlannedActualSection" title="Credit Limit">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="PlannedActualSection" title="Credit Limit">
                 <subSections>
                     <ObjectPageSubSection id="plannedandactual" title="Credit Limit Type">
                         <blocks>
@@ -319,7 +319,7 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="CreditPerformanceEvaluation" title="Credit Performance Evaluation">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditPerformanceEvaluation" title="Credit Performance Evaluation">
                 <subSections>
                     <ObjectPageSubSection id="CreditPerformanceEvaluationSection" title="Credit Performance Evaluation">
                         <blocks>
@@ -328,7 +328,7 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="CreditAnalysis" title="Credit Analysis">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditAnalysis" title="Credit Analysis">
                 <subSections>
                     <ObjectPageSubSection id="CreditAnalysisSection" title="Credit Analysis">
                         <blocks>
@@ -337,7 +337,7 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="CustomerBackground" title="Customer Background">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CustomerBackground" title="Customer Background">
                 <subSections>
                     <ObjectPageSubSection id="CustomerBackgroundSection" title="Customer Background">
                         <blocks>

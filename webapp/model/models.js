@@ -24,10 +24,10 @@ sap.ui.define([
             createMasterDataModel: function(){
                 var oTemp = {
                     "BusinessPartnerDD" : [
-                        {"BPKey":"Sold", "BPText":"Sold To"},
-                        {"BPKey":"Ship", "BPText":"Ship To"},
-                        {"BPKey":"One", "BPText":"One Time"},
-                        {"BPKey":"Inte", "BPText":"Intercompany Customer"},
+                        {"BPKey":"Sold", "BPText":"SOLD TO"},
+                        {"BPKey":"Ship", "BPText":"SHIP TO"},
+                        {"BPKey":"One", "BPText":"ONE TIME"},
+                        {"BPKey":"Inte", "BPText":"INTERCOMPANY CUSTOMER"},
                     ],
                     "BPRoles": [
                         {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},
@@ -67,10 +67,10 @@ sap.ui.define([
             createAppModel: function () {
                 var oTemp = {
                     "BusinessPartnerDD" : [
-                        {"BPKey":"1", "BPText":"Sold To"},
-                        {"BPKey":"2", "BPText":"Ship To"},
-                        {"BPKey":"3", "BPText":"One Time"},
-                        {"BPKey":"4", "BPText":"Intercompany Customer"},
+                        {"BPKey":"1", "BPText":"SOLD TO"},
+                        {"BPKey":"2", "BPText":"SHIP TO"},
+                        {"BPKey":"3", "BPText":"ONE TIME"},
+                        {"BPKey":"4", "BPText":"INTERCOMPANY CUSTOMER"},
                     ],
                     "BPRoles": [
                         {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},
