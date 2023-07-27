@@ -3,7 +3,7 @@
 	 <core:Title text="Annual Sales Revenue"/>
 		<Label text="Volume" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"/>
-		<Input value="{Customers>/zannual_volume}" type="Number" maxLength="20" liveChange="handleSetMaxLength"  visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"/>
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zannual_volume}" type="Number" maxLength="20" liveChange="handleSetMaxLength"  visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"/>
 		
 		<Label text="Actual Volume" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"/>
@@ -13,11 +13,11 @@
  required="{=${fieldMappingModels>/ValueMandatory} === true ? true : false}"/>
 		<Input value="{Customers>/zannual_value}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" liveChange="handleSetMaxLength" maxLength="8" type="Number"  visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"/>
 
-		<Label text="Currency" visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CreditlimitCurrencyMandatory} === true ? true : false}"/>
+		<Label text="Currency" visible="{=${fieldMappingModels>/CurrencyVisibleAnnualSalesRevenue} === true ? true : false}"
+ required="{=${fieldMappingModels>/CurrencyMandatoryAnnualSalesRevenue} === true ? true : false}"/>
      <!-- <Input value="{Customers>/zcredit_limit_currency}"  visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/> -->
 		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForCurrency" value="{Customers>/zcredit_limit_currency}"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/>
+		valueHelpOnly="true" visible="{=${fieldMappingModels>/CurrencyVisibleAnnualSalesRevenue} === true ? true : false}"/>
 
 		<Label text="Actual Turnover" visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/ActualTurnoverMandatory} === true ? true : false}"/>
@@ -44,7 +44,7 @@
 
 		 <Label text="Sales Value" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input  type="Number" value="{Customers>/zmonthly_actual_sales_value}"
+		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_sales_value}"
 		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
 
 		 <Label text="Actual Sales Value" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"

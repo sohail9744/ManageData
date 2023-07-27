@@ -6,7 +6,7 @@
 		<Input value="{Customers>/zvertical}" enabled="false" />
 		
 		<Label text="Customer Group" />
-		<Input value="{Customers>/zcustomer_group}" enabled="false" />
+		<Input value="{salesDataModel>/0/zcustomer_group}" enabled="false" />
 		
         <Label text="Business Proposal" />
 		<Input value="{Customers>/zbusiness_proposal}" enabled="false" />
@@ -16,17 +16,20 @@
 		<Input value="{Customers>/zstandard_usage}" enabled="false" />
 
         <Label text="Customer Ratings" />
-		<Input value="{Customers>/zcustomer_internal_rating}" enabled="false" />
+		<Input value="{Customers>/zclass}" enabled="false" />
 
         <core:Title text="Credit Limit"/>
         <Label text="Unsecured (AED)" />
-		<Input value="{Customers>/ztotal_unsecured_limit}" enabled="false" />
+		<Input value="{parts: ['Customers>/ztotal_unsecured_limit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="false" />
+		<!-- <Input value="{Customers>/ztotal_unsecured_limit}" enabled="false" /> -->
 
         <Label text="Secured (AED)" />
-		<Input value="{Customers>/ztotal_secured_limit}" enabled="false" />
+		<Input value="{parts: ['Customers>/ztotal_secured_limit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="false" />
+		<!-- <Input value="{Customers>/ztotal_secured_limit}" enabled="false" /> -->
 
         <Label text="Total Credit Limit(AED)" />
-		<Input value="{Customers>/ztotal_credit_amount}" enabled="false" />
+		<Input value="{parts: ['Customers>/ztotal_credit_amount', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}" enabled="false" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/>
+		<!-- <Input value="{Customers>/ztotal_credit_amount}" enabled="false" /> -->
 
         <Label text="In Functional Currency(AED)" />
 		<Input value="{Customers>/zstandard_usage}" enabled="false" />

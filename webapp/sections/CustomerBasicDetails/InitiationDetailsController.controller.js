@@ -229,12 +229,32 @@ sap.ui.define([
         },
         handleValueHelpVerticalSearch: function (evt) {
             var sValue = evt.getParameter("value");
+            var val = this.getView().byId("businessUnitId").getValue();
+            var filters = [];
             if (sValue.length > 0) {
-                var oFilter2 = new sap.ui.model.Filter("vertical", 'Contains', sValue);
-                this.vertical.getBinding("items").filter([oFilter2]);
-            } else {
-                this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", this.businessUntVal)]);
-            }
+              var filter1 = new sap.ui.model.Filter({
+                  path: "vertical",
+                  operator: "Contains",
+                  value1: sValue
+              });
+
+              var sFilters = [filter1];
+              filters.push(new sap.ui.model.Filter(sFilters, false));
+              if (val.length > 0) {
+                  filters.push(new sap.ui.model.Filter("Businessunit", "EQ", val));
+              }
+              this.vertical.getBinding("items").filter(filters, true);
+          } else {
+              this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", val)]);
+          }
+
+
+            // if (sValue.length > 0) {
+            //     var oFilter2 = new sap.ui.model.Filter("vertical", 'Contains', sValue);
+            //     this.vertical.getBinding("items").filter([oFilter2]);
+            // } else {
+            //     this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", this.businessUntVal)]);
+            // }
         },
         handleValueHelpVerticalClose: function () {
             this.vertical.close();

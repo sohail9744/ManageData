@@ -48,7 +48,9 @@ sap.ui.define([
             },
             onAfterRendering: function() {
                 var oSubSectionContainer = this.getView().byId("plannedandactual4").$().parent()[0];
+                // var oSubSectionContainer = this.getView().byId("plannedandactual4") ? this.getView().byId("plannedandactual4").$().parent()[0] : null
           
+                
                 var observer = new IntersectionObserver(this._handleIntersection.bind(this), {
                   threshold: 0.5 // Adjust the threshold as needed
                 });
@@ -298,6 +300,25 @@ sap.ui.define([
 
                             oCustomerDetailModel.setData(oData);
                             oCustomerDetailModel.refresh();
+                            
+                            var masterData = this.getView().getModel("Customers").getData();
+                            if(masterData.ztype_of_entity === 'Co-Operative (COOP)' || masterData.ztype_of_entity === 'CONSORTIUM'
+                            || masterData.ztype_of_entity === 'Government' || masterData.ztype_of_entity === 'Limited Liability Partnership'
+                            || masterData.ztype_of_entity === 'Other' || masterData.ztype_of_entity === 'Partnership'
+                            || masterData.ztype_of_entity === 'Private Limited Company' || masterData.ztype_of_entity === 'Public Limited Company'
+                            ||masterData.ztype_of_entity === 'Sole Proprietorship'){
+                                this.getView().getModel("appView").getData().TypeOfEntity1 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity2 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity3 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity4 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity5 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity6 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity7 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity8 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity9 = true;
+                            }
+
+
                             this.getView().getModel("appView").setProperty("/vertical", this.getView().getModel("Customers").getData().zdescription);
 
                             this.getDmsData();
@@ -427,6 +448,7 @@ sap.ui.define([
                                         }
                                     } else {
                                         sField += obj.Customersub1.split(" ").join("");
+                                        console.log(sField);
                                         // sField += obj.replace(":", "").split(" ").join("");
                                         if (obj.Visibility === "Y") {
                                             flatObj[sField] = true;
@@ -518,7 +540,7 @@ sap.ui.define([
                     oEntry.zcredit_limit_type = "Both";
                 }
                 
-                // this.handleAmtFields();
+                this.handleAmtFields();
 
                 // if (this.mode == "edit" && that.custNum) {
                 if (this.mode == "edit") {
@@ -711,7 +733,7 @@ sap.ui.define([
                             MessageBox.error(errorMessage);
                         }
                     }else {
-                        this.handleAmtFields();
+                        // this.handleAmtFields();
                         var req_no = Math.floor(1000 + Math.random() * 9000) + "";
                         oEntry.zrequest_no = req_no;
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
@@ -894,6 +916,9 @@ sap.ui.define([
                 // var emailState = this.getView().byId("orderData8").getAggregation("_views")[0].getContent()[0].getContent()[14].getValueState();
 
                 // if(emailState !== 'Error' && validFromState !== 'Error' && validToState !== 'Error'){
+
+               
+
                 var state = this.handleValidateFormFields();
                 if (state == true) {
                     var amtFieldState = this.handleAmtFieldsValidation();
@@ -913,6 +938,7 @@ sap.ui.define([
                     } else {
                         oEntry.zcredit_limit_type = "Both";
                     }
+                    this.handleAmtFields();
 
                     // if (this.mode == "edit" || this.custNum) {
                     if (this.mode == "edit") {
@@ -1351,6 +1377,7 @@ sap.ui.define([
                     that.getView().setBusy(false);
                     MessageBox.error(this.ValidationMesg);
                 }
+            
             },
 
             dateFormatter: function (value) {

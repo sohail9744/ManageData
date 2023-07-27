@@ -38,7 +38,4 @@
    visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/> -->
 	</forms:SimpleForm>
 </mvc:View>
-<!-- value="{parts: [{path: 'Customers>/zirr_bank_guarantee_amt'}, {path:'Customers>/zlc_confirming_amount'},
- {path:'Customers>/zcri_insurer_amount'}, {path:'Customers>/zclassa_customer_amount'},
- {path:'Customers>/zcash_deposit_adv_amount'},{path:'Customers>/zavalization_draft_amount'}" -->
 

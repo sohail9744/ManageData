@@ -366,12 +366,33 @@ sap.ui.define([
           },
           handleValueHelpChannelSearch: function (evt) {
             var sValue = evt.getParameter("value");
+            var val = this.getView().byId("channelGrpId").getValue();
+
+            var filters = [];
             if (sValue.length > 0) {
-              var oFilter1 = new sap.ui.model.Filter("channel", "Contains", sValue);
-              this.channel.getBinding("items").filter([oFilter1]);
-            } else {
-              this.channel.getBinding("items").filter([]);
-            }
+              var filter1 = new sap.ui.model.Filter({
+                  path: "channel",
+                  operator: "Contains",
+                  value1: sValue
+              });
+
+              var sFilters = [filter1];
+              filters.push(new sap.ui.model.Filter(sFilters, false));
+              if (val.length > 0) {
+                  filters.push(new sap.ui.model.Filter("channelgroup", "EQ", val));
+              }
+              this.channel.getBinding("items").filter(filters, true);
+          } else {
+              this.channel.getBinding("items").filter([new sap.ui.model.Filter("channelgroup", "EQ", val)]);
+          }
+
+            // if (sValue.length > 0) {
+            //   var oFilter1 = new sap.ui.model.Filter("channel", "EQ", sValue);
+            //   this.channel.getBinding("items").filter([oFilter1]);
+            // } else {
+            //   // var oFilter1 = new sap.ui.model.Filter("channel", "Contains", sValue);
+            //   this.channel.getBinding("items").filter([new sap.ui.model.Filter("channelgroup", "Contains", val)]);
+            // }
           },
     
           handleValueHelpForSubChannel: function (evt) {
@@ -404,12 +425,34 @@ sap.ui.define([
           },
           handleValueHelpSubChannelSearch: function (evt) {
             var sValue = evt.getParameter("value");
+            var val1 = this.getView().byId("channelId").getValue();
+
+            var filters = [];
             if (sValue.length > 0) {
-              var oFilter1 = new sap.ui.model.Filter("subchannel", "Contains", sValue);
-              this.subChannel.getBinding("items").filter([oFilter1]);
-            } else {
-              this.subChannel.getBinding("items").filter([]);
-            }
+              var filter1 = new sap.ui.model.Filter({
+                  path: "subchannel",
+                  operator: "Contains",
+                  value1: sValue
+              });
+
+              var sFilters = [filter1];
+              filters.push(new sap.ui.model.Filter(sFilters, false));
+              if (val1.length > 0) {
+                  filters.push(new sap.ui.model.Filter("channel", "EQ", val1));
+              }
+              this.subChannel.getBinding("items").filter(filters, true);
+          } else {
+              this.subChannel.getBinding("items").filter([new sap.ui.model.Filter("channel", "EQ", val1)]);
+          }
+
+
+            // if (sValue.length > 0) {
+            //   var oFilter1 = new sap.ui.model.Filter("subchannel", "Contains", sValue);
+            //   this.subChannel.getBinding("items").filter([oFilter1]);
+            // } else {
+            //   // this.subChannel.getBinding("items").filter([]);
+            //   this.subChannel.getBinding("items").filter([new sap.ui.model.Filter("channel", "EQ", val1)]);
+            // }
           },
           handleValueHelpForlineOfBusinessType: function (evt) {
             this.lineOfBusinessTypeField = evt.getSource();
@@ -443,12 +486,25 @@ sap.ui.define([
           },
           handleValueHelplobSearch: function (evt) {
             var sValue = evt.getParameter("value");
+            var val2 = this.getView().byId("subChannelId").getValue();
+            var filters = [];
             if (sValue.length > 0) {
-              var oFilter1 = new sap.ui.model.Filter("lineofbusinesstype", "Contains", sValue);
-              this.lineOfBusinessType.getBinding("items").filter([oFilter1]);
-            } else {
-              this.lineOfBusinessType.getBinding("items").filter([]);
-            }
+              var filter1 = new sap.ui.model.Filter({
+                  path: "lineofbusinesstype",
+                  operator: "Contains",
+                  value1: sValue
+              });
+
+              var sFilters = [filter1];
+              filters.push(new sap.ui.model.Filter(sFilters, false));
+              if (val2.length > 0) {
+                  filters.push(new sap.ui.model.Filter("subchannel", "EQ", val2));
+              }
+              this.lineOfBusinessType.getBinding("items").filter(filters, true);
+          } else {
+              this.lineOfBusinessType.getBinding("items").filter([new sap.ui.model.Filter("subchannel", "EQ", val2)]);
+          }
+
           },
           handleSetMaxLength:function (evt) {
             var val = evt.getSource().getValue().length;

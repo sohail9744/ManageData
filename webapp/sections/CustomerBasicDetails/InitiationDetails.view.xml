@@ -12,12 +12,12 @@
 
         <Label text="Business Unit" visible="{=${fieldMappingModels>/BusinessUnitVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/BusinessUnitMandatory} === true ? true : false}"/>
- <MultiInput showClearIcon="true" value="{Customers>/zbusiness_unit_name}" valueHelpRequest="handleValueHelpForBusinessUnit"
+ <MultiInput id="businessUnitId" showClearIcon="true" value="{Customers>/zbusiness_unit_name}" valueHelpRequest="handleValueHelpForBusinessUnit"
 		valueHelpOnly="true" enabled="{=${Customers>/zrequest_no} ? false : true}" visible="{=${fieldMappingModels>/BusinessUnitVisible} === true ? true : false}"/>
 
         <Label text="Vertical" visible="{=${fieldMappingModels>/VerticalVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/VerticalMandatory} === true ? true : false}"/>
-        <MultiInput showClearIcon="true" value="{Customers>/zvertical}" valueHelpRequest="handleValueHelpForVertical"
+        <MultiInput id="verticalId" showClearIcon="true" value="{Customers>/zvertical}" valueHelpRequest="handleValueHelpForVertical"
 		valueHelpOnly="true" enabled="{=${Customers>/zrequest_no} ? false : true}" visible="{=${fieldMappingModels>/VerticalVisible} === true ? true : false}"/>
 
         <Label text="Priority" visible="{=${fieldMappingModels>/PriorityVisible} === true ? true : false}"
@@ -31,7 +31,7 @@
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zreason}" visible="{=${fieldMappingModels>/ReasonVisible} === true ? true : false}"/>
         <Label text="Status" visible="{=${Customers>/zrequest_no} ? true : false}"
  required="{=${fieldMappingModels>/StatusMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zstatus}" maxLength="10" enabled="false" visible="{=${Customers>/zrequest_no} ? true : false}"/>
+        <Input value="{Customers>/zrequest_status}" maxLength="10" enabled="false" visible="{=${Customers>/zrequest_no} ? true : false}"/>
 
         <Label text="Created On/By" visible="{=${Customers>/zrequest_no} ? true : false}"
  required="{=${fieldMappingModels>/CreatedOnMandatory} === true ? true : false}" />

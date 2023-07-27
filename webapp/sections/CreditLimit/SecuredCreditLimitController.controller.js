@@ -102,21 +102,61 @@ sap.ui.define([
         },
         handleValueHelpBankSearch:function (evt) {
             var sValue = evt.getParameter("value");
-                if (sValue.length > 0) {
-                        var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
-                        this.bank.getBinding("items").filter([oFilter1]);
-                } else {
-                    this.bank.getBinding("items").filter([]);
-                }
+
+            var val = this.getView().byId("lcIssBankCountryId").getValue();
+
+            var filters = [];
+            if (sValue.length > 0) {
+              var filter1 = new sap.ui.model.Filter({
+                  path: "bank",
+                  operator: "Contains",
+                  value1: sValue
+              });
+
+              var sFilters = [filter1];
+              filters.push(new sap.ui.model.Filter(sFilters, false));
+              if (val.length > 0) {
+                  filters.push(new sap.ui.model.Filter("country", "EQ", val));
+              }
+              this.bank.getBinding("items").filter(filters, true);
+          } else {
+              this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "EQ", val)]);
+          }
+
+                // if (sValue.length > 0) {
+                //         var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
+                //         this.bank.getBinding("items").filter([oFilter1]);
+                // } else {
+                //     this.bank.getBinding("items").filter([]);
+                // }
         },
         handleValueHelpBankSearch1:function (evt) {
             var sValue = evt.getParameter("value");
-                if (sValue.length > 0) {
-                        var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
-                        this.bank1.getBinding("items").filter([oFilter1]);
-                } else {
-                    this.bank1.getBinding("items").filter([]);
-                }
+            var val = this.getView().byId("lcConfBankCountryId").getValue();
+
+            var filters = [];
+            if (sValue.length > 0) {
+              var filter1 = new sap.ui.model.Filter({
+                  path: "bank",
+                  operator: "Contains",
+                  value1: sValue
+              });
+
+              var sFilters = [filter1];
+              filters.push(new sap.ui.model.Filter(sFilters, false));
+              if (val.length > 0) {
+                  filters.push(new sap.ui.model.Filter("country", "EQ", val));
+              }
+              this.bank1.getBinding("items").filter(filters, true);
+          } else {
+              this.bank1.getBinding("items").filter([new sap.ui.model.Filter("country", "EQ", val)]);
+          }
+                // if (sValue.length > 0) {
+                //         var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
+                //         this.bank1.getBinding("items").filter([oFilter1]);
+                // } else {
+                //     this.bank1.getBinding("items").filter([]);
+                // }
         },
         handleValueHelpBankCountrySearch:function (evt) {
             var sValue = evt.getParameter("value");

@@ -14,6 +14,13 @@ sap.ui.define([], function () {
             else
                 return false;
         },
+        getVarienceAmt:function(amt, proposedAmt){
+            var amt = amt ? parseInt(amt) : 0 ;
+         var proposedAmt = proposedAmt ? parseInt(proposedAmt) : 0;
+          var sumOfSecUnsecAmt = amt - proposedAmt;
+          var positiveAmt =  Math.abs(sumOfSecUnsecAmt);
+          return positiveAmt.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).replace('$', '')
+        },
         formatDate: function (value) {
             if (value) {
                 var sNotifDate = new Date(value.toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0];
