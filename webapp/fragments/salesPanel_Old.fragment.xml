@@ -28,7 +28,7 @@
                         <Label
                             text="Sales Organization"
                             visible="{=${fieldMappingModels>/SalesOrganizationVisible} === true ? true : false}"
-                            required="true"
+                            // required="{=${fieldMappingModels>/SalesOrganizationMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
@@ -42,7 +42,7 @@
                         <Label
                             text="Distribution Channel"
                             visible="{=${fieldMappingModels>/DistributionChannelVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/DistributionChannelMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
@@ -57,7 +57,7 @@
                         <Label
                             text="Division"
                             visible="{=${fieldMappingModels>/DivisionVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/DivisionMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
@@ -495,7 +495,7 @@
                         <Label
                             text="Sales District"
                             visible="{=${fieldMappingModelss>/SalesdistrictVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesdistrictMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
@@ -508,7 +508,7 @@
                         <Label
                             text="Sales office"
                             visible="{=${fieldMappingModels>/SalesOfficeVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesOfficeMandatory} === true ? true : false}"
                         />
                         <Input
                             enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
@@ -520,7 +520,7 @@
                         <Label
                             text="Sales Group"
                             visible="{=${fieldMappingModels>/SalesGroupVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesGroupMandatory} === true ? true : false}"
                         />
                         <Input
                             enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
@@ -548,7 +548,7 @@
                         <Label
                             text="Currency"
                             visible="{=${fieldMappingModels>/CurrencyVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/CurrencyMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"

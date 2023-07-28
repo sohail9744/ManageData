@@ -30,8 +30,9 @@ sap.ui.define([
             }
             if (!this.division) {
                 this.division = new sap.ui.xmlfragment("Iffco.clap.fragments.DivisionSet", this);
+                // this.division.setModel(this.getOwnerComponent().getModel("DivModel"));
+                this.division.setModel(this.getOwnerComponent().getModel());
                 this.getView().addDependent(this.division);
-                this.division.setModel(this.getOwnerComponent().getModel("DivModel"));
             }
 
             if (!this.InvcDates) {
@@ -204,26 +205,26 @@ sap.ui.define([
             that.handleTaxClsModel();
         },
         //   Payment terms value help 
-        handleValueHelpForPaymentTerms:function (evt) {
+        handleValueHelpForPaymentTerms: function (evt) {
             this.paymentTermsField = evt.getSource();
-                this.paymentTerms.getBinding("items").filter([]);
-                this.paymentTerms.open();
+            this.paymentTerms.getBinding("items").filter([]);
+            this.paymentTerms.open();
         },
-        handleValueHelpPaymentTermsConfirm:function (evt){
+        handleValueHelpPaymentTermsConfirm: function (evt) {
             var title = evt.getParameter("selectedItems")[0].getProperty("title");
-                this.paymentTermsField.setValue(title);
+            this.paymentTermsField.setValue(title);
         },
-        handleValueHelpPaymentTermsClose:function () {
+        handleValueHelpPaymentTermsClose: function () {
             this.paymentTerms.close();
         },
-        handleValueHelpPaymentTermsSearch:function (evt) {
+        handleValueHelpPaymentTermsSearch: function (evt) {
             var sValue = evt.getParameter("value");
-                if (sValue.length > 0) {
-                        var oFilter1 = new sap.ui.model.Filter("paymentterm", 'Contains', sValue);
-                        this.paymentTerms.getBinding("items").filter([oFilter1]);
-                } else {
-                    this.paymentTerms.getBinding("items").filter([]);
-                }
+            if (sValue.length > 0) {
+                var oFilter1 = new sap.ui.model.Filter("paymentterm", 'Contains', sValue);
+                this.paymentTerms.getBinding("items").filter([oFilter1]);
+            } else {
+                this.paymentTerms.getBinding("items").filter([]);
+            }
         },
         // 
 
@@ -463,7 +464,7 @@ sap.ui.define([
             //  this.salesOrgOdataVal = this.getView().getModel("salesDataModel").getData()[0].zsales_orgnization;
             var salesOrgValue = evt.getSource().getParent().getParent().getParent().getParent().getContent()[2].getValue().split(' - ')[0];
             this.salesOrgValue = evt.getSource().getParent().getParent().getParent().getParent().getContent()[2].getValue().split(' - ')[0];
-            
+
             // var salesOrgOdataVal = evt.getSource().getParent().getParent().getParent().getParent().getContent()[2].getValue().split(' - )[0]
 
             if (salesOrgValue) {
@@ -491,26 +492,26 @@ sap.ui.define([
 
             var filters = [];
             if (sValue.length > 0) {
-              var filter1 = new sap.ui.model.Filter({
-                  path: "DistributionChannel",
-                  operator: "Contains",
-                  value1: sValue
-              });
-              var filter2 = new sap.ui.model.Filter({
-                        path: "DistributionChannelText",
-                        operator: "Contains",
-                        value1: sValue
-                    });
+                var filter1 = new sap.ui.model.Filter({
+                    path: "DistributionChannel",
+                    operator: "Contains",
+                    value1: sValue
+                });
+                var filter2 = new sap.ui.model.Filter({
+                    path: "DistributionChannelText",
+                    operator: "Contains",
+                    value1: sValue
+                });
 
-              var sFilters = [filter1, filter2];
-              filters.push(new sap.ui.model.Filter(sFilters, false));
-              if (this.salesOrgValue.length > 0) {
-                  filters.push(new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgValue));
-              }
-              this.distribution.getBinding("items").filter(filters, true);
-          } else {
-              this.distribution.getBinding("items").filter([new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgValue)]);
-          }
+                var sFilters = [filter1, filter2];
+                filters.push(new sap.ui.model.Filter(sFilters, false));
+                if (this.salesOrgValue.length > 0) {
+                    filters.push(new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgValue));
+                }
+                this.distribution.getBinding("items").filter(filters, true);
+            } else {
+                this.distribution.getBinding("items").filter([new sap.ui.model.Filter("SalesOrg", "EQ", this.salesOrgValue)]);
+            }
 
 
             // if (sValue.length > 0) {
@@ -534,18 +535,22 @@ sap.ui.define([
 
         handleValueHelpForDivision: function (evt) {
             this.divisionField = evt.getSource();
-            // this.distriOdataVal = this.getView().getModel("salesDataModel").getData()[0].zdistribution_channel;
-
             var salesOrgValue = evt.getSource().getParent().getParent().getParent().getParent().getContent()[2].getValue().split(' - ')[0];
             var distriOdataVal = evt.getSource().getParent().getParent().getParent().getParent().getContent()[4].getValue().split(' - ')[0];
-            this.distriOdataVal = evt.getSource().getParent().getParent().getParent().getParent().getContent()[4].getValue().split(' - ')[0];
-            if (distriOdataVal) {
-                this.division.getBinding("items").filter([new sap.ui.model.Filter("Distributionchannel", "EQ", distriOdataVal)]);
+
+            if (distriOdataVal && salesOrgValue) {
+                var filters = [];
+                filters.push(new sap.ui.model.Filter("DistributionChannel", "EQ", distriOdataVal));
+                filters.push(new sap.ui.model.Filter("SalesOrg", "EQ", salesOrgValue));
+
+                var oCombinedFilter = new sap.ui.model.Filter(filters, true);
+                this.division.getBinding("items").filter([oCombinedFilter]);
                 this.division.open();
             } else {
-                MessageBox.error("Please select Distribution Channel");
+                MessageBox.error("Please select Sales Org and Distribution Channel");
             }
         },
+
         handleValueHelpDivisionClose: function () {
             this.division._dialog.close();
         },
@@ -568,7 +573,7 @@ sap.ui.define([
                     operator: "Contains",
                     value1: sValue
                 });
-                        
+
                 var sFilters = [filter1, filter2];
                 filters.push(new sap.ui.model.Filter(sFilters, false));
                 if (this.distriOdataVal.length > 0) {
@@ -848,7 +853,7 @@ sap.ui.define([
                 } else {
                     MessageBox.information("There is no sales area to generate");
                     this.getView().getModel("appView").setProperty("/addSales", true);
-                    
+
                 }
             } else {
                 MessageBox.information("Sales area is already generated");
@@ -1550,12 +1555,12 @@ sap.ui.define([
         },
         handleValueHelpTaxCatSearch: function (evt) {
             var sValue = evt.getParameter("value");
-				if (sValue.length > 0) {   
-					var oFilter2 = new sap.ui.model.Filter("Taxcategory", 'Contains', sValue);
-					this.TaxCategory.getBinding("items").filter([oFilter2]);
-				}else {
-					this.TaxCategory.getBinding("items").filter([]);
-				}
+            if (sValue.length > 0) {
+                var oFilter2 = new sap.ui.model.Filter("Taxcategory", 'Contains', sValue);
+                this.TaxCategory.getBinding("items").filter([oFilter2]);
+            } else {
+                this.TaxCategory.getBinding("items").filter([]);
+            }
         },
         handleValueHelpTaxCatClose: function (evt) {
             this.TaxCategory.close();
@@ -1564,13 +1569,13 @@ sap.ui.define([
         //Value Help for Tax Classification
         handleValueHelpForTaxClssfn: function (evt) {
             // debugger
-        //   var taxCatOdataVal = this.getView().getModel("SalesDataModel").getData() ? this.getView().getModel("SalesDataModel").getData()[0].ztaxcategory : "";
-        this.taxCatValue = evt.getSource().getParent().getParent().getParent().getParent().getContent()[114].getValue();
-        this.TaxClass = evt.getSource();
+            //   var taxCatOdataVal = this.getView().getModel("SalesDataModel").getData() ? this.getView().getModel("SalesDataModel").getData()[0].ztaxcategory : "";
+            this.taxCatValue = evt.getSource().getParent().getParent().getParent().getParent().getContent()[114].getValue();
+            this.TaxClass = evt.getSource();
             if (this.taxCatValue) {
                 this.TaxClassfn.getBinding("items").filter([new sap.ui.model.Filter("Taxcategory", "EQ", this.taxCatValue)]);
                 this.TaxClassfn.open();
-            } 
+            }
             // else if (taxCatOdataVal) {
             //     this.TaxClassfn.getBinding("items").filter([new sap.ui.model.Filter("Taxcategory", "EQ", taxCatOdataVal)]);
             //     this.TaxClassfn.open();
@@ -1588,7 +1593,7 @@ sap.ui.define([
         },
         handleValueHelpTaxClassfnSearch: function (evt) {
             var sValue = evt.getParameter("value");
-            
+
             var filters = [];
             if (sValue.length > 0) {
                 var filter1 = new sap.ui.model.Filter({
@@ -1603,7 +1608,7 @@ sap.ui.define([
                 });
                 var sFilters = [filter1, filter2];
                 filters.push(new sap.ui.model.Filter(sFilters, false));
-                if(this.taxCatValue.length > 0) {
+                if (this.taxCatValue.length > 0) {
                     filters.push(new sap.ui.model.Filter("Taxcategory", "EQ", this.taxCatValue));
                 }
                 this.TaxClassfn.getBinding("items").filter(filters, true);
@@ -1617,7 +1622,7 @@ sap.ui.define([
         },
         handleSetMaxLength: function (evt) {
             var val = evt.getSource().getValue();
-                  
+
             var maxLen = evt.getSource().getMaxLength();
             if (val.length >= maxLen) {
                 evt.getSource().setType("Text");
@@ -1633,7 +1638,7 @@ sap.ui.define([
             //     currentTotal += newValue;
             //     this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", currentTotal);
             // }
-         
+
         },
         handleDeleteSalesArea: function (evt) {
             var that = this;
@@ -1701,14 +1706,14 @@ sap.ui.define([
 
         handleValueHelpForCS: function (evt) {
             this.creditSegmentField = evt.getSource();
-             this.ccaOdataVal = this.getView().getModel("salesDataModel").getData()[0].zcredit_control_area;
-             var creditControlAreaVal = evt.getSource().getParent().getParent().getParent().getParent().getContent()[44].getValue().split(' - ')[0];
+            this.ccaOdataVal = this.getView().getModel("salesDataModel").getData()[0].zcredit_control_area;
+            var creditControlAreaVal = evt.getSource().getParent().getParent().getParent().getParent().getContent()[44].getValue().split(' - ')[0];
             var salesOrgValue = evt.getSource().getParent().getParent().getParent().getParent().getContent()[2].getValue().split(' - ')[0];
             if (creditControlAreaVal && salesOrgValue) {
                 this.cs.getBinding("items").filter([new sap.ui.model.Filter("credit_control_area", "EQ", creditControlAreaVal),
                 new sap.ui.model.Filter("SalesOrg", "EQ", salesOrgValue)]);
                 this.cs.open();
-            }else {
+            } else {
                 MessageBox.error("Please select the credit control area first");
             }
         },
@@ -1716,7 +1721,7 @@ sap.ui.define([
             this.cs._dialog.close();
         },
         onChangeBP: function (evt) {
-            
+
             this.bpRealtionInputField = evt.getSource();
             const bpId = this.getView().getModel("Customers").getData().zbusiness_unit_name;
             if (bpId) {
