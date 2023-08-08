@@ -4,22 +4,11 @@
         <Input value="{Customers>/zrequest_no}" enabled="false" visible="{=${Customers>/zrequest_no} ? true : false}" />
         <Label text="Request Type" />
         <Input value = "{= ${Customers>/zrequest_type} !== '' ? 'Create Customer' : '{Customers>/zrequest_type}'}" enabled="false" maxLength="20"/>
-        <!-- <Label text="Description" /> -->
-        <!-- <RadioButtonGroup selectedIndex="0" select="onDescriptionSelect" >
+        <Label text="Description" />
+        <RadioButtonGroup selectedIndex="0" select="onDescriptionSelect" >
             <RadioButton id="0"  selected="{= ${Customers>/zdescription} === 'CREDIT' || ${appView>/customerType} === 0 ? true : false}" text="CREDIT"/>
             <RadioButton id="1" text="CASH" selected="{= ${Customers>/zdescription} === 'CASH' || ${appView>/customerType} === 1 ? true : false}"/>
-        </RadioButtonGroup> -->
-
-        <Label text="Business Unit" visible="{=${fieldMappingModels>/BusinessUnitVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/BusinessUnitMandatory} === true ? true : false}"/>
- <MultiInput id="businessUnitId" showClearIcon="true" value="{Customers>/zbusiness_unit_name}" valueHelpRequest="handleValueHelpForBusinessUnit"
-		valueHelpOnly="true" enabled="{=${Customers>/zrequest_no} ? false : true}" visible="{=${fieldMappingModels>/BusinessUnitVisible} === true ? true : false}"/>
-
-        <Label text="Vertical" visible="{=${fieldMappingModels>/VerticalVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/VerticalMandatory} === true ? true : false}"/>
-        <MultiInput id="verticalId" showClearIcon="true" value="{Customers>/zvertical}" valueHelpRequest="handleValueHelpForVertical"
-		valueHelpOnly="true" enabled="{=${Customers>/zrequest_no} ? false : true}" visible="{=${fieldMappingModels>/VerticalVisible} === true ? true : false}"/>
-
+        </RadioButtonGroup>
         <Label text="Priority" visible="{=${fieldMappingModels>/PriorityVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/PriorityMandatory} === true ? true : false}" />
         <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpriority}" maxLength="10" visible="{=${fieldMappingModels>/PriorityVisible} === true ? true : false}"/>

@@ -46,17 +46,6 @@ sap.ui.define([
                 }
 
             },
-            onAfterRendering: function() {
-                var oSubSectionContainer = this.getView().byId("plannedandactual4").$().parent()[0];
-                // var oSubSectionContainer = this.getView().byId("plannedandactual4") ? this.getView().byId("plannedandactual4").$().parent()[0] : null
-          
-                
-                var observer = new IntersectionObserver(this._handleIntersection.bind(this), {
-                  threshold: 0.5 // Adjust the threshold as needed
-                });
-          
-                observer.observe(oSubSectionContainer);
-              },
 
               handleAmtFields: function (evt) {
                 this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt = this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt ?  this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt.toString() : "0";
@@ -78,36 +67,6 @@ sap.ui.define([
 
             },
           
-              _handleIntersection: function(entries, observer) {
-                var salesDataLength = this.getView().getModel("salesDataModel").getData();
-
-                if(salesDataLength.length !== 0){
-                    var aSalesData = this.getView().getModel("salesDataModel").getData();
-                    var totalValue = 0;
-                    for (var i = 0; i < aSalesData.length; i++) {
-                        if(aSalesData[i].zlimit){
-                        totalValue += Number(aSalesData[i].zlimit);
-                        }else{
-                            aSalesData[i].zlimit = '0';
-                        }
-                    }
-
-                    let creditButton = this.getView().getModel("appView").getProperty("/selectedType");
-                    if(creditButton === "Secured Credit Limit"){
-                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", totalValue.toString());
-                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit","0");
-                    }
-                    if(creditButton === "Both"){
-                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "0");
-                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", "0");
-                    }
-                    if(creditButton === "UnSecured Credit Limit"){
-                        this.getView().getModel("Customers").setProperty("/ztotal_secured_limit", "0");
-                        this.getView().getModel("Customers").setProperty("/ztotal_unsecured_limit", totalValue.toString());
-                    }
-                    this.getView().getModel("Customers").setProperty("/ztotal_credit_amount", totalValue.toString());
-                }
-              },
             _onRouteMatched: function (oEvent) {
                 var that = this;
                 this.busyDialog = new sap.m.BusyDialog();
@@ -133,7 +92,7 @@ sap.ui.define([
                 this.mode = oEvent.getParameters().arguments.mode;
                 this.getView().getModel("appView").setProperty("/mode", this.mode);
                 this.onClear();
-                this.onClearFiles();
+                // this.onClearFiles();  // commented by mujaida
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
 
@@ -2171,9 +2130,9 @@ sap.ui.define([
                         "orderData12", "orderData81", "orderData193", "orderData86", "orderData125",
                         "erpCustomersydata1", "erpCustomersydata3", "erpCustomersydata5", "erpCustomersydata7", "erpCustomersydata9",
                         "erpCustomersydata11", "erpCustomersydata13", "erpCustomersydata15", "erpCustomersydata17", "erpCustomersydata19",
-                        "erpCustomersydata21",
-                        "Planned", "Planned2", "Planned3", "Planned4",
-                        "Planned6", "CreditAnalysisView", "orderData13", "CustomerBackgroundView", "DetailsOfExpectedView"
+                        "erpCustomersydata21"
+                        // "Planned", "Planned2", "Planned3", "Planned4",            //"commented by mujaida"
+                        // "Planned6", "CreditAnalysisView", "orderData13", "CustomerBackgroundView", "DetailsOfExpectedView"
                     ];
                 }
 
@@ -2266,32 +2225,34 @@ sap.ui.define([
                     }
                 }
             },
-            onClearFiles: function () {
-                var simpleFormIdArr = ["CreditAnalysisView", "Planned2", "orderData193", "orderData13"];
 
-                for (var j = 0; j < simpleFormIdArr.length; j++) {
-                    var content = this.getView().byId(simpleFormIdArr[j]).getAggregation("_views") !== null ? this.getView().byId(simpleFormIdArr[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
-                    var isVisible = this.getView().byId(simpleFormIdArr[j]).getParent().getParent().getVisible();
+            //commented by mujaida
+            // onClearFiles: function () {
+            //     var simpleFormIdArr = ["CreditAnalysisView", "Planned2", "orderData193", "orderData13"];
 
-                    if (isVisible) {
-                        for (var b = 0; b < content.length; b++) {
-                            if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
-                                if (content[b].getVisible()) {
-                                    if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getVisible() ===
-                                        true) {
-                                        if (content[b + 1].getMetadata().getName() == "sap.ui.unified.FileUploader") {
-                                            if (content[b + 1].getValue() !== "") {
-                                                content[b + 1].clear();
+            //     for (var j = 0; j < simpleFormIdArr.length; j++) {
+            //         var content = this.getView().byId(simpleFormIdArr[j]).getAggregation("_views") !== null ? this.getView().byId(simpleFormIdArr[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
+            //         var isVisible = this.getView().byId(simpleFormIdArr[j]).getParent().getParent().getVisible();
 
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            },
+            //         if (isVisible) {
+            //             for (var b = 0; b < content.length; b++) {
+            //                 if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
+            //                     if (content[b].getVisible()) {
+            //                         if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getVisible() ===
+            //                             true) {
+            //                             if (content[b + 1].getMetadata().getName() == "sap.ui.unified.FileUploader") {
+            //                                 if (content[b + 1].getValue() !== "") {
+            //                                     content[b + 1].clear();
+
+            //                                 }
+            //                             }
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // },
             handleAmtFieldsValidation: function () {
                 var amtFieldState = true;
                 

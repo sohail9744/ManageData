@@ -35,7 +35,7 @@
                             value="{salesDataModel>zsales_orgnization}"
                             valueHelpRequest="handleValueHelpForSalesOrg"
                             valueHelpOnly="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             visible="{=${fieldMappingModels>/SalesOrganizationVisible} === true ? true : false}"
                         />
                         <!-- <Input value="{salesDataModel>zsales_orgnization}" visible="{=${fieldMappingModels>/391} === true ? true : false}"/> -->
@@ -49,7 +49,7 @@
                             value="{salesDataModel>zdistribution_channel}"
                             valueHelpRequest="handleValueHelpForDistChannel"
                             valueHelpOnly="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             visible="{=${fieldMappingModels>/DistributionChannelVisible} === true ? true : false}"
                         />
                         <!-- <Input value="{salesDataModel>zdistribution_channel}" visible="{=${fieldMappingModels>/167} === true ? true : false}"/> -->
@@ -64,7 +64,7 @@
                             value="{salesDataModel>zdivision}"
                             valueHelpRequest="handleValueHelpForDivision"
                             valueHelpOnly="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             visible="{=${fieldMappingModels>/DivisionVisible} === true ? true : false}"
                         />
 
@@ -267,7 +267,7 @@
                         />
                         <MultiInput
                             showClearIcon="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zinco_term}"
                             maxLength="3"
                             valueHelpRequest="handleValueHelpForIncoterms"
@@ -293,7 +293,7 @@
                             required="{=${fieldMappingModels>/PaymentTermsMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zpayment_terms}"
                             maxLength="4"
                             visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"
@@ -499,7 +499,7 @@
                         />
                         <MultiInput
                             showClearIcon="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             valueHelpRequest="handleValueHelpForsalesDist"
                             value="{salesDataModel>zsales_district}"
                             valueHelpOnly="true"
@@ -511,7 +511,7 @@
                             required="true"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zsales_office}"
                             maxLength="4"
                             visible="{=${fieldMappingModels>/SalesOfficeVisible} === true ? true : false}"
@@ -523,7 +523,7 @@
                             required="true"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zsales_group}"
                             maxLength="3"
                             visible="{=${fieldMappingModels>/SalesGroupVisible} === true ? true : false}"
@@ -552,7 +552,7 @@
                         />
                         <MultiInput
                             showClearIcon="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             valueHelpRequest="handleValueHelpForCurrency"
                             value="{salesDataModel>zsales_currency}"
                             valueHelpOnly="true"
@@ -826,7 +826,7 @@
                             required="{=${fieldMappingModels>/RuleMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zrule}"
                             maxLength="20"
                             visible="{=${fieldMappingModels>/RuleVisible} === true ? true : false}"
@@ -837,7 +837,7 @@
                             required="{=${fieldMappingModels>/RiskClassMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zrisk_class}"
                             maxLength="3"
                             visible="{=${fieldMappingModels>/RiskClassVisible} === true ? true : false}"
@@ -849,7 +849,7 @@
                             required="{=${fieldMappingModels>/CheckruleMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zcheck_rule}"
                             maxLength="20"
                             visible="{=${fieldMappingModels>/CheckruleVisible} === true ? true : false}"
@@ -863,7 +863,7 @@
                             required="{=${fieldMappingModels>/LimitdefineMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zlimit_define}"
                             maxLength="35"
                             visible="{=${fieldMappingModels>/LimitdefineVisible} === true ? true : false}"
@@ -875,7 +875,7 @@
                         />
                         <Input
                             value="{parts: ['salesDataModel>zlimit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             maxLength="13"
                             visible="{=${fieldMappingModels>/LimitVisible} === true ? true : false}"
                         />
@@ -886,7 +886,7 @@
                             required="{=${fieldMappingModels>/ValiditytoMandatory} === true ? true : false}"
                         />
                         <DatePicker
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zvalidity_to}"
                             valueFormat="MM.dd.yyyy"
                             visible="{=${fieldMappingModels>/ValiditytoVisible} === true ? true : false}"
@@ -898,7 +898,7 @@
                         />
                         <MultiInput
                             showClearIcon="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zcredit_segment}"
                             maxLength="28"
                             valueHelpRequest="handleValueHelpForCS"
@@ -914,7 +914,7 @@
                             valueHelpOnly="true"
                             showValueHelp="true"
                             valueHelpRequest="onChangeBP"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="false"
                             value="{salesDataModel>zrelationship_to_bp}"
                             visible="{=${fieldMappingModels>/RelationshiptoBPVisible} === true ? true : false}"
                         />

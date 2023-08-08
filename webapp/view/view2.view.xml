@@ -9,58 +9,52 @@
     xmlns:ERPCustomers="Iffco.clap.sections.ERPCustomers"
     xmlns:CreditProfileSegmentData="Iffco.clap.sections.CreditProfileSegmentData"
     xmlns:SalesArea="Iffco.clap.sections.SalesArea"
-    xmlns:CreditAnalysis="Iffco.clap.sections.CreditAnalysis"
-    xmlns:CreditLimit="Iffco.clap.sections.CreditLimit"
-    xmlns:CustomerBackground="Iffco.clap.sections.CustomerBackground"
-    xmlns:CreditPerformanceEvaluation="Iffco.clap.sections.CreditPerformanceEvaluation"
-    xmlns:DetailsOfExpectedBusiness="Iffco.clap.sections.DetailsOfExpectedBusiness"
-    xmlns:ProposedCreditType="Iffco.clap.sections.ProposedCreditType"
     xmlns:Comments="Iffco.clap.sections.Comments"
 >
     <ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="false" showFooter="true" selectedSection="orderSection" showTitleInHeaderContent="true" showEditHeaderButton="true" upperCaseAnchorBar="false">
         <headerTitle>
-            <ObjectPageDynamicHeaderTitle>
+            <ObjectPageDynamicHeaderTitle id="_IDGenObjectPageDynamicHeaderTitle1">
                 <expandedHeading>
-                    <m:HBox>
-                        <m:Title text="Legal Name" wrapping="true" />
-                        <m:ObjectMarker type="Favorite" class="sapUiTinyMarginBegin" />
+                    <m:HBox id="_IDGenHBox1">
+                        <m:Title id="_IDGenTitle1" text="Legal Name" wrapping="true" />
+                        <m:ObjectMarker id="_IDGenObjectMarker1" type="Favorite" class="sapUiTinyMarginBegin" />
                     </m:HBox>
                 </expandedHeading>
 
                 <snappedHeading>
-                    <m:FlexBox fitContainer="true" alignItems="Center">
-                        <m:Avatar src="sap-icon://customer" class="sapUiTinyMarginEnd" />
-                        <m:Title text="Legal Name" wrapping="true" />
+                    <m:FlexBox id="_IDGenFlexBox1" fitContainer="true" alignItems="Center">
+                        <m:Avatar id="_IDGenAvatar1" src="sap-icon://customer" class="sapUiTinyMarginEnd" />
+                        <m:Title id="_IDGenTitle2" text="Legal Name" wrapping="true" />
                     </m:FlexBox>
                 </snappedHeading>
 
                 <expandedContent>
-                    <m:Text text="Country" />
+                    <m:Text id="_IDGenText1" text="Country" />
                 </expandedContent>
 
                 <snappedContent>
-                    <m:Text text="City" />
+                    <m:Text id="_IDGenText2" text="City" />
                 </snappedContent>
 
                 <actions>
-                    <m:Button text="{Customers>/zrequest_status}" />
+                    <m:Button id="_IDGenButton1" text="{Customers>/zrequest_status}" />
                 </actions>
             </ObjectPageDynamicHeaderTitle>
         </headerTitle>
 
         <headerContent>
-            <m:FlexBox wrap="Wrap">
-                <m:Avatar class="sapUiSmallMarginEnd" src="sap-icon://customer" displaySize="L" />
+            <m:FlexBox id="_IDGenFlexBox2" wrap="Wrap">
+                <m:Avatar id="_IDGenAvatar2" class="sapUiSmallMarginEnd" src="sap-icon://customer" displaySize="L" />
 
-                <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
+                <layout:HorizontalLayout id="_IDGenHorizontalLayout1" class="sapUiSmallMarginBeginEnd">
                     <!-- <m:Image src="./test-resources/sap/uxap/images/linkedin.png" /> -->
                     <!-- <m:Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin" /> -->
                 </layout:HorizontalLayout>
 
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:Label text="Customer Type :{=${appView>/vertical} === 'CASH' ? 'CASH' : 'CREDIT'}" />
-                    <m:VBox>
-                        <m:Label text="Credit Limit" />
+                <layout:VerticalLayout id="_IDGenVerticalLayout1" class="sapUiSmallMarginBeginEnd">
+                    <m:Label id="_IDGenLabel1" text="Customer Type :{=${appView>/vertical} === 'CASH' ? 'CASH' : 'CREDIT'}" />
+                    <m:VBox id="_IDGenVBox1">
+                        <m:Label id="_IDGenLabel2" text="Credit Limit" />
                         <!-- <m:ProgressIndicator percentValue="90" displayValue="30%" /> -->
                     </m:VBox>
                 </layout:VerticalLayout>
@@ -152,21 +146,8 @@
                             <CustomerBasicDetails:Industries id="orderData125" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <!-- <ObjectPageSubSection id="orderdata93" title="Identification Numbers">
-						<blocks>
-							<CustomerBasicDetails:IdentificationNumbers id="orderData193"/>
-						</blocks>
-					</ObjectPageSubSection> -->
-                    <!-- <ObjectPageSubSection id="orderdata10" title="Regularization Details">
-						<blocks>
-							<CustomerBasicDetails:ProfileDetails id="orderData11"/>
-						</blocks>
-					</ObjectPageSubSection> -->
-                    <ObjectPageSubSection id="orderdata12" title="Identity Proof">
-						<blocks>
-							<CustomerBasicDetails:IdentifyProof id="orderData13"/>
-						</blocks>
-					</ObjectPageSubSection> 
+                    
+                   
                 </subSections>
             </ObjectPageSection>
             <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? true : true}" id="erpCustomersSection" title="ERP Customers">
@@ -250,125 +231,7 @@
                     
                 </subSections>
             </ObjectPageSection>
-            <!-- <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditProfileSection" title="Credit profile">
-                <subSections>
-                    <ObjectPageSubSection id="CreditProfileData" title="Credit Profile">
-                        <blocks>
-                            <CreditProfileSegmentData:CustomerProfile id="CreditProfileSection1" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="controlData" title="Control">
-                        <blocks>
-                            <CreditProfileSegmentData:Control id="CreditProfileSection2" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="furtherInfo" title="Further Information">
-                        <blocks>
-                            <CreditProfileSegmentData:FurtherInfo id="CreditProfileSection3" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="paymentKey" title="Payment Behaviour Key Figures">
-                        <blocks>
-                            <CreditProfileSegmentData:HDL id="CreditProfileSection4" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="oot" title="Oldest Open Item">
-                        <blocks>
-                            <CreditProfileSegmentData:OOT id="CreditProfileSection5" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="lp" title="Last Payment">
-                        <blocks>
-                            <CreditProfileSegmentData:Lp id="CreditProfileSection6" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                 
-                </subSections>
-            </ObjectPageSection> -->
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="PlannedActualSection" title="Credit Limit">
-                <subSections>
-                    <ObjectPageSubSection id="plannedandactual" title="Credit Limit Type">
-                        <blocks>
-                            <CreditLimit:CreditLimit id="Planned" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual2" visible="{= ${Customers>/zcredit_limit_type} === 'Secured Credit' ? true : false || ${appView>/selectedType} === 'Secured Credit Limit' ? true : false || ${appView>/selectedType} === 'Both' ? true : false}" title="Secured credit Limit">
-                        <blocks>
-                            <CreditLimit:SecuredCreditLimit id="Planned2" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual3" visible="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit' ? true : false || ${appView>/selectedType} === 'UnSecured Credit Limit' ? true : false || ${appView>/selectedType} === 'Both' ? true : false}" title="Unsecured credit Limit">
-                        <blocks>
-                            <CreditLimit:UnsecuredCreditLimit id="Planned3" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual4" title="Total credit Limit">
-                        <blocks>
-                            <CreditLimit:TotalCreditLimit id="Planned4" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual5" title="Credit Limit Validity">
-                        <blocks>
-                            <CreditLimit:CreditLimitValidity id="Planned5" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual6" title="Payment Terms">
-                        <blocks>
-                            <CreditLimit:PaymentTerms id="Planned6" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditPerformanceEvaluation" title="Credit Performance Evaluation">
-                <subSections>
-                    <ObjectPageSubSection id="CreditPerformanceEvaluationSection" title="Credit Performance Evaluation">
-                        <blocks>
-                            <CreditPerformanceEvaluation:CreditPerformanceEvaluation id="CreditPerformanceEvaluationView" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditAnalysis" title="Credit Analysis">
-                <subSections>
-                    <ObjectPageSubSection id="CreditAnalysisSection" title="Credit Analysis">
-                        <blocks>
-                            <CreditAnalysis:CreditAnalysis id="CreditAnalysisView" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CustomerBackground" title="Customer Background">
-                <subSections>
-                    <ObjectPageSubSection id="CustomerBackgroundSection" title="Customer Background">
-                        <blocks>
-                            <CustomerBackground:CustomerBackground id="CustomerBackgroundView" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-                <subSections>
-                    <ObjectPageSubSection id="DetailsOfExpectedBusiness" title="Details of Expected Business">
-                        <blocks>
-                            <CustomerBackground:DetailsOfExpectedBusiness id="DetailsOfExpectedView" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections>
-            </ObjectPageSection>
-            <!-- <ObjectPageSection titleUppercase="false" id="DetailsOfExpectedBusiness" title="Details Of Expected Business">
-                <subSections>
-                    <ObjectPageSubSection id="DetailsOfExpectedBusinessSection" title="Details Of Expected Business">
-                        <blocks>
-                            <DetailsOfExpectedBusiness:DetailsOfExpectedBusiness id="DetailsOfExpectedBusinessView" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections> -->
-                <!-- <subSections>
-                    <ObjectPageSubSection id="ProposedCreditTypeSection" title="Proposed Credit Type">
-                        <blocks>
-                            <ProposedCreditType:ProposedCreditType id="ProposedCreditTypeView" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                </subSections> -->
-            <!-- </ObjectPageSection> -->
+            
             <ObjectPageSection titleUppercase="false" id="Comments" title="Attachments and Comments">
                 <subSections>
                     <ObjectPageSubSection id="CommentsSection1" title="Attachments" visible="{=${Customers>/zrequest_no} ? true : false}">
@@ -386,21 +249,21 @@
             
         </sections>
         <footer>
-            <m:OverflowToolbar>
-            <m:Button
+            <m:OverflowToolbar id="_IDGenOverflowToolbar1">
+            <m:Button id="_IDGenButton2"
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
                     visible="{= ${message>/}.length > 0 }"
                     type="Emphasized"
                     press="onMessagePopoverPress" />
-                <m:Button type="Emphasized" text="Back" press="onBack"/>
-                <m:ToolbarSpacer />
+                <m:Button id="_IDGenButton3" type="Emphasized" text="Back" press="onBack"/>
+                <m:ToolbarSpacer id="_IDGenToolbarSpacer1" />
                 <!-- <m:Button type="Emphasized"  text="{i18n>Validate}" press="saveRequest" /> -->
                 <!-- visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" -->
-                <m:Button type="Emphasized" text="{i18n>Save}" press="saveRequest" />
-                <m:Button type="Emphasized" text="{i18n>Save}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="saveRequest" />
+                <m:Button id="_IDGenButton4" type="Emphasized" text="{i18n>Save}" press="saveRequest" />
+                <m:Button id="_IDGenButton5" type="Emphasized" text="{i18n>Save}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="saveRequest" />
                 <!-- <m:Button type="Emphasized" text="{i18n>Submit}" press="submitRequest" /> -->
-                <m:Button type="Emphasized" text="{i18n>Submit}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="submitRequest" />
+                <m:Button id="_IDGenButton6" type="Emphasized" text="{i18n>Submit}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="submitRequest" />
             </m:OverflowToolbar>
         </footer>
     </ObjectPageLayout>
