@@ -150,7 +150,7 @@
                    
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? true : true}" id="erpCustomersSection" title="ERP Customers">
+            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/bpg} !== 'SHIP TO' ? true : false}" id="erpCustomersSection" title="ERP Customers">
                 <subSections>
                     <ObjectPageSubSection id="erpCustomersydata" title="Accounting Information">
                         <blocks>

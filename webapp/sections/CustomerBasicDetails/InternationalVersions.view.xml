@@ -16,9 +16,9 @@
 		<Label text= "Search term" visible="{=${fieldMappingModels>/SearchTermVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/SearchTermMandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zsearch_term}" visible="{=${fieldMappingModels>/SearchTermVisible} === true ? true : false}"/>
-		<!-- <Label text="Street House Number" visible="{=${fieldMappingModels>/211} === true ? true : false}"
+		<Label text="Street House Number" visible="{=${fieldMappingModels>/211} === true ? true : false}"
  required="{=${fieldMappingModels>/211} === true ? true : false}"/>
-		<Input value="{Customers>/zstreet_house_number}" visible="{=${fieldMappingModels>/211} === true ? true : false}"/> -->
+		<Input value="{Customers>/zstreet_house_number}" visible="{=${fieldMappingModels>/211} === true ? true : false}"/>
         <Label text="City" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/CityMandatory} === true ? true : false}"/>
 		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcity}" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"/>

@@ -1,8 +1,8 @@
 sap.ui.define([
-	"sap/ui/base/ManagedObject",
+    "sap/ui/base/ManagedObject",
     "sap/ui/model/json/JSONModel",
     "sap/ui/Device"
-],
+], 
     /**
      * provide app-view type models (as in the first "V" in MVVC)
      * 
@@ -11,7 +11,6 @@ sap.ui.define([
      * 
      * @returns {Function} createDeviceModel() for providing runtime info for the device the UI5 app is running on
      */
-	
     function (ManagedObject, JSONModel, Device) {
         "use strict";
 
@@ -30,9 +29,9 @@ sap.ui.define([
                         {"BPKey":"Inte", "BPText":"INTERCOMPANY CUSTOMER"},
                     ],
                     "BPRoles": [
-                        {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},
-                        {"BPRole": "FLCU01", "BPRoleDesc":"Customer"},
-                        {"BPRole": "UKM000", "BPRoleDesc":"SAP Credit Management"},
+                        {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer", "visiblity":true, "role" : ["Sold To", "Ship To"]},
+                        {"BPRole": "FLCU01", "BPRoleDesc":"Customer","visiblity":true, "role" : ["Sold To"] },
+                        {"BPRole": "UKM000", "BPRoleDesc":"SAP Credit Management", "visiblity":true, "role" : ["Sold To"]},
                     ],
                     "Status":[
                         {"value": "All"},
@@ -73,9 +72,9 @@ sap.ui.define([
                         {"BPKey":"4", "BPText":"INTERCOMPANY CUSTOMER"},
                     ],
                     "BPRoles": [
-                        {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},
-                        {"BPRole": "FLCU01", "BPRoleDesc":"Customer"},
-                        {"BPRole": "UKM000", "BPRoleDesc":"SAP Credit Management"},
+                        {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer", "visiblity":true, "role" : ["Sold To", "Ship To"]},
+                        {"BPRole": "FLCU01", "BPRoleDesc":"Customer","visiblity":true, "role" : ["Sold To"] },
+                        {"BPRole": "UKM000", "BPRoleDesc":"SAP Credit Management", "visiblity":false, "role" : ["Sold To"]},
                     ],
                     "requests": [{
                         "ReqNumber": "101",

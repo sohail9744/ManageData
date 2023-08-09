@@ -1,5 +1,7 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
-		<Table  inset="false" items="{ path: 'MasterData>/BPRoles' }">
+		<Table id="myTable" inset="false" items="{
+						path: 'MasterData>/BPRoles', filters:[{path:'visiblity',operator:'EQ',value1:true}]
+					}">
 		<headerToolbar>
 			<OverflowToolbar>
 				<content>
@@ -9,7 +11,7 @@
 		</headerToolbar>
 		<columns>
 			<Column minScreenWidth="Tablet" demandPopin="true">
-				<Text text="BP Role"/>
+				<Text text="BP Role" />
 			</Column>
 			<Column minScreenWidth="Tablet" demandPopin="true">
 				<Text text="BPRole Description"/>
@@ -17,10 +19,11 @@
 			
 		</columns>
 		<items>
-			<ColumnListItem vAlign="Middle">
+			<ColumnListItem vAlign="Middle" visible="{=${MasterData>visiblity} === true ? true : false}">
 				<cells>
-					<Text text="{MasterData>BPRole}"/>
-					<Text text="{MasterData>BPRoleDesc}"/>
+					<Text text="{MasterData>BPRole}" visible="{=${MasterData>visiblity} === true ? true : false}" />
+					<Text text="{MasterData>BPRoleDesc}" visible="{=${MasterData>visiblity} === true ? true : false}" />
+					
 				</cells>
 			</ColumnListItem>
 		</items>
