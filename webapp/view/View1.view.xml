@@ -6,7 +6,7 @@
    xmlns:f="sap.f" 
    xmlns:fb="sap.ui.comp.filterbar"
     xmlns:svm="sap.ui.comp.smartvariants">
-    <Page id="page" title="Credit Limit Approval Portal" titleAlignment="Center">
+    <Page id="page" title="Manage Data Application" titleAlignment="Center">
         <content>
             <f:DynamicPage headerExpanded="{/headerExpanded}">
                 <f:title>
