@@ -1,9 +1,10 @@
 sap.ui.define([
   "sap/ui/core/mvc/Controller",
   'sap/ui/model/Filter',
-  'sap/ui/model/FilterOperator'
+  'sap/ui/model/FilterOperator',
+  '../../utils/ruleEngine'
 ], function (
-  Controller, Filter, FilterOperator
+  Controller, Filter, FilterOperator, ruleEngine
 ) {
   "use strict";
 
@@ -116,7 +117,7 @@ sap.ui.define([
     },
     onSelectChange: function (evt) {
       this.getView().getModel("appView").setProperty("/bpg", evt.getSource().getSelectedItem().mProperties.text);
-     if (evt.getSource().getSelectedItem().mProperties.text === 'Ship To') {
+      if (evt.getSource().getSelectedItem().mProperties.text === 'Ship To') {
         this.getView().getModel("MasterData").getData().BPRoles[0].visiblity = false;
         this.getView().getModel("MasterData").getData().BPRoles[1].visiblity = true;
         this.getView().getModel("MasterData").getData().BPRoles[2].visiblity = false;
@@ -128,87 +129,9 @@ sap.ui.define([
       this.getView().getModel("MasterData").updateBindings(true);
       this.handleRuleEngineConfiguration();
     },
-    handleRuleEngineConfiguration: function (oEvent) {
+    handleRuleEngineConfiguration: async function (oEvent) {
       this.getView().setBusy(true);
-      var process = this.getView().getModel("appView").getProperty("/process");
-
-      var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit'
-      // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
-      var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
-      this.ruleId = "";
-      var aFilters = [];
-      aFilters.push(new sap.ui.model.Filter("Process", "EQ", process));
-      aFilters.push(new sap.ui.model.Filter("CustomerType", "EQ", sCustomerType));
-      aFilters.push(new sap.ui.model.Filter("ZbusinessPartnerId", "EQ", sBPGrouping));
-      if (process !== "" && sCustomerType !== "" && sBPGrouping !== "") {
-        var oModel = this.getView().getModel("RuleEngine");
-
-        oModel.read("/ZDD_GET_RULE_Details", {
-          filters: aFilters,
-          urlParameters: {
-            "$top": 10000
-          },
-          success: function (oData, oResponse) {
-
-            var flatObj = {};
-            oData.results.forEach(function (obj, index) {
-              var sField = "";
-              var rField = "";
-
-              sField += obj.Fieldname.split(" ").join("");
-              rField += obj.Fieldname.split(" ").join("");
-
-              if (obj.Visibility) {
-                sField += "Visible";
-                if (!Object.keys(flatObj).includes(sField)) {
-                  if (obj.Visibility === "Y") {
-                    flatObj[sField] = true;
-                  } else {
-                    flatObj[sField] = false;
-                  }
-                } else {
-                  sField += obj.Customersub1.split(" ").join("");
-                  // sField += obj.replace(":", "").split(" ").join("");
-                  if (obj.Visibility === "Y") {
-                    flatObj[sField] = true;
-                  } else {
-                    flatObj[sField] = false;
-                  }
-                }
-              }
-              if (obj.Mandatory) {
-                rField += "Mandatory";
-
-                if (!Object.keys(flatObj).includes(rField)) {
-                  if (obj.Mandatory === "Y") {
-                    flatObj[rField] = true;
-                  } else {
-                    flatObj[rField] = false;
-                  }
-                } else {
-                  rField += obj.Customersub1.split(" ").join("");
-                  if (obj.Mandatory === "Y") {
-                    flatObj[rField] = true;
-                  } else {
-                    flatObj[rField] = false;
-                  }
-                }
-
-              }
-            }.bind(this)),
-              console.log(flatObj);
-            this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({}), "fieldMappingModels");
-            this.getView().getModel("fieldMappingModels").oData = flatObj;
-            this.getView().getModel("fieldMappingModels").updateBindings(true);
-            console.log(this.getView().getModel("fieldMappingModels").oData);
-            this.getOwnerComponent().getModel().refresh(true);
-            this.busyDialog.close();
-            // resolve()
-          }.bind(this),
-          error: function (oError) { }
-        });
-        this.getView().setBusy(false);
-      }
+    
       this.getView().setBusy(false);
     },
     onRead: function (ruleid) {

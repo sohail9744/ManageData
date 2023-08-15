@@ -31,9 +31,9 @@ sap.ui.define([
                 // debugger
                 var oView = this.getView();
                 // if (oView.getDomRef() && oView.getParent() && oEvent.getParameter("name") === "RouteView1") {
-                    let oTable = oView.byId("table");
-                    oTable.getModel().refresh();
-                    oTable.getModel().updateBindings();
+                let oTable = oView.byId("table");
+                oTable.getModel().refresh();
+                oTable.getModel().updateBindings();
                 // }
             },
 
@@ -185,7 +185,6 @@ sap.ui.define([
                         }
                     }
                 }
-
                 oTable.getBinding("items").filter(aFilters);
 
             },
@@ -225,7 +224,7 @@ sap.ui.define([
                 this.check2 = true;
                 this.getView().getModel("appView").setProperty("/addSales", true);
                 this.getView().getModel("appView").setProperty("/selectedType", "Secured Credit Limit");
-                
+
                 var busyDialog = new sap.m.BusyDialog();
                 busyDialog.open();
                 var oRouter = this.getOwnerComponent().getRouter();

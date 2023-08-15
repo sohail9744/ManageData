@@ -5,14 +5,14 @@ sap.ui.define([
     "sap/m/MessageBox",
     "sap/ui/core/message/Message",
     "sap/ui/core/library",
-    "sap/ui/core/Fragment"
+    "sap/ui/core/Fragment",
+    "../utils/ruleEngine"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, MessageToast, formatter, MessageBox, Message, library, Fragment) {
+    function (Controller, MessageToast, formatter, MessageBox, Message, library, Fragment, ruleEngine) {
         "use strict";
-
         // shortcut for sap.ui.core.ValueState
         var ValueState = library.ValueState;
 
@@ -46,6 +46,27 @@ sap.ui.define([
                 }
 
             },
+
+            handleAmtFields: function (evt) {
+                this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt = this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt ? this.getView().getModel("Customers").getData().zirr_bank_guarantee_amt.toString() : "0";
+                this.getView().getModel("Customers").getData().zlc_issuance_amount = this.getView().getModel("Customers").getData().zlc_issuance_amount ? this.getView().getModel("Customers").getData().zlc_issuance_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zlc_confirming_amount = this.getView().getModel("Customers").getData().zlc_confirming_amount ? this.getView().getModel("Customers").getData().zlc_confirming_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zcri_amount = this.getView().getModel("Customers").getData().zcri_amount ? this.getView().getModel("Customers").getData().zcri_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zclassa_customer_amount = this.getView().getModel("Customers").getData().zclassa_customer_amount ? this.getView().getModel("Customers").getData().zclassa_customer_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zcash_deposit_adv_amount = this.getView().getModel("Customers").getData().zcash_deposit_adv_amount ? this.getView().getModel("Customers").getData().zcash_deposit_adv_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zavalization_draft_amount = this.getView().getModel("Customers").getData().zavalization_draft_amount ? this.getView().getModel("Customers").getData().zavalization_draft_amount.toString() : "0";
+
+                //    Unsecured amt fields
+                this.getView().getModel("Customers").getData().zopen_clean_credit_amount = this.getView().getModel("Customers").getData().zopen_clean_credit_amount ? this.getView().getModel("Customers").getData().zopen_clean_credit_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zcad_amount = this.getView().getModel("Customers").getData().zcad_amount ? this.getView().getModel("Customers").getData().zcad_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zpoc_in_hand_amount = this.getView().getModel("Customers").getData().zpoc_in_hand_amount ? this.getView().getModel("Customers").getData().zpoc_in_hand_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zundated_or_security_deposit_c = this.getView().getModel("Customers").getData().zundated_or_security_deposit_c ? this.getView().getModel("Customers").getData().zundated_or_security_deposit_c.toString() : "0";
+                this.getView().getModel("Customers").getData().zcri_insurer_amount = this.getView().getModel("Customers").getData().zcri_insurer_amount ? this.getView().getModel("Customers").getData().zcri_insurer_amount.toString() : "0";
+                this.getView().getModel("Customers").getData().zuncfrmd_lc_nonapvd_bnkamt = this.getView().getModel("Customers").getData().zuncfrmd_lc_nonapvd_bnkamt ? this.getView().getModel("Customers").getData().zuncfrmd_lc_nonapvd_bnkamt.toString() : "0";
+                // this.getView().getModel("Customers").getData().zlc_issuance_amount = this.getView().getModel("Customers").getData().zlc_issuance_amount.toString();
+
+            },
+
             _onRouteMatched: function (oEvent) {
                 var that = this;
                 this.busyDialog = new sap.m.BusyDialog();
@@ -70,22 +91,42 @@ sap.ui.define([
                 this.getView().getModel("appView").setProperty("/firstTym", 'add');
                 this.mode = oEvent.getParameters().arguments.mode;
                 this.getView().getModel("appView").setProperty("/mode", this.mode);
-                this.onClear();
+                // Mohammad Sohail: will add it later in Manage application is already added
+                //this.onClear();
+                // this.onClearFiles();  // commented by mujaida
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
 
                     this.zcustomer_num = oEvent.getParameters().arguments.zcustomer_num;
 
                     this.zsales_orgnization = oEvent.getParameters().arguments.zsales_orgnization !== undefined ? oEvent.getParameters().arguments.zsales_orgnization : "";
-                    var oModel = this.getView().getModel();
-                    // this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "',zsales_orgnization='" + this.zsales_orgnization + "')"
+
                     this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
+                    this.onCustomerData();
+                } else {
+                    this.getView().getModel("Customers").setData({});
+                    // this.getView().getModel("appView").setProperty("/addSales", true);
+                    this.getView().getModel("appView").updateBindings(true);
+                }
+                // this.getDmsData();
+                if (this.flagForFirstTime) {
+                    setTimeout(() => {
+                        this.handleRuleEngineConfiguration();
+                    }, 2000);
+                } else {
+                    // this.handleRuleEngine();
+                    this.handleRuleEngineConfiguration();
+                }
+
+            },
+            onCustomerData: function () {
+                return new Promise((resolve, reject) => {
+                    var oModel = this.getView().getModel();
                     oModel.read(this.sPath, {
                         urlParameters: {
                             "$expand": "to_salesarea,to_comments,to_credit"
                         },
                         success: function (oData, oResponse) {
-                            console.log(oData);
                             var oCustomerDetailModel = this.getView().getModel("Customers");
                             delete oData.__metadata;
                             delete oData.to_zdd_comments;
@@ -237,32 +278,35 @@ sap.ui.define([
 
                             oCustomerDetailModel.setData(oData);
                             oCustomerDetailModel.refresh();
-                            this.getView().getModel("appView").setProperty("/vertical", this.getView().getModel("Customers").getData().zdescription);
 
+                            var masterData = this.getView().getModel("Customers").getData();
+                            if (masterData.ztype_of_entity === 'Co-Operative (COOP)' || masterData.ztype_of_entity === 'CONSORTIUM'
+                                || masterData.ztype_of_entity === 'Government' || masterData.ztype_of_entity === 'Limited Liability Partnership'
+                                || masterData.ztype_of_entity === 'Other' || masterData.ztype_of_entity === 'Partnership'
+                                || masterData.ztype_of_entity === 'Private Limited Company' || masterData.ztype_of_entity === 'Public Limited Company'
+                                || masterData.ztype_of_entity === 'Sole Proprietorship') {
+                                this.getView().getModel("appView").getData().TypeOfEntity1 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity2 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity3 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity4 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity5 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity6 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity7 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity8 = true;
+                                this.getView().getModel("appView").getData().TypeOfEntity9 = true;
+                            }
+                            this.getView().getModel("appView").setProperty("/vertical", this.getView().getModel("Customers").getData().zdescription);
                             this.getDmsData();
-                            //    this.handleRuleEngineConfiguration();
+                            resolve();
                         }.bind(this),
                         error: function (oError) {
-
+                            // sap.m.MessageBox.error("onCustomerData error: " + oError);
+                            reject(oError)
+                            console.log(oError);
                         }
 
                     });
-                } else {
-                    this.getView().getModel("Customers").setData({});
-                    // this.getView().getModel("appView").setProperty("/addSales", true);
-                    this.getView().getModel("appView").updateBindings(true);
-                }
-                // this.getDmsData();
-                if (this.flagForFirstTime) {
-                    window.setTimeout(function () {
-                        // this.handleRuleEngine();
-                        this.handleRuleEngineConfiguration();
-                    }.bind(this), 2000)
-                } else {
-                    // this.handleRuleEngine();
-                    this.handleRuleEngineConfiguration();
-                }
-
+                })
             },
             getDmsData: function (evt) {
                 var serviceURL = this.getOwnerComponent().getModel("DMS").sServiceUrl;
@@ -311,105 +355,23 @@ sap.ui.define([
                     }
                 });
             },
-            handleRuleEngineConfiguration: function (oEvent) {
-                this.busyDialog = new sap.m.BusyDialog();
+            handleRuleEngineConfiguration: async function () {
                 this.busyDialog.open();
-                // this.process = "CHANGE";
-                if (this.process == "Create Customer") {
-                    this.process = "CREATE";
-                } else if (this.process = "Change Customer") {
-                    this.process = "CHANGE";
-                } else {
-                    this.process = "EXTEND";
+                this.process = (this.process === "Create Customer") ? "CREATE" : (this.process === "Change Customer") ? "CHANGE" : "EXTEND";
+                var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit'
+                var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg").toLocaleUpperCase();
+                const configObject = {
+                    oModel: this.getView().getModel("RuleEngine"),
+                    process: this.process,
+                    aCustomerType: sCustomerType.toLocaleUpperCase(),
+                    sBPGrouping: sBPGrouping.toLocaleUpperCase()
                 }
-                // setTimeout(function () {
-                //     busyDialog.close();
-                // }, 5000);
-                this.getView().getModel("appView").setProperty("/process", this.process);
-                var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
-                // var sCustomerType = this.getView().byId("orderData1").getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
-                // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
-                // var sBPGrouping = this.getView().byId("orderdata").getParent().getSubSections()[1].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[1].getSelectedItem().getText();
-                var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
-                this.ruleId = "";
-                var aFilters = [];
-                aFilters.push(new sap.ui.model.Filter("Process", "EQ", this.process));
-                aFilters.push(new sap.ui.model.Filter("CustomerType", "EQ", sCustomerType));
-                aFilters.push(new sap.ui.model.Filter("ZbusinessPartnerId", "EQ", sBPGrouping));
-                if (this.process !== "" && sCustomerType !== "" && sBPGrouping !== "") {
-                    var oModel = this.getView().getModel("RuleEngine");
 
-                    // try {
-                    //     new Promise((resolve, reject) => {
-                    oModel.read("/ZDD_GET_RULE_Details", {
-                        filters: aFilters,
-                        urlParameters: {
-                            "$top": 10000
-                        },
-                        success: function (oData, oResponse) {
-
-                            var flatObj = {};
-                            oData.results.forEach(function (obj, index) {
-                                var sField = "";
-                                var rField = "";
-
-                                sField += obj.Fieldname.split(" ").join("");
-                                rField += obj.Fieldname.split(" ").join("");
-
-                                if (obj.Visibility) {
-                                    sField += "Visible";
-                                    if (!Object.keys(flatObj).includes(sField)) {
-                                        if (obj.Visibility === "Y") {
-                                            flatObj[sField] = true;
-                                        } else {
-                                            flatObj[sField] = false;
-                                        }
-                                    } else {
-                                        sField += obj.Customersub1.split(" ").join("");
-                                        // sField += obj.replace(":", "").split(" ").join("");
-                                        if (obj.Visibility === "Y") {
-                                            flatObj[sField] = true;
-                                        } else {
-                                            flatObj[sField] = false;
-                                        }
-                                    }
-                                }
-                                if (obj.Mandatory) {
-                                    rField += "Mandatory";
-
-                                    if (!Object.keys(flatObj).includes(rField)) {
-                                        if (obj.Mandatory === "Y") {
-                                            flatObj[rField] = true;
-                                        } else {
-                                            flatObj[rField] = false;
-                                        }
-                                    } else {
-                                        rField += obj.Customersub1.split(" ").join("");
-                                        if (obj.Mandatory === "Y") {
-                                            flatObj[rField] = true;
-                                        } else {
-                                            flatObj[rField] = false;
-                                        }
-                                    }
-
-                                }
-                            }.bind(this)),
-                                console.log(flatObj);
-                            this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel({}), "fieldMappingModels");
-                            this.getView().getModel("fieldMappingModels").oData = flatObj;
-                            this.getView().getModel("fieldMappingModels").updateBindings(true);
-                            console.log(this.getView().getModel("fieldMappingModels").oData);
-                            this.getOwnerComponent().getModel().refresh(true);
-                            this.busyDialog.close();
-                            // resolve()
-                        }.bind(this),
-                        error: function (oError) { }
-                    });
-                    //     })
-                    // } catch (err) {
-
-                    // }
-                }
+                // Call the rule engine function with the object parameter
+                const fieldMappingModelsData = await ruleEngine(configObject);
+                this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel(fieldMappingModelsData), "fieldMappingModels");
+                this.getView().getModel("fieldMappingModels").updateBindings(true);
+                this.getOwnerComponent().getModel().refresh(true);
                 this.busyDialog.close();
             },
             updateFeilds: function (evt) {
@@ -438,190 +400,29 @@ sap.ui.define([
             saveRequest: function () {
                 var that = this;
                 this.buttonText = 'save';
-                var oModel = this.getView().getModel();
-                var oCustomerDetailModel = this.getView().getModel("Customers");
-                delete oCustomerDetailModel.getData().to_zdd_sale;
-                delete oCustomerDetailModel.getData().to_zdd_comments;
-                var oEntry = oCustomerDetailModel.getData();
+                var amtFieldState = this.handleAmtFieldsValidation();
+                if (amtFieldState === true) {
+                    var oModel = this.getView().getModel();
+                    var oCustomerDetailModel = this.getView().getModel("Customers");
+                    delete oCustomerDetailModel.getData().to_zdd_sale;
+                    delete oCustomerDetailModel.getData().to_zdd_comments;
+                    var oEntry = oCustomerDetailModel.getData();
 
-                // if (this.mode == "edit" && that.custNum) {
-                if (this.mode == "edit") {
-                    // oEntry.zrequest_no = req_no;
-                    // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                    oEntry.zrequest_type = "Create Customer";
-                    oEntry.zrequest_status = "In Draft";
-                    delete oEntry.zindividual_paymen;
-                    delete oEntry.ztelephone_country_number_exte;
-                    delete oEntry.zfax_country_number_extension;
-                    delete oEntry.zhouse_number;
-                    delete oEntry.zindividual_paymen;
-                    delete oEntry.zamount_insured;
-                    delete oEntry.to_comments;
-                    delete oEntry.to_salesarea;
-                    delete oEntry.zmobile_country_number;
+                    var creditLimitType = this.getView().getModel("appView").getProperty("/selectedType");
 
-                    delete oEntry.BusinessPartnerDD;
-                    delete oEntry.BPRoles;
-                    delete oEntry.requests;
-                    delete oEntry.EntryCollection;
-
-                    if(this.getView().getModel("appView").getProperty("/selectedType") === "Secured Credit Limit"){
+                    if (creditLimitType === "Secured Credit Limit" || creditLimitType === "Secured Credit") {
                         oEntry.zcredit_limit_type = "Secured Credit";
-                    }else if(this.getView().getModel("appView").getProperty("/selectedType") === "Secured Credit Limit"){
+                    } else if (creditLimitType === "UnSecured Credit Limit" || creditLimitType === "UnSecured Credit") {
                         oEntry.zcredit_limit_type = "UnSecured Credit";
-                    }else{
+                    } else {
                         oEntry.zcredit_limit_type = "Both";
                     }
 
-                    // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
-                    // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
-                    //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
-                    //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
-                    // }
-                    if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
-                        oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
-                    }
-                    oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
-                    oEntry.ztype_of_customer = oEntry.zdescription;
-                    //oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
-                    // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
-                    // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+                    this.handleAmtFields();
 
-                    // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
-                    //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
-                    // }
-                    if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
-                        oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
-                    }
-                    // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
-                    //     oEntry.zcredit_control_area = this.getView(.).byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
-                    //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
-                    // }
-
-                    delete oEntry.to_credit;
-                    this.reqNumber = oEntry.zrequest_no;
-                    if (this.getView().getModel("Customers").getData().zdate_founded === null || this.getView().getModel("Customers").getData().zdate_founded.length < 13) {
-                        oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
-                    }
-                    if (this.getView().getModel("Customers").getData().zliquidationdate === null || this.getView().getModel("Customers").getData().zliquidationdate.length < 13) {
-                        oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
-                    }
-                    if (this.getView().getModel("Customers").getData().zdate === null || (this.getView().getModel("Customers").getData().zdate != null && this.getView().getModel("Customers").getData().zdate.length < 13)) {
-                        oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
-                    }
-                    // if (this.getView().getModel("Customers").getData().zvalidity_to === null || this.getView().getModel("Customers").getData().zvalidity_to.length < 13) {
-                    //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
-                    // }
-                    if (this.getView().getModel("Customers").getData().zvalid_from === null || this.getView().getModel("Customers").getData().zvalid_from.length < 13) {
-                        oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
-                    }
-                    if (this.getView().getModel("Customers").getData().zvalid_to === null || this.getView().getModel("Customers").getData().zvalid_to.length < 13) {
-                        oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
-                    }
-                    // if (this.getView().getModel("Customers").getData().zentry_date === null || this.getView().getModel("Customers").getData().zentry_date.length < 13) {
-                    //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
-                    // }
-                    if (this.getView().getModel("Customers").getData().zduedate === null || this.getView().getModel("Customers").getData().zduedate.length < 13) {
-                        oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
-                    }
-                    //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                    if (this.getView().getModel("Customers").getData().zupdated_date === null || this.getView().getModel("Customers").getData().zupdated_date.length < 13) {
-                        oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
-                    }
-                    if (this.getView().getModel("Customers").getData().zfinalizedon === null || this.getView().getModel("Customers").getData().zfinalizedon.length < 13) {
-                        oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
-                    }
-                    // if (this.getView().getModel("Customers").getData().zlast_key_date === null || this.getView().getModel("Customers").getData().zlast_key_date.length < 13) {
-                    //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
-                    // }
-                    // if (this.getView().getModel("Customers").getData().zpayment_on === null || this.getView().getModel("Customers").getData().zpayment_on.length < 13) {
-                    //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
-                    // }
-                    if (this.getView().getModel("Customers").getData().zcreated_date === null || this.getView().getModel("Customers").getData().zcreated_date.length < 13) {
-                        oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                    }
-                    if (this.getView().getModel("Customers").getData().zcl_validity_proposed_date === null || this.getView().getModel("Customers").getData().zcl_validity_proposed_date.length < 13) {
-                        oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
-                    }
-                    // if (this.getView().getModel("Customers").getData().zresubmission_on === null || this.getView().getModel("Customers").getData().zresubmission_on.length < 13) {
-                    //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
-                    // }
-                    if (this.getView().getModel("Customers").getData().zvalid_passport_date === null || this.getView().getModel("Customers").getData().zvalid_passport_date.length < 13) {
-                        oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
-                    }
-                    if (this.getView().getModel("Customers").getData().zvisa_valid_date === null || this.getView().getModel("Customers").getData().zvisa_valid_date.length < 13) {
-                        oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
-                    }
-                     if (this.getView().getModel("Customers").getData().znet_due_date === null || this.getView().getModel("Customers").getData().znet_due_date.length < 13) {
-                        oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                    }
-
-                    oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
-                    oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
-                    oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
-                    oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                    oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                    oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
-                    oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
-                    oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
-                    oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
-                    oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
-                    oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
-                    oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                    oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                    oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
-                    oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
-                    oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
-                    oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
-                    oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
-                    oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
-                    oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
-                    oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
-                    oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
-                    oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
-                    oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
-                    oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
-                    oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
-                    oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
-                    oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                    delete oEntry.ztype_of_Entity;
-                    oModel.update(this.sPath, oEntry, {
-                        success: function (oData, oResponse) {
-                            // jQuery.sap.require("sap.m.MessageBox");
-                            // sap.m.MessageBox.success("Customer Id " + this.getView().getModel("Customers").getData().zrequest_no + " saved Successfully");
-                            this.handleSalesData();
-                        }.bind(this),
-                        error: function (err) {
-
-                        }
-                    });
-
-                } else {
-                    if (!oEntry.zbusiness_unit_name || !oEntry.zvertical || !oEntry.zcustomer_type || !oEntry.zchannel_group || !oEntry.zcustomer_legal_name || !oEntry.zcompany_code) {
-                        // MessageBox.error("Please fill Mandotry fields");
-                        var mandatoryFields = [
-                            { field: "zbusiness_unit_name", label: "Business Unit" },
-                            { field: "zvertical", label: "Vertical" },
-                            { field: "zcustomer_type", label: "Customer Type" },
-                            { field: "zchannel_group", label: "Channel Group" },
-                            { field: "zcustomer_legal_name", label: "Legal Name" },
-                            { field: "zcompany_code", label: "Company Code" }
-                        ];
-                        var missingFields = [];
-                        mandatoryFields.forEach(function (fieldObj) {
-                            var fieldValue = oEntry[fieldObj.field];
-                            if (!fieldValue) {
-                                missingFields.push(fieldObj.label);
-                            }
-                        });
-                        if (missingFields.length > 0) {
-                            var errorMessage = "Please fill in the following mandatory fields: " + missingFields.join(", ");
-                            MessageBox.error(errorMessage);
-                        }
-                    } 
-                    else {
-                        var req_no = Math.floor(1000 + Math.random() * 9000) + "";
-                        oEntry.zrequest_no = req_no;
+                    // if (this.mode == "edit" && that.custNum) {
+                    if (this.mode == "edit") {
+                        // oEntry.zrequest_no = req_no;
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
                         oEntry.zrequest_type = "Create Customer";
                         oEntry.zrequest_status = "In Draft";
@@ -640,7 +441,17 @@ sap.ui.define([
                         delete oEntry.requests;
                         delete oEntry.EntryCollection;
 
-                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                        // var creditLimitType = this.getView().getModel("appView").getProperty("/selectedType");
+
+                        // if(creditLimitType === "Secured Credit Limit" || creditLimitType === "Secured Credit"){
+                        //     oEntry.zcredit_limit_type = "Secured Credit";
+                        // }else if(creditLimitType === "UnSecured Credit Limit" || creditLimitType === "UnSecured Credit"){
+                        //     oEntry.zcredit_limit_type = "UnSecured Credit";
+                        // }else{
+                        //     oEntry.zcredit_limit_type = "Both";
+                        // }
+
+                        // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
                         // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
                         //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
                         //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
@@ -648,20 +459,9 @@ sap.ui.define([
                         if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
                             oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
                         }
-                        if(this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")){
-                         oEntry.zbusiness_partner_grouping = "Z070";
-                        }
-                        else if(this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")){
-                            oEntry.zbusiness_partner_grouping = "BP01"
-                        }
-                        else if(this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")){
-                            oEntry.zbusiness_partner_grouping = "BP02"
-                        }
-                        else if(this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")){
-                            oEntry.zbusiness_partner_grouping = "BP08"
-                        }
-                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
+                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
                         oEntry.ztype_of_customer = oEntry.zdescription;
+                        //oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
                         // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
                         // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
 
@@ -672,77 +472,68 @@ sap.ui.define([
                             oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
                         }
                         // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
-                        //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
+                        //     oEntry.zcredit_control_area = this.getView(.).byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
                         //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
                         // }
-                        // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
-                        //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
-                        // }
-                        // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
-                        //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
-                        // }
 
-
-                        // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
-                        // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
-                        // }
-
-                        var custData = this.getView().getModel("Customers").getData();
-                        if (custData.zdate_founded === undefined || custData.zdate_founded === null || custData.zdate_founded.length < 13) {
+                        delete oEntry.to_credit;
+                        this.reqNumber = oEntry.zrequest_no;
+                        if (this.getView().getModel("Customers").getData().zdate_founded === null || this.getView().getModel("Customers").getData().zdate_founded.length < 13) {
                             oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
                         }
-                        if (custData.zliquidationdate === undefined || custData.zliquidationdate === null || custData.zliquidationdate.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zliquidationdate === null || this.getView().getModel("Customers").getData().zliquidationdate.length < 13) {
                             oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
                         }
-                        if (custData.zdate === undefined || custData.zdate === null || custData.zdate.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zdate === null || (this.getView().getModel("Customers").getData().zdate != null && this.getView().getModel("Customers").getData().zdate.length < 13)) {
                             oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
                         }
-                        // if (custData.zvalidity_to === undefined || custData.zvalidity_to === null || custData.zvalidity_to.length < 13) {
+                        // if (this.getView().getModel("Customers").getData().zvalidity_to === null || this.getView().getModel("Customers").getData().zvalidity_to.length < 13) {
                         //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
                         // }
-                        if (custData.zvalid_from === undefined || custData.zvalid_from === null || custData.zvalid_from.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zvalid_from === null || this.getView().getModel("Customers").getData().zvalid_from.length < 13) {
                             oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
                         }
-                        if (custData.zvalid_to === undefined || custData.zvalid_to === null || custData.zvalid_to.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zvalid_to === null || this.getView().getModel("Customers").getData().zvalid_to.length < 13) {
                             oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
                         }
-                        // if (custData.zentry_date === undefined || custData.zentry_date === null || custData.zentry_date.length < 13) {
+                        // if (this.getView().getModel("Customers").getData().zentry_date === null || this.getView().getModel("Customers").getData().zentry_date.length < 13) {
                         //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
                         // }
-                        if (custData.zduedate === undefined || custData.zduedate === null || custData.zduedate.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zduedate === null || this.getView().getModel("Customers").getData().zduedate.length < 13) {
                             oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
                         }
                         //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                        if (custData.zupdated_date === undefined || custData.zupdated_date === null || custData.zupdated_date.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zupdated_date === null || this.getView().getModel("Customers").getData().zupdated_date.length < 13) {
                             oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
                         }
-                        if (custData.zfinalizedon === undefined || custData.zfinalizedon === null || custData.zfinalizedon.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zfinalizedon === null || this.getView().getModel("Customers").getData().zfinalizedon.length < 13) {
                             oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
                         }
-                        // if (custData.zlast_key_date === undefined || custData.zlast_key_date === null || custData.zlast_key_date.length < 13) {
+                        // if (this.getView().getModel("Customers").getData().zlast_key_date === null || this.getView().getModel("Customers").getData().zlast_key_date.length < 13) {
                         //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
                         // }
-                        // if (custData.zpayment_on === undefined || custData.zpayment_on === null || custData.zpayment_on.length < 13) {
+                        // if (this.getView().getModel("Customers").getData().zpayment_on === null || this.getView().getModel("Customers").getData().zpayment_on.length < 13) {
                         //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
                         // }
-                        if (custData.zcreated_date === undefined || custData.zcreated_date === null || custData.zcreated_date.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zcreated_date === null || this.getView().getModel("Customers").getData().zcreated_date.length < 13) {
                             oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
                         }
-                        if (custData.zcl_validity_proposed_date === undefined || custData.zcl_validity_proposed_date === null || custData.zcl_validity_proposed_date.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zcl_validity_proposed_date === null || this.getView().getModel("Customers").getData().zcl_validity_proposed_date.length < 13) {
                             oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
                         }
-                        // if (custData.zresubmission_on === undefined || custData.zresubmission_on === null || custData.zresubmission_on.length < 13) {
+                        // if (this.getView().getModel("Customers").getData().zresubmission_on === null || this.getView().getModel("Customers").getData().zresubmission_on.length < 13) {
                         //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
                         // }
-                        if (custData.zvalid_passport_date === undefined || custData.zvalid_passport_date === null || custData.zvalid_passport_date.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zvalid_passport_date === null || this.getView().getModel("Customers").getData().zvalid_passport_date.length < 13) {
                             oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
                         }
-                        if (custData.zvisa_valid_date === undefined || custData.zvisa_valid_date === null || custData.zvisa_valid_date.length < 13) {
+                        if (this.getView().getModel("Customers").getData().zvisa_valid_date === null || this.getView().getModel("Customers").getData().zvisa_valid_date.length < 13) {
                             oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
                         }
-                        // if (custData.znet_due_date === undefined || custData.znet_due_date === null || custData.znet_due_date.length < 13) {
+                        //  if (this.getView().getModel("Customers").getData().znet_due_date === null || this.getView().getModel("Customers").getData().znet_due_date.length < 13) {
                         //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
                         // }
+
                         oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
                         oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
                         oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
@@ -771,23 +562,229 @@ sap.ui.define([
                         oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                        delete oEntry.ztype_of_Entity;
+                        // delete oEntry.ztype_of_Entity;
+                        if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
+                            oEntry.zbusiness_partner_grouping = "Z070";
+                        }
+                        else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
+                            oEntry.zbusiness_partner_grouping = "BP01"
+                        }
+                        else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
+                            oEntry.zbusiness_partner_grouping = "BP02"
+                        }
+                        else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
+                            oEntry.zbusiness_partner_grouping = "BP08"
+                        }
 
-                        oModel.create("/ZDD_CUSTOMER", oEntry, {
+                        oEntry.zregion = oEntry.zstate;
+                        oModel.update(this.sPath, oEntry, {
                             success: function (oData, oResponse) {
-                                that.reqestNo = req_no;
-                                that.custNum = oData.zcustomer_num;
-                                this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
-                                //         jQuery.sap.require("sap.m.MessageBox");
-                                // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
+                                // jQuery.sap.require("sap.m.MessageBox");
+                                // sap.m.MessageBox.success("Customer Id " + this.getView().getModel("Customers").getData().zrequest_no + " saved Successfully");
                                 this.handleSalesData();
-
                             }.bind(this),
-                            error: function (oError) {
-                                this.getView().setBusy(false);
+                            error: function (err) {
+
                             }
                         });
+
+                    } else {
+                        if (!oEntry.zbusiness_unit_name || !oEntry.zvertical || !oEntry.zcustomer_type || !oEntry.zchannel_group || !oEntry.zcustomer_legal_name || !oEntry.zcompany_code) {
+                            // MessageBox.error("Please fill Mandotry fields");
+                            var mandatoryFields = [
+                                { field: "zbusiness_unit_name", label: "Business Unit" },
+                                { field: "zvertical", label: "Vertical" },
+                                { field: "zcustomer_type", label: "Customer Type" },
+                                { field: "zchannel_group", label: "Channel Group" },
+                                { field: "zcustomer_legal_name", label: "Legal Name" },
+                                { field: "zcompany_code", label: "Company Code" }
+                            ];
+                            var missingFields = [];
+                            mandatoryFields.forEach(function (fieldObj) {
+                                var fieldValue = oEntry[fieldObj.field];
+                                if (!fieldValue) {
+                                    missingFields.push(fieldObj.label);
+                                }
+                            });
+                            if (missingFields.length > 0) {
+                                var errorMessage = "Please fill in the following mandatory fields: " + missingFields.join(", ");
+                                MessageBox.error(errorMessage);
+                            }
+                        } else {
+                            // this.handleAmtFields();
+                            var req_no = Math.floor(1000 + Math.random() * 9000) + "";
+                            oEntry.zrequest_no = req_no;
+                            // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
+                            oEntry.zrequest_type = "Create Customer";
+                            oEntry.zrequest_status = "In Draft";
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.ztelephone_country_number_exte;
+                            delete oEntry.zfax_country_number_extension;
+                            delete oEntry.zhouse_number;
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.zamount_insured;
+                            delete oEntry.to_comments;
+                            delete oEntry.to_salesarea;
+                            delete oEntry.zmobile_country_number;
+
+                            delete oEntry.BusinessPartnerDD;
+                            delete oEntry.BPRoles;
+                            delete oEntry.requests;
+                            delete oEntry.EntryCollection;
+
+                            // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                            // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
+                            //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
+                            //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
+                                oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
+                            }
+                            if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
+                                oEntry.zbusiness_partner_grouping = "Z070";
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
+                                oEntry.zbusiness_partner_grouping = "BP01"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
+                                oEntry.zbusiness_partner_grouping = "BP02"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
+                                oEntry.zbusiness_partner_grouping = "BP08"
+                            }
+                            oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
+                            oEntry.ztype_of_customer = oEntry.zdescription;
+                            // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
+                            // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+
+                            // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
+                            //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
+                                oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
+                            }
+                            // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
+                            //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
+                            //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
+                            // }
+                            // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
+                            //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
+                            // }
+                            // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
+                            //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
+                            // }
+
+
+                            // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
+                            // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
+                            // }
+
+                            var custData = this.getView().getModel("Customers").getData();
+                            if (custData.zdate_founded === undefined || custData.zdate_founded === null || custData.zdate_founded.length < 13) {
+                                oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
+                            }
+                            if (custData.zliquidationdate === undefined || custData.zliquidationdate === null || custData.zliquidationdate.length < 13) {
+                                oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
+                            }
+                            if (custData.zdate === undefined || custData.zdate === null || custData.zdate.length < 13) {
+                                oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
+                            }
+                            // if (custData.zvalidity_to === undefined || custData.zvalidity_to === null || custData.zvalidity_to.length < 13) {
+                            //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
+                            // }
+                            if (custData.zvalid_from === undefined || custData.zvalid_from === null || custData.zvalid_from.length < 13) {
+                                oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
+                            }
+                            if (custData.zvalid_to === undefined || custData.zvalid_to === null || custData.zvalid_to.length < 13) {
+                                oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
+                            }
+                            // if (custData.zentry_date === undefined || custData.zentry_date === null || custData.zentry_date.length < 13) {
+                            //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
+                            // }
+                            if (custData.zduedate === undefined || custData.zduedate === null || custData.zduedate.length < 13) {
+                                oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
+                            }
+                            //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            if (custData.zupdated_date === undefined || custData.zupdated_date === null || custData.zupdated_date.length < 13) {
+                                oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
+                            }
+                            if (custData.zfinalizedon === undefined || custData.zfinalizedon === null || custData.zfinalizedon.length < 13) {
+                                oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
+                            }
+                            // if (custData.zlast_key_date === undefined || custData.zlast_key_date === null || custData.zlast_key_date.length < 13) {
+                            //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
+                            // }
+                            // if (custData.zpayment_on === undefined || custData.zpayment_on === null || custData.zpayment_on.length < 13) {
+                            //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
+                            // }
+                            if (custData.zcreated_date === undefined || custData.zcreated_date === null || custData.zcreated_date.length < 13) {
+                                oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            }
+                            if (custData.zcl_validity_proposed_date === undefined || custData.zcl_validity_proposed_date === null || custData.zcl_validity_proposed_date.length < 13) {
+                                oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
+                            }
+                            // if (custData.zresubmission_on === undefined || custData.zresubmission_on === null || custData.zresubmission_on.length < 13) {
+                            //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
+                            // }
+                            if (custData.zvalid_passport_date === undefined || custData.zvalid_passport_date === null || custData.zvalid_passport_date.length < 13) {
+                                oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
+                            }
+                            if (custData.zvisa_valid_date === undefined || custData.zvisa_valid_date === null || custData.zvisa_valid_date.length < 13) {
+                                oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
+                            }
+                            // if (custData.znet_due_date === undefined || custData.znet_due_date === null || custData.znet_due_date.length < 13) {
+                            //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                            // }
+                            oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
+                            oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
+                            oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
+                            oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
+                            oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
+                            oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
+                            oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
+                            oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
+                            oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
+                            oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
+                            oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
+                            oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
+                            oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
+                            oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
+                            oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
+                            oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
+                            oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
+                            oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
+                            oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
+                            oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
+                            oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
+                            oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                            // delete oEntry.ztype_of_Entity;
+
+                            oEntry.zregion = oEntry.zstate;
+
+                            oModel.create("/ZDD_CUSTOMER", oEntry, {
+                                success: function (oData, oResponse) {
+                                    that.reqestNo = req_no;
+                                    that.custNum = oData.zcustomer_num;
+                                    this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
+                                    //         jQuery.sap.require("sap.m.MessageBox");
+                                    // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
+                                    this.handleSalesData();
+
+                                }.bind(this),
+                                error: function (oError) {
+                                    this.getView().setBusy(false);
+                                }
+                            });
+                        }
                     }
+                } else {
+                    MessageBox.error(this.amtValidationMesg);
                 }
             },
             submitRequest: function () {
@@ -797,421 +794,468 @@ sap.ui.define([
                 // var emailState = this.getView().byId("orderData8").getAggregation("_views")[0].getContent()[0].getContent()[14].getValueState();
 
                 // if(emailState !== 'Error' && validFromState !== 'Error' && validToState !== 'Error'){
+
+
+
                 var state = this.handleValidateFormFields();
                 if (state == true) {
-                    var oModel = this.getView().getModel();
-                    var oCustomerDetailModel = this.getView().getModel("Customers");
-                    delete oCustomerDetailModel.getData().to_zdd_sale;
-                    delete oCustomerDetailModel.getData().to_zdd_comments;
-                    var oEntry = oCustomerDetailModel.getData();
+                    var amtFieldState = this.handleAmtFieldsValidation();
+                    if (amtFieldState === true) {
+                        var oModel = this.getView().getModel();
+                        var oCustomerDetailModel = this.getView().getModel("Customers");
+                        delete oCustomerDetailModel.getData().to_zdd_sale;
+                        delete oCustomerDetailModel.getData().to_zdd_comments;
+                        var oEntry = oCustomerDetailModel.getData();
 
-                    if (this.mode == "edit" || this.custNum) {
-                        // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                        oEntry.zrequest_type = "Create Customer";
-                        oEntry.zrequest_status = "In Progress";
-                        delete oEntry.zindividual_paymen;
-                        delete oEntry.ztelephone_country_number_exte;
-                        delete oEntry.zfax_country_number_extension;
-                        delete oEntry.zhouse_number;
-                        delete oEntry.zindividual_paymen;
-                        delete oEntry.zamount_insured;
-                        delete oEntry.to_comments;
-                        delete oEntry.to_salesarea;
-                        delete oEntry.zmobile_country_number;
+                        var creditLimitType = this.getView().getModel("appView").getProperty("/selectedType");
 
-                        delete oEntry.BusinessPartnerDD;
-                        delete oEntry.BPRoles;
-                        delete oEntry.requests;
-                        delete oEntry.EntryCollection;
+                        if (creditLimitType === "Secured Credit Limit" || creditLimitType === "Secured Credit") {
+                            oEntry.zcredit_limit_type = "Secured Credit";
+                        } else if (creditLimitType === "UnSecured Credit Limit" || creditLimitType === "UnSecured Credit") {
+                            oEntry.zcredit_limit_type = "UnSecured Credit";
+                        } else {
+                            oEntry.zcredit_limit_type = "Both";
+                        }
+                        this.handleAmtFields();
 
-                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
-                        // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
-                        //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
-                        //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
-                        // }
-                        if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
-                            oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
-                        }
-                        //oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
-                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
-                        oEntry.ztype_of_customer = oEntry.zdescription;
-                        // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
-                        // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+                        // if (this.mode == "edit" || this.custNum) {
+                        if (this.mode == "edit") {
+                            // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
+                            oEntry.zrequest_type = "Create Customer";
+                            oEntry.zrequest_status = "In Progress";
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.ztelephone_country_number_exte;
+                            delete oEntry.zfax_country_number_extension;
+                            delete oEntry.zhouse_number;
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.zamount_insured;
+                            delete oEntry.to_comments;
+                            delete oEntry.to_salesarea;
+                            delete oEntry.zmobile_country_number;
 
-                        // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
-                        //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
-                        // }
-                        if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
-                            oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
-                        }
-                        // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
-                        //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
-                        //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
-                        // }
-                        // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
-                        //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
-                        // }
-                        // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
-                        //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
-                        // }
-                        // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
-                        // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
-                        // }   
-                        // if (this.getView().getModel("Customers").getData().zpayment_terms !== "") {
-                        //     oEntry.zpayment_terms = oEntry.zpayment_terms.split(" ")[0];
-                        // }
-                        var custData = this.getView().getModel("Customers").getData();
-                        this.reqNumber = custData.zrequest_no;
-                        if (custData.zdate_founded && custData.zdate_founded.length < 13) {
-                            oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
-                        }
-                        if (custData.zliquidationdate && custData.zliquidationdate.length < 13) {
-                            oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
-                        }
-                        if (custData.zdate && custData.zdate.length < 13) {
-                            oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
-                        }
-                        if (custData.zvalidity_to && custData.zvalidity_to.length < 13) {
-                            oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
-                        }
-                        if (custData.zvalid_from && custData.zvalid_from.length < 13) {
-                            oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
-                        }
-                        if (custData.zvalid_to && custData.zvalid_to.length < 13) {
-                            oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
-                        }
-                        if (custData.zentry_date && custData.zentry_date.length < 13) {
-                            oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
-                        }
-                        if (custData.zduedate && custData.zduedate.length < 13) {
-                            oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
-                        }
-                        //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                        if (custData.zupdated_date && custData.zupdated_date.length < 13) {
-                            oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
-                        }
-                        if (custData.zfinalizedon && custData.zfinalizedon.length < 13) {
-                            oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
-                        }
-                        if (custData.zlast_key_date && custData.zlast_key_date.length < 13) {
-                            oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
-                        }
-                        if (custData.zpayment_on && custData.zpayment_on.length < 13) {
-                            oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
-                        }
-                        if (custData.zcreated_date && custData.zcreated_date.length < 13) {
-                            oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                        }
-                        if (custData.zcl_validity_proposed_date && custData.zcl_validity_proposed_date.length < 13) {
-                            oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
-                        }
-                        if (custData.zresubmission_on && custData.zresubmission_on.length < 13) {
-                            oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
-                        }
-                        if (custData.zvalid_passport_date && custData.zvalid_passport_date.length < 13) {
-                            oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
-                        }
-                        if (custData.zvisa_valid_date && custData.zvisa_valid_date.length < 13) {
-                            oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
-                        }
-                        if (custData.znet_due_date && custData.znet_due_date.length < 13) {
-                            oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                        }
+                            delete oEntry.BusinessPartnerDD;
+                            delete oEntry.BPRoles;
+                            delete oEntry.requests;
+                            delete oEntry.EntryCollection;
 
-                        delete oEntry.to_credit;
-                        oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
-                        oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
-                        oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
-                        oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                        oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                        oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
-                        oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
-                        oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
-                        oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
-                        oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
-                        oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
-                        oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                        oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                        oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
-                        oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
-                        oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
-                        oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
-                        oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
-                        oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
-                        oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
-                        oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
-                        oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
-                        oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
-                        oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
-                        oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
-                        oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
-                        oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
-                        oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                        delete oEntry.ztype_of_Entity;
-                        oModel.update(this.sPath, oEntry, {
-                            success: function (oData, oResponse) {
-                                // jQuery.sap.require("sap.m.MessageBox");
-                                // sap.m.MessageBox.success("Customer Id " + this.getView().getModel("Customers").getData().zrequest_no + " saved Successfully");
-                                this.handleSalesData();
-                                if (oData.zdescription !== 'Cash') {
-                                    var sCreatedAt = "";
-                                    if (oEntry.zcreated_date) {
-                                        if (oEntry.zcreated_date.getDate() < 10) {
-                                            sCreatedAt += "0" + oEntry.zcreated_date.getDate() + ".";
-                                        } else {
-                                            sCreatedAt += oEntry.zcreated_date.getDate() + ".";
+                            // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                            // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
+                            //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
+                            //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
+                                oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
+                            }
+                            //oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
+                            oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
+                            oEntry.ztype_of_customer = oEntry.zdescription;
+                            // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
+                            // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+
+                            // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
+                            //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
+                                oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
+                            }
+                            // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
+                            //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
+                            //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
+                            // }
+                            // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
+                            //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
+                            // }
+                            // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
+                            //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
+                            // }
+                            // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
+                            // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
+                            // }   
+                            // if (this.getView().getModel("Customers").getData().zpayment_terms !== "") {
+                            //     oEntry.zpayment_terms = oEntry.zpayment_terms.split(" ")[0];
+                            // }
+                            var custData = this.getView().getModel("Customers").getData();
+                            this.reqNumber = custData.zrequest_no;
+                            if (custData.zdate_founded && custData.zdate_founded.length < 13) {
+                                oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
+                            }
+                            if (custData.zliquidationdate && custData.zliquidationdate.length < 13) {
+                                oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
+                            }
+                            if (custData.zdate && custData.zdate.length < 13) {
+                                oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
+                            }
+                            if (custData.zvalidity_to && custData.zvalidity_to.length < 13) {
+                                oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
+                            }
+                            if (custData.zvalid_from && custData.zvalid_from.length < 13) {
+                                oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
+                            }
+                            if (custData.zvalid_to && custData.zvalid_to.length < 13) {
+                                oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
+                            }
+                            if (custData.zentry_date && custData.zentry_date.length < 13) {
+                                oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
+                            }
+                            if (custData.zduedate && custData.zduedate.length < 13) {
+                                oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
+                            }
+                            //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            if (custData.zupdated_date && custData.zupdated_date.length < 13) {
+                                oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
+                            }
+                            if (custData.zfinalizedon && custData.zfinalizedon.length < 13) {
+                                oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
+                            }
+                            if (custData.zlast_key_date && custData.zlast_key_date.length < 13) {
+                                oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
+                            }
+                            if (custData.zpayment_on && custData.zpayment_on.length < 13) {
+                                oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
+                            }
+                            if (custData.zcreated_date && custData.zcreated_date.length < 13) {
+                                oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            }
+                            if (custData.zcl_validity_proposed_date && custData.zcl_validity_proposed_date.length < 13) {
+                                oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
+                            }
+                            if (custData.zresubmission_on && custData.zresubmission_on.length < 13) {
+                                oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
+                            }
+                            if (custData.zvalid_passport_date && custData.zvalid_passport_date.length < 13) {
+                                oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
+                            }
+                            if (custData.zvisa_valid_date && custData.zvisa_valid_date.length < 13) {
+                                oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
+                            }
+                            // if (custData.znet_due_date && custData.znet_due_date.length < 13) {
+                            //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                            // }
+
+                            delete oEntry.to_credit;
+                            oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
+                            oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
+                            oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
+                            oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
+                            oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
+                            oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
+                            oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
+                            oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
+                            oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
+                            oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
+                            oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
+                            oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
+                            oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
+                            oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
+                            oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
+                            oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
+                            oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
+                            oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
+                            oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
+                            oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
+                            oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
+                            oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                            if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
+                                oEntry.zbusiness_partner_grouping = "Z070";
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
+                                oEntry.zbusiness_partner_grouping = "BP01"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
+                                oEntry.zbusiness_partner_grouping = "BP02"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
+                                oEntry.zbusiness_partner_grouping = "BP08"
+                            }
+                            oEntry.zregion = oEntry.zstate;
+                            // delete oEntry.ztype_of_Entity;
+                            oModel.update(this.sPath, oEntry, {
+                                success: function (oData, oResponse) {
+                                    // jQuery.sap.require("sap.m.MessageBox");
+                                    // sap.m.MessageBox.success("Customer Id " + this.getView().getModel("Customers").getData().zrequest_no + " saved Successfully");
+                                    this.handleSalesData();
+                                    if (oEntry.zdescription !== 'CASH') {
+                                        var sCreatedAt = "";
+                                        if (oEntry.zcreated_date) {
+                                            if (oEntry.zcreated_date.getDate() < 10) {
+                                                sCreatedAt += "0" + oEntry.zcreated_date.getDate() + ".";
+                                            } else {
+                                                sCreatedAt += oEntry.zcreated_date.getDate() + ".";
+                                            }
+                                            if ((oEntry.zcreated_date.getMonth() + 1) < 10) {
+                                                sCreatedAt += "0" + (oEntry.zcreated_date.getMonth() + 1);
+                                            } else {
+                                                sCreatedAt += (oEntry.zcreated_date.getMonth() + 1);
+                                            }
+                                            sCreatedAt += "." + oEntry.zcreated_date.getFullYear();
                                         }
-                                        if ((oEntry.zcreated_date.getMonth() + 1) < 10) {
-                                            sCreatedAt += "0" + (oEntry.zcreated_date.getMonth() + 1);
-                                        } else {
-                                            sCreatedAt += (oEntry.zcreated_date.getMonth() + 1);
+
+                                        var sLinkToTask = that.createLinkToTask();
+
+                                        var oWFModel = this.getOwnerComponent().getModel("Workflow");
+                                        var body = {
+                                            "definitionId": "eu10.iffcodevprocessautomation.iffcocustomerservices.iFFCOCustomerCreate",
+                                            "context": {
+                                                "requesttype": "create",
+                                                "customerid": oEntry.zcustomer_num,
+                                                "customername": oEntry.zfirst_name,
+                                                "customersitename": oEntry.zfirst_name,
+                                                "customercountry": oEntry.zcountry,
+                                                "businessunit": oEntry.zbusiness_unit_name,
+                                                "createdbyuserid": oEntry.zcreated_by,
+                                                "createdbyname": oEntry.zcreated_by,
+                                                "createdbyrole": "Sales Person",
+                                                "createdon": sCreatedAt,
+                                                "salesorganizationid": this.getView().getModel("salesDataModel").getData().length !== 0 ? this.getView().getModel("salesDataModel").getData()[0].zsales_orgnization.split(" - ")[0] : "",
+                                                "linktotask": sLinkToTask,
+                                                "testmode": true,
+                                                "bulkdocumentid": "",
+                                                "requestid": that.reqNumber,
+                                                "channel": oEntry.zchannel
+                                            }
+                                        };
+                                        oWFModel.create("/createWF", { body: JSON.stringify(body) }, {
+                                            success: function (oData) {
+                                                sap.m.MessageToast.show("Customer is submitted Successfully");
+                                            },
+                                            error: function (oError) {
+                                                sap.m.MessageToast.show("Error while initiating workflow request!");
+                                            }
+                                        });
+                                    }
+                                }.bind(this),
+
+                                error: function (oError) {
+                                    that.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
+                                    MessageBox.error(oError.message);
+
+
+                                }
+                            });
+
+                        } else {
+                            var req_no = Math.floor(1000 + Math.random() * 9000) + "";
+                            oEntry.zrequest_no = req_no;
+
+                            oEntry.zrequest_type = "Create Customer";
+                            oEntry.zrequest_status = "In Progress";
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.ztelephone_country_number_exte;
+                            delete oEntry.zfax_country_number_extension;
+                            delete oEntry.zhouse_number;
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.zamount_insured;
+                            delete oEntry.to_comments;
+                            delete oEntry.to_salesarea;
+                            delete oEntry.zmobile_country_number;
+                            delete oEntry.BusinessPartnerDD;
+                            delete oEntry.BPRoles;
+                            delete oEntry.requests;
+                            delete oEntry.EntryCollection;
+
+                            // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
+
+                            // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                            // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
+                            //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
+                            //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
+                                oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
+                            }
+                            // oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
+                            oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
+                            oEntry.ztype_of_customer = oEntry.zdescription;
+                            // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
+                            // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+
+                            // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
+                            //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
+                                oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
+                            }
+                            var custData = this.getView().getModel("Customers").getData();
+                            if (custData.zdate_founded && custData.zdate_founded.length < 13) {
+                                oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
+                            }
+                            if (custData.zliquidationdate && custData.zliquidationdate.length < 13) {
+                                oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
+                            }
+                            if (custData.zdate && custData.zdate.length < 13) {
+                                oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
+                            }
+                            if (custData.zvalidity_to && custData.zvalidity_to.length < 13) {
+                                oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
+                            }
+                            if (custData.zvalid_from && custData.zvalid_from.length < 13) {
+                                oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
+                            }
+                            if (custData.zvalid_to && custData.zvalid_to.length < 13) {
+                                oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
+                            }
+                            if (custData.zentry_date && custData.zentry_date.length < 13) {
+                                oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
+                            }
+                            if (custData.zduedate && custData.zduedate.length < 13) {
+                                oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
+                            }
+                            //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            if (custData.zupdated_date && custData.zupdated_date.length < 13) {
+                                oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
+                            }
+                            if (custData.zfinalizedon && custData.zfinalizedon.length < 13) {
+                                oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
+                            }
+                            if (custData.zlast_key_date && custData.zlast_key_date.length < 13) {
+                                oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
+                            }
+                            if (custData.zpayment_on && custData.zpayment_on.length < 13) {
+                                oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
+                            }
+                            if (custData.zcreated_date && custData.zcreated_date.length < 13) {
+                                oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            }
+                            if (custData.zcl_validity_proposed_date && custData.zcl_validity_proposed_date.length < 13) {
+                                oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
+                            }
+                            if (custData.zresubmission_on && custData.zresubmission_on.length < 13) {
+                                oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
+                            }
+                            if (custData.zvalid_passport_date && custData.zvalid_passport_date.length < 13) {
+                                oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
+                            }
+                            if (custData.zvisa_valid_date && custData.zvisa_valid_date.length < 13) {
+                                oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
+                            }
+                            // if (custData.znet_due_date && custData.znet_due_date.length < 13) {
+                            //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                            // }
+                            oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
+                            oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
+                            oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
+                            oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
+                            oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
+                            oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
+                            oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
+                            oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
+                            oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
+                            oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
+                            oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
+                            oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
+                            oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
+                            oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
+                            oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
+                            oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
+                            oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
+                            oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
+                            oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
+                            oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
+                            oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
+                            oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                            // delete oEntry.ztype_of_Entity;
+                            if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
+                                oEntry.zbusiness_partner_grouping = "Z070";
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
+                                oEntry.zbusiness_partner_grouping = "BP01"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
+                                oEntry.zbusiness_partner_grouping = "BP02"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
+                                oEntry.zbusiness_partner_grouping = "BP08"
+                            }
+                            oEntry.zregion = oEntry.zstate;
+                            oModel.create("/ZDD_CUSTOMER", oEntry, {
+                                success: function (oData, oResponse) {
+                                    this.custNum = oData.zcustomer_num;
+                                    this.reqNumber = oData.zrequest_no;
+
+                                    //      jQuery.sap.require("sap.m.MessageBox");
+                                    // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
+                                    this.handleSalesData();
+                                    this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
+                                    if (oData.zdescription !== 'CASH') {
+                                        var sCreatedAt = "";
+                                        if (oData.zcreated_date) {
+                                            if (oData.zcreated_date.getDate() < 10) {
+                                                sCreatedAt += "0" + oData.zcreated_date.getDate() + ".";
+                                            } else {
+                                                sCreatedAt += oData.zcreated_date.getDate() + ".";
+                                            }
+                                            if ((oData.zcreated_date.getMonth() + 1) < 10) {
+                                                sCreatedAt += "0" + (oData.zcreated_date.getMonth() + 1);
+                                            } else {
+                                                sCreatedAt += (oData.zcreated_date.getMonth() + 1);
+                                            }
+                                            sCreatedAt += "." + oData.zcreated_date.getFullYear();
                                         }
-                                        sCreatedAt += "." + oEntry.zcreated_date.getFullYear();
+
+                                        var sLinkToTask = that.createLinkToTask();
+
+                                        var oWFModel = this.getOwnerComponent().getModel("Workflow");
+                                        var body = {
+                                            "definitionId": "eu10.iffcodevprocessautomation.iffcocustomerservices.iFFCOCustomerCreate",
+                                            "context": {
+                                                "requesttype": "create",
+                                                "customerid": that.custNum,
+                                                "customername": oData.zfirst_name,
+                                                "customersitename": oData.zfirst_name,
+                                                "customercountry": oData.zcountry,
+                                                "businessunit": oData.zbusiness_unit_name,
+                                                "createdbyuserid": oData.zcreated_by,
+                                                "createdbyname": oData.zcreated_by,
+                                                "createdbyrole": "Sales Person",
+                                                "createdon": sCreatedAt,
+                                                "salesorganizationid": oData.zsales_orgnization ? oData.zsales_orgnization : "",
+                                                "linktotask": sLinkToTask,
+                                                "testmode": true,
+                                                "bulkdocumentid": "",
+                                                "requestid": that.reqNumber,
+                                                "channel": oData.zchannel
+                                            }
+                                        };
+                                        oWFModel.create("/createWF", { body: JSON.stringify(body) }, {
+                                            success: function (oData) {
+                                                sap.m.MessageToast.show("Customer is submitted Successfully");
+                                            },
+                                            error: function (oError) {
+                                                sap.m.MessageToast.show("Error while initiating workflow request!");
+                                            }
+                                        });
                                     }
 
-                                    var sLinkToTask = that.createLinkToTask();
+                                    // this.handleSalesData();
 
-                                    var oWFModel = this.getOwnerComponent().getModel("Workflow");
-                                    var body = {
-                                        "definitionId": "eu10.iffcodevprocessautomation.iffcocustomerservices.iFFCOCustomerCreate",
-                                        "context": {
-                                            "requesttype": "create",
-                                            "customerid": this.custNum,
-                                            "customername": oEntry.zfirst_name,
-                                            "customersitename": oEntry.zfirst_name,
-                                            "customercountry": oEntry.zcountry,
-                                            "businessunit": oEntry.zbusiness_unit_name,
-                                            "createdbyuserid": oEntry.zcreated_by,
-                                            "createdbyname": oEntry.zcreated_by,
-                                            "createdbyrole": "Sales Person",
-                                            "createdon": sCreatedAt,
-                                            "salesorganizationid": this.getView().getModel("salesDataModel").getData() ? this.getView().getModel("salesDataModel").getData()[0].zsales_orgnization.split(" - ")[0] : "",
-                                            "linktotask": sLinkToTask,
-                                            "testmode": true,
-                                            "bulkdocumentid": "",
-                                            "requestid": that.reqNumber,
-                                            "channel": oEntry.zchannel
-                                        }
-                                    };
-                                    oWFModel.create("/createWF", { body: JSON.stringify(body) }, {
-                                        success: function (oData) {
-                                            sap.m.MessageToast.show("Customer is submitted Successfully");
-                                        },
-                                        error: function (oError) {
-                                            sap.m.MessageToast.show("Error while initiating workflow request!");
-                                        }
-                                    });
+                                }.bind(this),
+
+                                error: function (oError) {
+                                    that.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
+                                    MessageBox.error(oError.message);
                                 }
-                            }.bind(this),
-
-                            error: function (oError) {
-                                that.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
-                                MessageBox.error(oError.message);
-
-
-                            }
-                        });
-
+                            });
+                        }
                     } else {
-                        var req_no = Math.floor(1000 + Math.random() * 9000) + "";
-                        oEntry.zrequest_no = req_no;
-
-                        oEntry.zrequest_type = "Create Customer";
-                        oEntry.zrequest_status = "In Progress";
-                        delete oEntry.zindividual_paymen;
-                        delete oEntry.ztelephone_country_number_exte;
-                        delete oEntry.zfax_country_number_extension;
-                        delete oEntry.zhouse_number;
-                        delete oEntry.zindividual_paymen;
-                        delete oEntry.zamount_insured;
-                        delete oEntry.to_comments;
-                        delete oEntry.to_salesarea;
-                        delete oEntry.zmobile_country_number;
-                        delete oEntry.BusinessPartnerDD;
-                        delete oEntry.BPRoles;
-                        delete oEntry.requests;
-                        delete oEntry.EntryCollection;
-
-                        // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-
-                        oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
-                        // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
-                        //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
-                        //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
-                        // }
-                        if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
-                            oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
-                        }
-                       // oEntry.zbusiness_partner_id_grouping = this.getView().getModel("appView").getProperty("/bpg");
-                        oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
-                        oEntry.ztype_of_customer = oEntry.zdescription;
-                        // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
-                        // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
-
-                        // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
-                        //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
-                        // }
-                        if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
-                            oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
-                        }
-                        var custData = this.getView().getModel("Customers").getData();
-                        if (custData.zdate_founded && custData.zdate_founded.length < 13) {
-                            oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
-                        }
-                        if (custData.zliquidationdate && custData.zliquidationdate.length < 13) {
-                            oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
-                        }
-                        if (custData.zdate && custData.zdate.length < 13) {
-                            oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
-                        }
-                        if (custData.zvalidity_to && custData.zvalidity_to.length < 13) {
-                            oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
-                        }
-                        if (custData.zvalid_from && custData.zvalid_from.length < 13) {
-                            oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
-                        }
-                        if (custData.zvalid_to && custData.zvalid_to.length < 13) {
-                            oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
-                        }
-                        if (custData.zentry_date && custData.zentry_date.length < 13) {
-                            oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
-                        }
-                        if (custData.zduedate && custData.zduedate.length < 13) {
-                            oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
-                        }
-                        //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                        if (custData.zupdated_date && custData.zupdated_date.length < 13) {
-                            oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
-                        }
-                        if (custData.zfinalizedon && custData.zfinalizedon.length < 13) {
-                            oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
-                        }
-                        if (custData.zlast_key_date && custData.zlast_key_date.length < 13) {
-                            oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
-                        }
-                        if (custData.zpayment_on && custData.zpayment_on.length < 13) {
-                            oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
-                        }
-                        if (custData.zcreated_date && custData.zcreated_date.length < 13) {
-                            oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                        }
-                        if (custData.zcl_validity_proposed_date && custData.zcl_validity_proposed_date.length < 13) {
-                            oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
-                        }
-                        if (custData.zresubmission_on && custData.zresubmission_on.length < 13) {
-                            oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
-                        }
-                        if (custData.zvalid_passport_date && custData.zvalid_passport_date.length < 13) {
-                            oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
-                        }
-                        if (custData.zvisa_valid_date && custData.zvisa_valid_date.length < 13) {
-                            oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
-                        }
-                        if (custData.znet_due_date && custData.znet_due_date.length < 13) {
-                            oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                        }
-                        oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
-                        oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
-                        oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
-                        oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                        oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                        oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
-                        oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
-                        oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
-                        oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
-                        oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
-                        oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
-                        oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                        oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                        oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
-                        oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
-                        oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
-                        oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
-                        oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
-                        oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
-                        oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
-                        oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
-                        oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
-                        oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
-                        oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
-                        oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
-                        oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
-                        oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
-                        oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                        delete oEntry.ztype_of_Entity;
-                        oModel.create("/ZDD_CUSTOMER", oEntry, {
-                            success: function (oData, oResponse) {
-                                this.custNum = oData.zcustomer_num;
-                                this.reqNumber = oData.zrequest_no;
-
-                                //      jQuery.sap.require("sap.m.MessageBox");
-                                // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
-                                this.handleSalesData();
-                                this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
-                                if (oData.zdescription !== 'Cash') {
-                                    var sCreatedAt = "";
-                                    if (oData.zcreated_date) {
-                                        if (oData.zcreated_date.getDate() < 10) {
-                                            sCreatedAt += "0" + oData.zcreated_date.getDate() + ".";
-                                        } else {
-                                            sCreatedAt += oData.zcreated_date.getDate() + ".";
-                                        }
-                                        if ((oData.zcreated_date.getMonth() + 1) < 10) {
-                                            sCreatedAt += "0" + (oData.zcreated_date.getMonth() + 1);
-                                        } else {
-                                            sCreatedAt += (oData.zcreated_date.getMonth() + 1);
-                                        }
-                                        sCreatedAt += "." + oData.zcreated_date.getFullYear();
-                                    }
-
-                                    var sLinkToTask = that.createLinkToTask();
-
-                                    var oWFModel = this.getOwnerComponent().getModel("Workflow");
-                                    var body = {
-                                        "definitionId": "eu10.iffcodevprocessautomation.iffcocustomerservices.iFFCOCustomerCreate",
-                                        "context": {
-                                            "requesttype": "create",
-                                            "customerid": that.custNum,
-                                            "customername": oData.zfirst_name,
-                                            "customersitename": oData.zfirst_name,
-                                            "customercountry": oData.zcountry,
-                                            "businessunit": oData.zbusiness_unit_name,
-                                            "createdbyuserid": oData.zcreated_by,
-                                            "createdbyname": oData.zcreated_by,
-                                            "createdbyrole": "Sales Person",
-                                            "createdon": sCreatedAt,
-                                            "salesorganizationid": oData.zsales_orgnization ? oData.zsales_orgnization : "",
-                                            "linktotask": sLinkToTask,
-                                            "testmode": true,
-                                            "bulkdocumentid": "",
-                                            "requestid": that.reqNumber,
-                                            "channel": oData.zchannel
-                                        }
-                                    };
-                                    oWFModel.create("/createWF", { body: JSON.stringify(body) }, {
-                                        success: function (oData) {
-                                            sap.m.MessageToast.show("Customer is submitted Successfully");
-                                        },
-                                        error: function (oError) {
-                                            sap.m.MessageToast.show("Error while initiating workflow request!");
-                                        }
-                                    });
-                                }
-
-                                // this.handleSalesData();
-
-                            }.bind(this),
-
-                            error: function (oError) {
-                                that.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
-                                MessageBox.error(oError.message);
-                            }
-                        });
+                        MessageBox.error(this.amtValidationMesg);
                     }
                 } else {
                     that.getView().setBusy(false);
                     MessageBox.error(this.ValidationMesg);
                 }
+
             },
 
             dateFormatter: function (value) {
@@ -1273,6 +1317,7 @@ sap.ui.define([
                         // obj.zprice_group_text = obj.zprice_group ? obj.zprice_group.split(" - ")[1] : "";
                         // obj.zcredit_control_area = obj.zcredit_control_area ? obj.zcredit_control_area.split(" - ")[0] : "";
                         obj.zpricelist = obj.zpricelist ? obj.zpricelist.split(" - ")[0] : "";
+                        obj.zcredit_segment = obj.zcredit_segment ? obj.zcredit_segment.split(" - ")[0] : "";
                         // obj.zpricelist_text = obj.zpricelist ? obj.zpricelist.split(" - ")[1] : "";
 
                         obj.zprice_procedured_term = obj.zprice_procedured_term ? obj.zprice_procedured_term.split(" - ")[0] : "";
@@ -1311,9 +1356,13 @@ sap.ui.define([
                         obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
                         obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
                         obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
+                        obj.zlimit = obj.zlimit ? obj.zlimit.toString() : '0';
 
                         var salesVal = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
                         var checkBoxValue = salesVal.length > 0 ? salesVal[index].getItems()[0].getContent()[0].getItems()[0].getContent() : "";
+
+                        //    delete obj.zpayment_terms;
+
                         // if(checkBoxValue.length > 0){
                         //     obj.zblockedincm = checkBoxValue[123].getSelected() ? 'Y' : 'N';
                         //     obj.zspecialattention = checkBoxValue[125].getSelected() ? 'Y' : 'N';
@@ -1373,6 +1422,7 @@ sap.ui.define([
                         obj.zprice_group = obj.zprice_group ? obj.zprice_group.split(" - ")[0] : "";
 
                         obj.zpricelist = obj.zpricelist ? obj.zpricelist.split(" - ")[0] : "";
+                        obj.zcredit_segment = obj.zcredit_segment ? obj.zcredit_segment.split(" - ")[0] : "";
 
 
                         obj.zprice_procedured_term = obj.zprice_procedured_term ? obj.zprice_procedured_term.split(" - ")[0] : "";
@@ -1403,13 +1453,41 @@ sap.ui.define([
                         obj.zinfo_type = obj.zinfo_type ? obj.zinfo_type.split(" - ")[0] : "";
                         obj.zblock_reason = obj.zblock_reason ? obj.zblock_reason.split(" - ")[0] : "";
 
-                        obj.zresubmission_on = obj.zresubmission_on ? this.dateFormatter(obj.zresubmission_on) : null;
-                        obj.zdate_from = obj.zdate_from ? this.dateFormatter(obj.zdate_from) : null;
-                        obj.zdate_to = obj.zdate_to ? this.dateFormatter(obj.zdate_to) : null;
-                        obj.zentered_on = obj.zentered_on ? this.dateFormatter(obj.zentered_on) : null;
-                        obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
-                        obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
-                        obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
+                        if (obj.zresubmission_on === null || typeof obj.zresubmission_on === 'string') {
+                            obj.zresubmission_on = obj.zresubmission_on ? this.dateFormatter(obj.zresubmission_on) : null;
+                        }
+
+                        if (obj.zdate_from === null || typeof obj.zdate_from === 'string') {
+                            obj.zdate_from = obj.zdate_from ? this.dateFormatter(obj.zdate_from) : null;
+                        }
+
+                        if (obj.zdate_to === null || typeof obj.zdate_to === 'string') {
+                            obj.zdate_to = obj.zdate_to ? this.dateFormatter(obj.zdate_to) : null;
+                        }
+
+                        if (obj.zentered_on === null || typeof obj.zentered_on === 'string') {
+                            obj.zentered_on = obj.zentered_on ? this.dateFormatter(obj.zentered_on) : null;
+                        }
+
+                        if (obj.zdeleted_on === null || typeof obj.zdeleted_on === 'string') {
+                            obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
+                        }
+
+                        if (obj.zvalidity_to === null || typeof obj.zvalidity_to === 'string') {
+                            obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
+                        }
+
+                        if (obj.zresubmission_date === null || typeof obj.zresubmission_date === 'string') {
+                            obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
+                        }
+
+                        // obj.zresubmission_on = obj.zresubmission_on ? this.dateFormatter(obj.zresubmission_on) : null;
+                        // obj.zdate_from = obj.zdate_from ? this.dateFormatter(obj.zdate_from) : null;
+                        // obj.zdate_to = obj.zdate_to ? this.dateFormatter(obj.zdate_to) : null;
+                        // obj.zentered_on = obj.zentered_on ? this.dateFormatter(obj.zentered_on) : null;
+                        // obj.zdeleted_on = obj.zdeleted_on ? this.dateFormatter(obj.zdeleted_on) : null;
+                        // obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
+                        // obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
                         var salesVal = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
                         var checkBoxValue = salesVal.length > 0 ? salesVal[index].getItems()[0].getContent()[0].getItems()[0].getContent() : "";
                         if (checkBoxValue.length > 0) {
@@ -1427,8 +1505,10 @@ sap.ui.define([
                             obj.zspecialattention = 'N';
                             obj.zrelevant = 'N';
                         }
+                        obj.zlimit = obj.zlimit ? obj.zlimit.toString() : '0';
 
                         delete obj.Flag;
+                        // delete obj.zpayment_terms;
                         batchSalesChanges.push(oModel.createBatchOperation(salesUpdatePath, "PUT", obj));
                     } else if (obj.Flag === 'D') {
                         var salesDeletePath = "/ZDD_CUST_SALESAREAS(zcustomer_num=guid'" + obj.zcustomer_num + "',zsales_orgnization='" + obj.zsales_orgnization + "',zsales_area_id='" + obj.zsales_area_id + "')";
@@ -1927,10 +2007,8 @@ sap.ui.define([
                 this.getView().getModel("appView").setProperty("/generateSale", false);
                 this.getView().getModel("appView").setProperty("/addSales", false);
 
-                if (this.getView().byId("salesAreadata17").getAggregation("_views") !== null) {
-                    var panel = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
-                }
-                if (panel.length > 0) {
+                if (this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[1]?.getItems()) {
+                    let panel = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[1]?.getItems();
                     for (var i = 0; i < panel.length; i++) {
                         panel[i].destroy();
                     }
@@ -1951,18 +2029,16 @@ sap.ui.define([
                 this.getView().getModel("appView").setProperty("/selectedType", evt.getSource().getSelectedButton().getText());
                 this.getView().getModel("appView").updateBindings();
                 // that.selectedType = evt.getSource().getSelectedButton().getText();
-                this.toggleSubsection();
+
             },
-            toggleSubsection: function (evt) {
-                console.log(evt);
-            },
+
             onClear: function () {
                 var that = this;
                 var State = true;
                 var salesRequired = true;
 
 
-                if (this.getView().getModel("appView").getProperty("/vertical") === 'Cash') {
+                if (this.getView().getModel("appView").getProperty("/vertical") === 'CASH') {
                     var simpleFormIdArr = ["orderData1", "orderData5", "orderData9", "orderData6", "orderData8",
                         "orderData12", "orderData81", "orderData193", "orderData86", "orderData125"]
                 } else {
@@ -1971,9 +2047,9 @@ sap.ui.define([
                         "orderData12", "orderData81", "orderData193", "orderData86", "orderData125",
                         "erpCustomersydata1", "erpCustomersydata3", "erpCustomersydata5", "erpCustomersydata7", "erpCustomersydata9",
                         "erpCustomersydata11", "erpCustomersydata13", "erpCustomersydata15", "erpCustomersydata17", "erpCustomersydata19",
-                        "erpCustomersydata21",
-                        "Planned", "Planned2", "Planned3", "Planned4",
-                        "Planned6", "CreditAnalysisView", "orderData13", "CustomerBackgroundView", "DetailsOfExpectedView"
+                        "erpCustomersydata21"
+                        // "Planned", "Planned2", "Planned3", "Planned4",            //"commented by mujaida"
+                        // "Planned6", "CreditAnalysisView", "orderData13", "CustomerBackgroundView", "DetailsOfExpectedView"
                     ];
                 }
 
@@ -2007,8 +2083,14 @@ sap.ui.define([
                                             content[b + 1].setValueState("None");
                                             that.removeValidationError(content[b]);
 
+                                        } else if (content[b + 1].getMetadata().getName() == 'sap.ui.unified.FileUploader') {
+                                            // content[b + 1].setValue("");
+                                            content[b + 1].setValueState("None");
+                                            that.removeValidationError(content[b]);
                                         }
                                     }
+
+
                                 }
                             }
                         }
@@ -2016,37 +2098,42 @@ sap.ui.define([
                 }
                 var custType = this.getView().getModel("appView").getProperty("/customerType");
 
-                var formId = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
+                var formId = this.getView().byId("salesAreadata17").getAggregation("_views") ? this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems() : null;
 
-                for (var i = 0; i < formId.length; i++) {
-                    var salesFormContent = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems()[i].getItems()[0].getContent()[0].getItems()[0].getContent();
-                    var isSalesAreaVisible = this.getView().byId("salesAreadata17").getParent().getParent().getVisible();
-                    if (isSalesAreaVisible) {
-                        for (var b = 0; b < salesFormContent.length; b++) {
-                            if (salesFormContent[b].getMetadata().getName() != "sap.ui.core.Title") {
-                                if (salesFormContent[b].getVisible()) {
-                                    if (salesFormContent[b].getMetadata().getName() == "sap.m.Label" && salesFormContent[b].getRequired() === true && salesFormContent[b].getVisible() ===
-                                        true) {
-                                        if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.Input") {
 
-                                            salesFormContent[b + 1].setValueState("None");
-                                            that.removeValidationError(salesFormContent[b]);
+                // var formId = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
 
-                                        } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.MultiInput") {
+                if (formId) {
+                    for (var i = 0; i < formId.length; i++) {
+                        var salesFormContent = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems()[i].getItems()[0].getContent()[0].getItems()[0].getContent();
+                        var isSalesAreaVisible = this.getView().byId("salesAreadata17").getParent().getParent().getVisible();
+                        if (isSalesAreaVisible) {
+                            for (var b = 0; b < salesFormContent.length; b++) {
+                                if (salesFormContent[b].getMetadata().getName() != "sap.ui.core.Title") {
+                                    if (salesFormContent[b].getVisible()) {
+                                        if (salesFormContent[b].getMetadata().getName() == "sap.m.Label" && salesFormContent[b].getRequired() === true && salesFormContent[b].getVisible() ===
+                                            true) {
+                                            if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.Input") {
 
-                                            salesFormContent[b + 1].setValueState("None");
-                                            that.removeValidationError(salesFormContent[b]);
+                                                salesFormContent[b + 1].setValueState("None");
+                                                that.removeValidationError(salesFormContent[b]);
 
-                                        } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.Select") {
+                                            } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.MultiInput") {
 
-                                            salesFormContent[b + 1].setValueState("None");
-                                            that.removeValidationError(salesFormContent[b]);
+                                                salesFormContent[b + 1].setValueState("None");
+                                                that.removeValidationError(salesFormContent[b]);
 
-                                        } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.DatePicker") {
+                                            } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.Select") {
 
-                                            salesFormContent[b + 1].setValueState("None");
-                                            that.removeValidationError(salesFormContent[b]);
+                                                salesFormContent[b + 1].setValueState("None");
+                                                that.removeValidationError(salesFormContent[b]);
 
+                                            } else if (salesFormContent[b + 1].getMetadata().getName() == "sap.m.DatePicker") {
+
+                                                salesFormContent[b + 1].setValueState("None");
+                                                that.removeValidationError(salesFormContent[b]);
+
+                                            }
                                         }
                                     }
                                 }
@@ -2055,13 +2142,77 @@ sap.ui.define([
                     }
                 }
             },
+
+            //commented by mujaida
+            // onClearFiles: function () {
+            //     var simpleFormIdArr = ["CreditAnalysisView", "Planned2", "orderData193", "orderData13"];
+
+            //     for (var j = 0; j < simpleFormIdArr.length; j++) {
+            //         var content = this.getView().byId(simpleFormIdArr[j]).getAggregation("_views") !== null ? this.getView().byId(simpleFormIdArr[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
+            //         var isVisible = this.getView().byId(simpleFormIdArr[j]).getParent().getParent().getVisible();
+
+            //         if (isVisible) {
+            //             for (var b = 0; b < content.length; b++) {
+            //                 if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
+            //                     if (content[b].getVisible()) {
+            //                         if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getVisible() ===
+            //                             true) {
+            //                             if (content[b + 1].getMetadata().getName() == "sap.ui.unified.FileUploader") {
+            //                                 if (content[b + 1].getValue() !== "") {
+            //                                     content[b + 1].clear();
+
+            //                                 }
+            //                             }
+            //                         }
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // },
+            handleAmtFieldsValidation: function () {
+                var amtFieldState = true;
+
+                var simpleForms = ["Planned2", "Planned3"];
+                for (var j = 0; j < simpleForms.length; j++) {
+                    var content = this.getView().byId(simpleForms[j]).getAggregation("_views") !== null ? this.getView().byId(simpleForms[j]).getAggregation("_views")[0].getContent()[0].getContent() : "";
+                    var isVisible = this.getView().byId(simpleForms[j]).getParent().getParent().getVisible();
+                    if (isVisible) {
+                        for (var b = 0; b < content.length; b++) {
+                            if (content[b].getMetadata().getName() != "sap.ui.core.Title") {
+                                if (content[b].getVisible()) {
+                                    if (content[b].getMetadata().getName() == "sap.m.Label" && content[b].getVisible() ===
+                                        true) {
+                                        if (content[b + 1].getMetadata().getName() == "sap.m.Input") {
+                                            if (content[b + 1].getValueState() == "Error") {
+                                                // content[b + 1].setValueState("Error").setValueStateText("");
+                                                amtFieldState = false;
+                                                this.registerValidationError(content[b]);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+                if (amtFieldState === false) {
+                    this.amtValidationMesg = "Please check the amount fields";
+                }
+
+                return amtFieldState;
+
+
+            },
             handleValidateFormFields: function () {
                 var that = this;
                 var State = true;
                 var salesRequired = true;
 
 
-                if (this.getView().getModel("appView").getProperty("/vertical") === 'Cash') {
+                if (this.getView().getModel("appView").getProperty("/vertical") === 'CASH') {
                     var simpleFormIdArr = ["orderData1", "orderData5", "orderData9", "orderData6", "orderData8",
                         "orderData12", "orderData81", "orderData193", "orderData86", "orderData125"]
                 } else {

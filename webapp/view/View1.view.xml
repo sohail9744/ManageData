@@ -1,12 +1,18 @@
-<mvc:View controllerName="Iffco.clap.controller.View1"
- xmlns:mvc="sap.ui.core.mvc" 
- displayBlock="true"
-  xmlns="sap.m"
-   xmlns:core="sap.ui.core"
-   xmlns:f="sap.f" 
-   xmlns:fb="sap.ui.comp.filterbar"
-    xmlns:svm="sap.ui.comp.smartvariants">
-    <Page id="page" title="Manage Data Application" titleAlignment="Center">
+<mvc:View
+    controllerName="Iffco.clap.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:svm="sap.ui.comp.smartvariants"
+>
+    <Page
+        id="page"
+        title="Manage Data Application"
+        titleAlignment="Center"
+    >
         <content>
             <f:DynamicPage headerExpanded="{/headerExpanded}">
                 <f:title>
@@ -25,56 +31,111 @@
                 <f:header>
                     <f:DynamicPageHeader>
                         <f:content>
-                            <fb:FilterBar id="filterbar" reset="onReset" persistencyKey="myPersKey" useToolbar="false" search=".onSearch" filterChange=".onFilterChange" afterVariantLoad=".onAfterVariantLoad">
+                            <fb:FilterBar
+                                id="filterbar"
+                                reset="onReset"
+                                persistencyKey="myPersKey"
+                                useToolbar="false"
+                                search=".onSearch"
+                                filterChange=".onFilterChange"
+                                afterVariantLoad=".onAfterVariantLoad"
+                            >
                                 <fb:filterItems>
-								<fb:FilterItem name="Request Number" label="Request Number">
+                                    <fb:FilterItem
+                                        name="Request Number"
+                                        label="Request Number"
+                                    >
                                         <fb:control>
                                             <Input />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Customer Name" label="Customer Name">
+                                    <fb:FilterItem
+                                        name="Customer Name"
+                                        label="Customer Name"
+                                    >
                                         <fb:control>
                                             <Input />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Company Code" label="Company Code">
+                                    <fb:FilterItem
+                                        name="Company Code"
+                                        label="Company Code"
+                                    >
                                         <fb:control>
-                                            <Input showClearIcon="true" showValueHelp="true" valueHelpOnly="true" valueHelpRequest="handleValueHelpForCompCode" />
+                                            <Input
+                                                showClearIcon="true"
+                                                showValueHelp="true"
+                                                valueHelpOnly="true"
+                                                valueHelpRequest="handleValueHelpForCompCode"
+                                            />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="License Code" label="License Code">
+                                    <fb:FilterItem
+                                        name="License Code"
+                                        label="License Code"
+                                    >
                                         <fb:control>
                                             <Input />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Status" label="Status">
+                                    <fb:FilterItem
+                                        name="Status"
+                                        label="Status"
+                                    >
                                         <fb:control>
-                                            <MultiComboBox name="Status" selectedKeys="All" selectionChange=".onSelectionChange" items="{
+                                            <MultiComboBox
+                                                name="Status"
+                                                selectedKeys="All"
+                                                selectionChange=".onSelectionChange"
+                                                items="{
 												path: 'MasterData>/Status',
 												templateShareable: true
-											}">
-                                                <core:Item key="{MasterData>value}" text="{MasterData>value}" />
+											}"
+                                            >
+                                                <core:Item
+                                                    key="{MasterData>value}"
+                                                    text="{MasterData>value}"
+                                                />
                                             </MultiComboBox>
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Approver Name" label="Approver Name">
+                                    <fb:FilterItem
+                                        name="Approver Name"
+                                        label="Approver Name"
+                                    >
                                         <fb:control>
                                             <Input />
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Request Type" label="Request Type">
+                                    <fb:FilterItem
+                                        name="Request Type"
+                                        label="Request Type"
+                                    >
                                         <fb:control>
-                                            <MultiComboBox name="Request Type" selectedKeys="All" selectionChange=".onSelectionChange" items="{
+                                            <MultiComboBox
+                                                name="Request Type"
+                                                selectedKeys="All"
+                                                selectionChange=".onSelectionChange"
+                                                items="{
 												path: 'MasterData>/RequestType',
 												templateShareable: true
-											}">
-                                                <core:Item key="{MasterData>value}" text="{MasterData>value}" />
+											}"
+                                            >
+                                                <core:Item
+                                                    key="{MasterData>value}"
+                                                    text="{MasterData>value}"
+                                                />
                                             </MultiComboBox>
                                         </fb:control>
                                     </fb:FilterItem>
-                                    <fb:FilterItem name="Date Range" label="Date Range">
+                                    <fb:FilterItem
+                                        name="Date Range"
+                                        label="Date Range"
+                                    >
                                         <fb:control>
-                                            <DateRangeSelection displayFormat="dd/MM/yyyy"/>
+                                            <DateRangeSelection
+                                                displayFormat="dd/MM/yyyy"
+                                            />
                                         </fb:control>
                                     </fb:FilterItem>
                                 </fb:filterItems>
@@ -86,50 +147,84 @@
                     <!-- <Table id="table" inset="false" items="{
 						path: '/ZDD_CLAP1_VIEW'
 					}"> -->
-                    <Table id="table" inset="false" items="{
+                    <Table
+                        id="table"
+                        inset="false"
+                        items="{
 						path: '/ZDD_CUSTOMER', filters:[{path:'zrequest_type',operator:'EQ',value1:'Create Customer'}],
                          sorter: [{ path: 'zcreated_date', descending: 'true'}]
-					}">
+					}"
+                    >
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
-                                    <Title text="Customer Requests" level="H2" />
+                                    <Title
+                                        text="Customer Requests"
+                                        level="H2"
+                                    />
                                     <ToolbarSpacer />
 
                                     <Button text="New Customer" type="Emphasized" press="handleNewCustomer" />
-                                    
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Request Number" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Request Type" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Customer Name" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="License Code" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Company Code" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Created At" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Created By" />
                             </Column>
-                            <Column minScreenWidth="Tablet" demandPopin="true">
+                            <Column
+                                minScreenWidth="Tablet"
+                                demandPopin="true"
+                            >
                                 <Text text="Status" />
                             </Column>
                         </columns>
 
                         <items>
-                            <ColumnListItem vAlign="Middle" type="Active" press="handleRequestnavigation">
+                            <ColumnListItem
+                                vAlign="Middle"
+                                type="Active"
+                                press="handleRequestnavigation"
+                            >
                                 <cells>
                                     <Text text="{zrequest_no}" />
                                     <Text text="{zrequest_type}" />
@@ -137,8 +232,9 @@
                                     <Text text="{zimport_license_number}" />
                                     <Text text="{zcompany_code}" />
                                     <!-- <Text text="{zcreated_date}" /> -->
-                                    <Text text="{path:'zcreated_date', formatter: '.formatter.getFormatDate'}" />
-                                    <!-- {path:'expandEntitiesModel>/0/CreatedDate', formatter: '.formatter.formatDate'} -->
+                                    <Text
+                                        text="{path:'zcreated_date', formatter: '.formatter.getFormatDate'}"
+                                    />
                                     <Text text="{zcreated_by}" />
                                     <Text text="{zrequest_status}" />
                                 </cells>
