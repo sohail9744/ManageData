@@ -67,7 +67,7 @@ sap.ui.define([
 
             },
 
-            _onRouteMatched: function (oEvent) {
+            _onRouteMatched: async function (oEvent) {
                 var that = this;
                 this.busyDialog = new sap.m.BusyDialog();
                 this.busyDialog.close();
@@ -102,7 +102,16 @@ sap.ui.define([
                     this.zsales_orgnization = oEvent.getParameters().arguments.zsales_orgnization !== undefined ? oEvent.getParameters().arguments.zsales_orgnization : "";
 
                     this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
-                    this.onCustomerData();
+                    try {
+                        let customerData = await this.onCustomerData();
+                    } catch (error) {
+                        const delay = 2000; // 2 seconds
+                        console.log(`Retrying after ${delay}ms...`);
+                        MessageToast.show(`Retrying after ${delay}ms...`)
+                        setTimeout(() => {
+                            customerData = this.onCustomerData();
+                        }, delay);
+                    }
                 } else {
                     this.getView().getModel("Customers").setData({});
                     // this.getView().getModel("appView").setProperty("/addSales", true);
@@ -110,9 +119,9 @@ sap.ui.define([
                 }
                 // this.getDmsData();
                 if (this.flagForFirstTime) {
-                    setTimeout(() => {
-                        this.handleRuleEngineConfiguration();
-                    }, 2000);
+                    // setTimeout(() => {
+                    this.handleRuleEngineConfiguration();
+                    // }, 2000);
                 } else {
                     // this.handleRuleEngine();
                     this.handleRuleEngineConfiguration();
@@ -280,6 +289,7 @@ sap.ui.define([
                             oCustomerDetailModel.refresh();
 
                             var masterData = this.getView().getModel("Customers").getData();
+                            this.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
                             if (masterData.ztype_of_entity === 'Co-Operative (COOP)' || masterData.ztype_of_entity === 'CONSORTIUM'
                                 || masterData.ztype_of_entity === 'Government' || masterData.ztype_of_entity === 'Limited Liability Partnership'
                                 || masterData.ztype_of_entity === 'Other' || masterData.ztype_of_entity === 'Partnership'
@@ -301,10 +311,9 @@ sap.ui.define([
                         }.bind(this),
                         error: function (oError) {
                             // sap.m.MessageBox.error("onCustomerData error: " + oError);
-                            reject(oError)
-                            console.log(oError);
-                        }
-
+                            this.onCustomerData();
+                            console.log("Customer Data and Sales Data is triggering ERROR: " + oError);
+                        }.bind(this)
                     });
                 })
             },
@@ -366,13 +375,13 @@ sap.ui.define([
                     aCustomerType: sCustomerType.toLocaleUpperCase(),
                     sBPGrouping: sBPGrouping.toLocaleUpperCase()
                 }
+                let fieldMappingModelsData = await ruleEngine(configObject);
 
-                // Call the rule engine function with the object parameter
-                const fieldMappingModelsData = await ruleEngine(configObject);
                 this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel(fieldMappingModelsData), "fieldMappingModels");
                 this.getView().getModel("fieldMappingModels").updateBindings(true);
                 this.getOwnerComponent().getModel().refresh(true);
                 this.busyDialog.close();
+
             },
             updateFeilds: function (evt) {
                 var oModel = this.getView().getModel("RuleEngine");

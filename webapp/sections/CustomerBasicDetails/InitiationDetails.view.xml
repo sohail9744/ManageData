@@ -27,6 +27,7 @@
 
         <RadioButtonGroup
             selectedIndex="0"
+            enabled="{appView>/clapFields}"
             select="onDescriptionSelect"
         >
             <RadioButton
@@ -51,7 +52,7 @@
             value="{Customers>/zbusiness_unit_name}"
             valueHelpRequest="handleValueHelpForBusinessUnit"
             valueHelpOnly="true"
-            enabled="{=${Customers>/zrequest_no} ? false : true}"
+            enabled="{appView>/clapFields}"
             visible="{=${fieldMappingModels>/BusinessUnitVisible} === true ? true : false}"
         />
 
@@ -65,7 +66,7 @@
             value="{Customers>/zvertical}"
             valueHelpRequest="handleValueHelpForVertical"
             valueHelpOnly="true"
-            enabled="{=${Customers>/zrequest_no} ? false : true}"
+            enabled="{appView>/clapFields}"
             visible="{=${fieldMappingModels>/VerticalVisible} === true ? true : false}"
         />
 

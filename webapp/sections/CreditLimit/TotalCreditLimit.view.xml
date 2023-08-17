@@ -1,44 +1,79 @@
-<mvc:View controllerName="Iffco.clap.sections.CreditLimit.TotalCreditLimitController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
-	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<!-- <Label text="Total Secured Credit Limit (AED)" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"
+<mvc:View
+    controllerName="Iffco.clap.sections.CreditLimit.TotalCreditLimitController"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <forms:SimpleForm
+        editable="false"
+        layout="ColumnLayout"
+    >
+        <!-- <Label text="Total Secured Credit Limit (AED)" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/TotalSecuredCreditLimitMandatory} === true ? true : false}"/>
 		<Input value="{Customers>/ztotal_secured_limit}" liveChange="handleSetMaxLength" maxLength="14" type="Number" visible="{=${fieldMappingModels>/TotalCreditLimitVisible} === true ? true : false}"/> -->
-		<Label text="Total Secured Credit Limit (AED)" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/TotalSecuredCreditLimitMandatory} === true ? true : false}"/>
-		<!-- <Input value="{Customers>/ztotal_secured_limit}" liveChange="handleSetMaxLength" maxLength="14" type="Number" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"/> -->
-		<Input value="{parts: [{path: 'Customers>/zirr_bank_guarantee_amt'},
+        <Label
+            text="Total Secured Credit Limit (AED)"
+            visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/TotalSecuredCreditLimitMandatory} === true ? true : false}"
+        />
+        <!-- <Input value="{Customers>/ztotal_secured_limit}" liveChange="handleSetMaxLength" maxLength="14" type="Number" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"/> -->
+        <Input
+            value="{parts: [{path: 'Customers>/zirr_bank_guarantee_amt'},
 		{path:'Customers>/zlc_issuance_amount'},
 		 {path:'Customers>/zlc_confirming_amount'},
  {path:'Customers>/zcri_amount'},
   {path:'Customers>/zclassa_customer_amount'},
  {path:'Customers>/zcash_deposit_adv_amount'},
  {path:'Customers>/zavalization_draft_amount'}],
-  formatter:'.formatter.getTotalAmount'}" enabled="false" liveChange="handleSetMaxLength" maxLength="14" type="Number" visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"/>
-		
-		<Label text="Total Unsecured Credit Limit (AED)" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/TotalUnsecuredCreditLimitMandatory} === true ? true : false}"/>
-		<!-- <Input value="{Customers>/ztotal_unsecured_limit}" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"/> -->
-		
-		<Input value="{parts: [{path: 'Customers>/zopen_clean_credit_amount'},
+  formatter:'.formatter.getTotalAmount'}"
+            enabled="{appView>/clapFields}"
+            liveChange="handleSetMaxLength"
+            maxLength="14"
+            type="Number"
+            visible="{=${fieldMappingModels>/TotalSecuredCreditLimitVisible} === true ? true : false}"
+        />
+
+        <Label
+            text="Total Unsecured Credit Limit (AED)"
+            visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/TotalUnsecuredCreditLimitMandatory} === true ? true : false}"
+        />
+        <!-- <Input value="{Customers>/ztotal_unsecured_limit}" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"/> -->
+
+        <Input
+            value="{parts: [{path: 'Customers>/zopen_clean_credit_amount'},
 		 {path:'Customers>/zcad_amount'},
  {path:'Customers>/zpoc_in_hand_amount'},
   {path:'Customers>/zundated_or_security_deposit_c'},
  {path:'Customers>/zcri_insurer_amount'},
 {path:'Customers>/zuncfrmd_lc_nonapvd_bnkamt'}
  ],
-  formatter:'.formatter.getTotalUnsecuredAmount'}" enabled="false" liveChange="handleSetMaxLength" maxLength="20" type="Number" visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"/>
+  formatter:'.formatter.getTotalUnsecuredAmount'}"
+            enabled="{appView>/clapFields}"
+            liveChange="handleSetMaxLength"
+            maxLength="20"
+            type="Number"
+            visible="{=${fieldMappingModels>/TotalUnsecuredCreditLimitVisible} === true ? true : false}"
+        />
 
-		<Label text="Total Credit Amount (AED)" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/TotalCreditAmountMandatory} === true ? true : false}"/>
-		<!-- <Input value="{Customers>/ztotal_credit_amount}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/> -->
-		<Input value="{parts: [{path: 'Customers>/ztotal_secured_limit'},	
+        <Label
+            text="Total Credit Amount (AED)"
+            visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/TotalCreditAmountMandatory} === true ? true : false}"
+        />
+        <!-- <Input value="{Customers>/ztotal_credit_amount}" liveChange="handleSetMaxLength" maxLength="10" type="Number" visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/> -->
+        <Input
+            value="{parts: [{path: 'Customers>/ztotal_secured_limit'},	
  {path:'Customers>/ztotal_unsecured_limit'}],
   formatter:'.formatter.getTotalCreditAmount'}"
-  liveChange="handleSetMaxLength" maxLength="10" type="Number" enabled="false"
-   visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"/>
-	</forms:SimpleForm>
+            liveChange="handleSetMaxLength"
+            maxLength="10"
+            type="Number"
+            enabled="{appView>/clapFields}"
+            visible="{=${fieldMappingModels>/TotalCreditAmountVisible} === true ? true : false}"
+        />
+    </forms:SimpleForm>
 </mvc:View>
 <!-- value="{parts: [{path: 'Customers>/zirr_bank_guarantee_amt'}, {path:'Customers>/zlc_confirming_amount'},
  {path:'Customers>/zcri_insurer_amount'}, {path:'Customers>/zclassa_customer_amount'},
  {path:'Customers>/zcash_deposit_adv_amount'},{path:'Customers>/zavalization_draft_amount'}" -->
-

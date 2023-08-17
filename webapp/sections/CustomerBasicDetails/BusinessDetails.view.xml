@@ -14,7 +14,7 @@
             required="{=${fieldMappingModels>/BusinessPartnerIDGroupingMandatory} === true ? true : false}"
         />
         <Select
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             change="onSelectChange"
             forceSelection="true"
             selectedKey="{Customers>/zbusiness_partner_grouping}"
@@ -44,7 +44,7 @@
             required="{=${fieldMappingModels>/NameMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             value="{Customers>/zfirst_name}"
             maxLength="40"
             visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"
@@ -55,7 +55,7 @@
             required="{=${fieldMappingModels>/Name2Mandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             value="{Customers>/zlast_name}"
             maxLength="40"
             visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"
@@ -93,7 +93,7 @@
         <MultiInput
             showClearIcon="true"
             value="{Customers>/zcustomer_type}"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             valueHelpRequest="handleValueHelpForCustomerType"
             visible="{=${fieldMappingModels>/CustomerTypeVisible} === true ? true : false}"
             valueHelpOnly="true"
@@ -106,7 +106,7 @@
         />
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             value="{Customers>/zclass}"
             valueHelpRequest="handleValueHelpForCustomerInternalRating"
             valueHelpOnly="true"
@@ -121,7 +121,7 @@
         <MultiInput
             showClearIcon="true"
             id="channelGrpId"
-            enabled="{=${Customers>/zrequest_no} ? false : true}"
+            enabled="{appView>/clapFields}"
             value="{Customers>/zchannel_group}"
             maxLength="20"
             visible="{=${fieldMappingModels>/ChannelGroupVisible} === true ? true : false}"
@@ -136,7 +136,7 @@
         />
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             id="channelId"
             value="{Customers>/zchannel}"
             maxLength="20"
@@ -152,7 +152,7 @@
         />
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             id="subChannelId"
             value="{Customers>/zsub_channel}"
             maxLength="20"
@@ -168,7 +168,7 @@
         />
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/clapFields}"
             id="lobtId"
             value="{Customers>/zline_business_type}"
             maxLength="20"

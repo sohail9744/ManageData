@@ -3,9 +3,9 @@
 		
 		<Label text="Credit Limit Type" visible="{=${fieldMappingModels>/CreditLimitTypeVisible} === true ? true : false}" required="{=${fieldMappingModels>/CreditLimitTypeMandatory} === true ? true : false}"/>
 		<RadioButtonGroup select="handleCreditLimitTypeSelect" selectedIndex="0">
-			<RadioButton enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{= ${Customers>/zcredit_limit_type} === 'Secured Credit' || ${appView>/selectedType} === 'Secured Credit Limit' ? true : false}" text="Secured Credit Limit" />
-			<RadioButton enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit' || ${appView>/selectedType} === 'UnSecured Credit Limit' ? true : false}" text="UnSecured Credit Limit" />
-		    <RadioButton enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{= ${Customers>/zcredit_limit_type} === 'Both' ? true : false}" text="Both" />
+			<RadioButton enabled="{appView>/clapFields}" selected="{= ${Customers>/zcredit_limit_type} === 'Secured Credit' || ${appView>/selectedType} === 'Secured Credit Limit' ? true : false}" text="Secured Credit Limit" />
+			<RadioButton enabled="{appView>/clapFields}" selected="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit' || ${appView>/selectedType} === 'UnSecured Credit Limit' ? true : false}" text="UnSecured Credit Limit" />
+		    <RadioButton enabled="{appView>/clapFields}" selected="{= ${Customers>/zcredit_limit_type} === 'Both' ? true : false}" text="Both" />
 		</RadioButtonGroup>
 	</forms:SimpleForm>	
 </mvc:View>

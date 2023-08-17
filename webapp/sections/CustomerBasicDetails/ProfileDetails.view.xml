@@ -1,46 +1,146 @@
-<mvc:View controllerName="Iffco.clap.sections.CustomerBasicDetails.ProfileDetailsController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" >
-	<forms:SimpleForm editable="false" layout="ColumnLayout">
-		<!-- <Label text="Street / House Number" required="true"/>
+<mvc:View
+    controllerName="Iffco.clap.sections.CustomerBasicDetails.ProfileDetailsController"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns="sap.m"
+>
+    <forms:SimpleForm
+        editable="false"
+        layout="ColumnLayout"
+    >
+        <!-- <Label text="Street / House Number" required="true"/>
 		<Input value="{Customers>/zstreet_house_number}" editable="true"/> -->
-		<!-- 443 -->
-		<Label text="Postal Code / City" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CityMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpostal_code}" maxLength="10" visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"/>
-        <Label text="Country" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"/>
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="LAND1" value="{Customers>/zcountry}" valueHelpRequest="handleValueHelpForCountry"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/>
-        <Label text="State / Region" visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/StateMandatory} === true ? true : false}"/>
- <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zstate}" maxLength="20" visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"/> -->
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="Regio1" value="{Customers>/zstate}" valueHelpRequest="handleValueHelpForRegion"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"/>
-        <Label text="Language" visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/LanguageMandatory} === true ? true : false}"/>
-		<!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlanguage}" maxLength="2" visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"/> -->
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlanguage}" valueHelpRequest="handleValueHelpForLanguage"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"/>
-		<Label text="Transportation Zone" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/TransportationZoneMandatory} === true ? true : false}"/>
-		<!-- <Input value="{Customers>/ztransportation_zone}" maxLength="10" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"/> -->
-		<MultiInput value="{Customers>/ztransportation_zone}" showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" change="handleInputType" id="TRSPTNZNE" valueHelpRequest="handleValueHelpForTrsptnZne"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"/>
-		<Label text="PO Box Postal Code /PO Box" visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/POBoxPostalCodeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcompany_postal_code}" maxLength="10" visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"/>
-		<Label text="PO BOX WithoutNumber" visible="{=${fieldMappingModels>/POBOXWithoutNumberVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/POBOXWithoutNumberMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcompany_postal_code}" maxLength="10" visible="{=${fieldMappingModels>/POBOXWithoutNumberVisible} === true ? true : false}"/>
-		<Label text="Company Postal Code" visible="{=${fieldMappingModels>/CompanyPostalCodeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/CompanyPostalCodeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcompany_postal_code}" maxLength="10" visible="{=${fieldMappingModels>/CompanyPostalCodeVisible} === true ? true : false}"/>
-        <Label text="Type of Entity" visible="{=${fieldMappingModels>/TypeofEntityVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/TypeofEntityMandatory} === true ? true : true}"/>
-		<MultiInput showClearIcon="true" id="entityId" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztype_of_Entity}" valueHelpRequest="handleValueHelpForEntityType"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/TypeofEntityVisible} === true ? true : false}" change="onEntityConfirm"/>
-		<Label text="Customer Internal Rating" visible="{=${fieldMappingModels>/154} === true ? true : false}"
- required="{=${fieldMappingModels>/154} === true ? true : false}"/>
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/ztype_of_Entity}" valueHelpRequest="handleValueHelpForEntityType"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/154} === true ? true : false}"/>
-	</forms:SimpleForm>
+        <!-- 443 -->
+        <Label
+            text="Postal Code / City"
+            visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/CityMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{appView>/clapFields}"
+            value="{Customers>/zpostal_code}"
+            maxLength="10"
+            visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
+        />
+        <Label
+            text="Country"
+            visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/CountryMandatory} === true ? true : false}"
+        />
+        <MultiInput
+            showClearIcon="true"
+            enabled="{appView>/clapFields}"
+            id="LAND1"
+            value="{Customers>/zcountry}"
+            valueHelpRequest="handleValueHelpForCountry"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"
+        />
+        <Label
+            text="State / Region"
+            visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/StateMandatory} === true ? true : false}"
+        />
+        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zstate}" maxLength="20" visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"/> -->
+        <MultiInput
+            showClearIcon="true"
+            enabled="{appView>/clapFields}"
+            id="Regio1"
+            value="{Customers>/zstate}"
+            valueHelpRequest="handleValueHelpForRegion"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"
+        />
+        <Label
+            text="Language"
+            visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/LanguageMandatory} === true ? true : false}"
+        />
+        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlanguage}" maxLength="2" visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"/> -->
+        <MultiInput
+            showClearIcon="true"
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            value="{Customers>/zlanguage}"
+            valueHelpRequest="handleValueHelpForLanguage"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"
+        />
+        <Label
+            text="Transportation Zone"
+            visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/TransportationZoneMandatory} === true ? true : false}"
+        />
+        <!-- <Input value="{Customers>/ztransportation_zone}" maxLength="10" visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"/> -->
+        <MultiInput
+            value="{Customers>/ztransportation_zone}"
+            showClearIcon="true"
+            enabled="{appView>/clapFields}"
+            change="handleInputType"
+            id="TRSPTNZNE"
+            valueHelpRequest="handleValueHelpForTrsptnZne"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/TransportationZoneVisible} === true ? true : false}"
+        />
+        <Label
+            text="PO Box Postal Code /PO Box"
+            visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/POBoxPostalCodeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            value="{Customers>/zcompany_postal_code}"
+            maxLength="10"
+            visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"
+        />
+        <Label
+            text="PO BOX WithoutNumber"
+            visible="{=${fieldMappingModels>/POBOXWithoutNumberVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/POBOXWithoutNumberMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            value="{Customers>/zcompany_postal_code}"
+            maxLength="10"
+            visible="{=${fieldMappingModels>/POBOXWithoutNumberVisible} === true ? true : false}"
+        />
+        <Label
+            text="Company Postal Code"
+            visible="{=${fieldMappingModels>/CompanyPostalCodeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/CompanyPostalCodeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            value="{Customers>/zcompany_postal_code}"
+            maxLength="10"
+            visible="{=${fieldMappingModels>/CompanyPostalCodeVisible} === true ? true : false}"
+        />
+        <Label
+            text="Type of Entity"
+            visible="{=${fieldMappingModels>/TypeofEntityVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/TypeofEntityMandatory} === true ? true : true}"
+        />
+        <MultiInput
+            showClearIcon="true"
+            id="entityId"
+            enabled="{appView>/clapFields}"
+            value="{Customers>/ztype_of_Entity}"
+            valueHelpRequest="handleValueHelpForEntityType"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/TypeofEntityVisible} === true ? true : false}"
+            change="onEntityConfirm"
+        />
+        <Label
+            text="Customer Internal Rating"
+            visible="{=${fieldMappingModels>/154} === true ? true : false}"
+            required="{=${fieldMappingModels>/154} === true ? true : false}"
+        />
+        <MultiInput
+            showClearIcon="true"
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            value="{Customers>/ztype_of_Entity}"
+            valueHelpRequest="handleValueHelpForEntityType"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/154} === true ? true : false}"
+        />
+    </forms:SimpleForm>
 </mvc:View>

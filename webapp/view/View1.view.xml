@@ -164,7 +164,7 @@
                                     />
                                     <ToolbarSpacer />
 
-                                    <Button text="New Customer" type="Emphasized" press="handleNewCustomer" />
+                                    <!-- <Button text="New Customer" type="Emphasized" press="handleNewCustomer" /> -->
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
