@@ -13,13 +13,13 @@ sap.ui.define(
             ztext:"",
             selectedType: 'Secured Credit Limit',
             newCustId:"",
-            custType:"CREDIT",
+            custType:"Credit",
             customerType: 0,
             mode:"",
             selectedMode:false,
             distributionChannel:"",
             cca:"",
-            bpg:"SOLD TO",
+            bpg:"Sold To",
             process:"",
             salesFlag:false,
             addSales: false,
@@ -27,7 +27,7 @@ sap.ui.define(
             content:"",
             token:"",
             firstTym:"",
-            vertical:"CREDIT",
+            vertical:"Credit",
             generateSale:false,
             TypeOfEntity1: "",
             TypeOfEntity2: "",
@@ -38,7 +38,8 @@ sap.ui.define(
             TypeOfEntity7: "",
             TypeOfEntity8: "",
             TypeOfEntity9: "",
-            dmsFile:[{}]
+            dmsFile:[{}],
+            clapFields: false
           });
           this.getView().setModel(oViewModel, "appView");
           this.getView().getModel("appView").updateBindings(true);

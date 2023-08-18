@@ -3,12 +3,13 @@ sap.ui.define([
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     "sap/ui/core/Fragment",
-    "Iffco/clap/formatter/formatter"
+    "Iffco/clap/formatter/formatter",
+    "../utils/ruleEngine"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
-     */ //master
-    function (Controller, Filter, FilterOperator, Fragment, formatter) {
+     */
+    function (Controller, Filter, FilterOperator, Fragment, formatter, ruleEngine) {
         "use strict";
 
         return Controller.extend("Iffco.clap.controller.View1", {
@@ -31,9 +32,9 @@ sap.ui.define([
                 // debugger
                 var oView = this.getView();
                 // if (oView.getDomRef() && oView.getParent() && oEvent.getParameter("name") === "RouteView1") {
-                    let oTable = oView.byId("table");
-                    oTable.getModel().refresh();
-                    oTable.getModel().updateBindings();
+                let oTable = oView.byId("table");
+                oTable.getModel().refresh();
+                oTable.getModel().updateBindings();
                 // }
             },
 
@@ -47,83 +48,6 @@ sap.ui.define([
                         filterBars[i].setVisibleInFilterBar(true);
                     }
                 }
-                // var oTable = this.getView().byId("table");
-                
-                var oModel = this.getView().getModel();
-                var oTable = this.getView().byId("table");
-                var oFilter = this.getView().byId("filterbar");
-                var aFilters = [];
-                for (var i = 0; i < oFilter.getAllFilterItems().length; i++) {
-                    var sName = oFilter.getAllFilterItems()[i].getProperty("name");
-                    var sPath = "";
-                    var dPath = "";
-                    var sValue = "";
-                    var sKeys = [];
-                    if (sName === "Request Number") {
-                        sPath = "zrequest_no";
-                        sValue = oFilter.getAllFilterItems()[i].getControl().setValue("");
-                    } else if (sName === "Customer Name") {
-                        sPath = "zfirst_name";
-                        sValue = oFilter.getAllFilterItems()[i].getControl().setValue("");
-
-                    } else if (sName === "Company Code") {
-                        sPath = "zcompany_code";
-                        // sValue = oFilter.getAllFilterItems()[i].getControl().getValue();
-                        sValue = oFilter.getAllFilterItems()[i].getControl().setValue("");
-                    }
-                    else if (sName === "License Code") {
-                        sPath = "zimport_license_number";
-                        sValue = oFilter.getAllFilterItems()[i].getControl().setValue("");
-                    }
-                    else if (sName == "Status") {
-                        sPath = "zrequest_status";
-                        sKeys = oFilter.getAllFilterItems()[i].getControl().setSelectedKeys('All');
-                    }
-                    else if (sName == "Business Unit") {
-                        sPath = "zbusiness_unit_name";
-                        sKeys = oFilter.getAllFilterItems()[i].getControl().setSelectedKeys('');
-                    }
-                    else if (sName == "Request Type") {
-                        sPath = "zrequest_type";
-                        sKeys = oFilter.getAllFilterItems()[i].getControl().setSelectedKeys('All');
-                    }
-                    else if (sName == "Date Range") {
-                        sPath = "zcreated_date";
-                        dPath = "zupdated_date";
-                        oFilter.getAllFilterItems()[i].getControl().setValue("");
-                        var a = oFilter.getAllFilterItems()[i].getControl();
-                        var from = a.mProperties.dateValue;
-                        var to = a.mProperties.secondDateValue;
-                        if (from != null) {
-                            
-                            
-                            aFilters.push(new Filter({ path: sPath, operator: FilterOperator.GE, value1: from }));
-                            aFilters.push(new Filter({ path: dPath, operator: FilterOperator.LE, value1: to }));
-                        }
-                    }
-
-                    if (sPath !== "") {
-                        if (sValue !== "") {
-                            aFilters.push(new Filter({ path: sPath, operator: FilterOperator.Contains, value1: sValue }));
-                        }
-                        if (sKeys.length > 0) {
-                            var aKeysFilter = [];
-                            for (var j = 0; j < sKeys.length; j++) {
-                                if (sKeys[j] !== "All") {
-                                    aKeysFilter.push(new Filter({ path: sPath, operator: FilterOperator.Contains, value1: sKeys[j] }));
-                                }
-                            }
-                            if (aKeysFilter.length > 0) {
-                                aFilters.push(new Filter({
-                                    filters: aKeysFilter,
-                                    and: false
-                                }));
-                            }
-                        }
-                    }
-                }
-
-                oTable.getBinding("items").filter([]);
             },
             handleValueHelpForCompCode: function (evt) {
                 this.CompCodeField = evt.getSource();
@@ -262,7 +186,6 @@ sap.ui.define([
                         }
                     }
                 }
-
                 oTable.getBinding("items").filter(aFilters);
 
             },
@@ -302,7 +225,7 @@ sap.ui.define([
                 this.check2 = true;
                 this.getView().getModel("appView").setProperty("/addSales", true);
                 this.getView().getModel("appView").setProperty("/selectedType", "Secured Credit Limit");
-                
+
                 var busyDialog = new sap.m.BusyDialog();
                 busyDialog.open();
                 var oRouter = this.getOwnerComponent().getRouter();

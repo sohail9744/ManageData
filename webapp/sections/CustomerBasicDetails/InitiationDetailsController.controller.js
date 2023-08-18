@@ -61,7 +61,7 @@ sap.ui.define([
             console.log("ty");
             // var process = "CREATE";
             var process = this.getView().getModel("appView").getProperty("/process");
-            var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
+            var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit';
             // var sCustomerType = this.getView().byId("orderdata").getParent().getSubSections()[0].getBlocks()[0].getAggregation("_views")[0].getContent()[0].getContent()[5].getSelectedButton().getText();
             var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
             this.ruleId = "";
@@ -229,32 +229,12 @@ sap.ui.define([
         },
         handleValueHelpVerticalSearch: function (evt) {
             var sValue = evt.getParameter("value");
-            var val = this.getView().byId("businessUnitId").getValue();
-            var filters = [];
             if (sValue.length > 0) {
-              var filter1 = new sap.ui.model.Filter({
-                  path: "vertical",
-                  operator: "Contains",
-                  value1: sValue
-              });
-
-              var sFilters = [filter1];
-              filters.push(new sap.ui.model.Filter(sFilters, false));
-              if (val.length > 0) {
-                  filters.push(new sap.ui.model.Filter("Businessunit", "EQ", val));
-              }
-              this.vertical.getBinding("items").filter(filters, true);
-          } else {
-              this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", val)]);
-          }
-
-
-            // if (sValue.length > 0) {
-            //     var oFilter2 = new sap.ui.model.Filter("vertical", 'Contains', sValue);
-            //     this.vertical.getBinding("items").filter([oFilter2]);
-            // } else {
-            //     this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", this.businessUntVal)]);
-            // }
+                var oFilter2 = new sap.ui.model.Filter("vertical", 'Contains', sValue);
+                this.vertical.getBinding("items").filter([oFilter2]);
+            } else {
+                this.vertical.getBinding("items").filter([new sap.ui.model.Filter("Businessunit", "EQ", this.businessUntVal)]);
+            }
         },
         handleValueHelpVerticalClose: function () {
             this.vertical.close();

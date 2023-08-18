@@ -1,85 +1,228 @@
-	<mvc:View controllerName="Iffco.clap.sections.CustomerBackground.DetailsOfExpectedBusinessController" xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m" xmlns:core="sap.ui.core">
-	<forms:SimpleForm editable="false" layout="ColumnLayout">
-	 <core:Title text="Annual Sales Revenue"/>
-		<Label text="Volume" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zannual_volume}" type="Number" maxLength="20" liveChange="handleSetMaxLength"  visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"/>
-		
-		<Label text="Actual Volume" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zannual_actual_volume}" maxLength="20" visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"/>
-        
-		<Label text="Value" visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/ValueMandatory} === true ? true : false}"/>
-		<Input value="{Customers>/zannual_value}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" liveChange="handleSetMaxLength" maxLength="8" type="Number"  visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"/>
+<mvc:View
+    controllerName="Iffco.clap.sections.CustomerBackground.DetailsOfExpectedBusinessController"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:forms="sap.ui.layout.form"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <forms:SimpleForm
+        editable="false"
+        layout="ColumnLayout"
+    >
+        <core:Title text="Annual Sales Revenue" />
+        <Label
+            text="Volume"
+            visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            value="{Customers>/zannual_volume}"
+            type="Number"
+            maxLength="20"
+            liveChange="handleSetMaxLength"
+            visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
+        />
 
-		<Label text="Currency" visible="{=${fieldMappingModels>/CurrencyVisibleAnnualSalesRevenue} === true ? true : false}"
- required="{=${fieldMappingModels>/CurrencyMandatoryAnnualSalesRevenue} === true ? true : false}"/>
-     <!-- <Input value="{Customers>/zcredit_limit_currency}"  visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/> -->
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" valueHelpRequest="handleValueHelpForCurrency" value="{Customers>/zcredit_limit_currency}"
-		valueHelpOnly="true" visible="{=${fieldMappingModels>/CurrencyVisibleAnnualSalesRevenue} === true ? true : false}"/>
+        <Label
+            text="Actual Volume"
+            visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zannual_actual_volume}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/ActualVolumeVisible} === true ? true : false}"
+        />
 
-		<Label text="Actual Turnover" visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/ActualTurnoverMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zannual_actual_turnover}" liveChange="handleSetMaxLength" maxLength="8" type="Number" visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"/>
+        <Label
+            text="Value"
+            visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/ValueMandatory} === true ? true : false}"
+        />
+        <Input
+            value="{Customers>/zannual_value}"
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            liveChange="handleSetMaxLength"
+            maxLength="8"
+            type="Number"
+            visible="{=${fieldMappingModels>/ValueVisible} === true ? true : false}"
+        />
 
-	<core:Title text="Monthly Expected Highest Sales"/>
-         <Label text="Sales Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_sales_volume}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <Label
+            text="Currency"
+            visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/CreditlimitCurrencyMandatory} === true ? true : false}"
+        />
+        <!-- <Input value="{Customers>/zcredit_limit_currency}"  visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/> -->
+        <MultiInput
+            showClearIcon="true"
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            valueHelpRequest="handleValueHelpForCurrency"
+            value="{Customers>/zcredit_limit_currency}"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"
+        />
 
-		 <Label text="Acutal Sales Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_sales_volume}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <Label
+            text="Actual Turnover"
+            visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/ActualTurnoverMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            value="{Customers>/zannual_actual_turnover}"
+            liveChange="handleSetMaxLength"
+            maxLength="8"
+            type="Number"
+            visible="{=${fieldMappingModels>/ActualTurnoverVisible} === true ? true : false}"
+        />
 
-		 <Label text="Sales Volume unit" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_sales_volume_unit}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <core:Title text="Monthly Expected Highest Sales" />
+        <Label
+            text="Sales Volume"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zmonthly_sales_volume}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		 <Label text="Actual Volume" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_volume}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <Label
+            text="Acutal Sales Volume"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zmonthly_actual_sales_volume}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		 <Label text="Sales Value" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_sales_value}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <Label
+            text="Sales Volume unit"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zmonthly_sales_volume_unit}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		 <Label text="Actual Sales Value" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_sales_value}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <Label
+            text="Actual Volume"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zmonthly_actual_volume}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
+        <Label
+            text="Sales Value"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            type="Number"
+            value="{Customers>/zmonthly_actual_sales_value}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		  <Label text="Sales Currency" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="salesCuurency" type="Number" value="{Customers>/zcredit_limit_currency}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
+        <Label
+            text="Actual Sales Value"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zmonthly_actual_sales_value}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		  <Label text="Actual Turnover" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" type="Number" value="{Customers>/zmonthly_actual_turnover}"
-		 maxLength="20" visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"/>
-		
-		<core:Title text="Gross Contribution"/>
+        <Label
+            text="Sales Currency"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            id="salesCuurency"
+            type="Number"
+            value="{Customers>/zcredit_limit_currency}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		<Label text="Gross Average GC% or avg gc /MT %" visible="{=${fieldMappingModels>/GrossAverageGCoravggc-MTVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/GrossAverageGCoravggc-MTMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zgross_average_gc_or_av_gc_mt}" maxLength="20" visible="{=${fieldMappingModels>/GrossAverageGCoravggc-MTVisible} === true ? true : false}"/>
+        <Label
+            text="Actual Turnover"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            type="Number"
+            value="{Customers>/zmonthly_actual_turnover}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeVisible} === true ? true : false}"
+        />
 
-		<Label text="Avg GC/MT or GC%" visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/AvgGC-MTorGCMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zavg_gc_mt_or_gc}"  maxLength="20" visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"/>
-		
-		<Label text="Inco Term" visible="{=${fieldMappingModels>/IncoTermVisible} === true ? true : false}"
- required="{=${fieldMappingModels>/IncoTermMandatory} === true ? true : false}"/>		
-		<MultiInput enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" showClearIcon="true"  value="{Customers>/zinco_term}" maxLength="3" valueHelpRequest="handleValueHelpForIncoterms"
-	 valueHelpOnly="true" visible="{=${fieldMappingModels>/IncoTermVisible} === true ? true : false}"/>
+        <core:Title text="Gross Contribution" />
 
-        
+        <Label
+            text="Gross Average GC% or avg gc /MT %"
+            visible="{=${fieldMappingModels>/GrossAverageGCoravggc-MTVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/GrossAverageGCoravggc-MTMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{appView>/clapFields}"
+            value="{Customers>/zgross_average_gc_or_av_gc_mt}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/GrossAverageGCoravggc-MTVisible} === true ? true : false}"
+        />
 
-	
-	</forms:SimpleForm>
+        <Label
+            text="Avg GC/MT or GC%"
+            visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/AvgGC-MTorGCMandatory} === true ? true : false}"
+        />
+        <Input
+            enabled="{appView>/clapFields}"
+            value="{Customers>/zavg_gc_mt_or_gc}"
+            maxLength="20"
+            visible="{=${fieldMappingModels>/AvgGC-MTorGCVisible} === true ? true : false}"
+        />
+
+        <Label
+            text="Inco Term"
+            visible="{=${fieldMappingModels>/IncoTermVisible} === true ? true : false}"
+            required="{=${fieldMappingModels>/IncoTermMandatory} === true ? true : false}"
+        />
+        <MultiInput
+            enabled="{appView>/clapFields}"
+            showClearIcon="true"
+            value="{Customers>/zinco_term}"
+            maxLength="3"
+            valueHelpRequest="handleValueHelpForIncoterms"
+            valueHelpOnly="true"
+            visible="{=${fieldMappingModels>/IncoTermVisible} === true ? true : false}"
+        />
+    </forms:SimpleForm>
 </mvc:View>

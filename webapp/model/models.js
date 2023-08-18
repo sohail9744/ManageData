@@ -24,10 +24,10 @@ sap.ui.define([
             createMasterDataModel: function(){
                 var oTemp = {
                     "BusinessPartnerDD" : [
-                        {"BPKey":"Sold", "BPText":"SOLD TO"},
-                        {"BPKey":"Ship", "BPText":"SHIP TO"},
-                        {"BPKey":"One", "BPText":"ONE TIME"},
-                        {"BPKey":"Inte", "BPText":"INTERCOMPANY CUSTOMER"},
+                        {"BPKey":"Sold", "BPText":"Sold To"},
+                        {"BPKey":"Ship", "BPText":"Ship To"},
+                        {"BPKey":"One", "BPText":"One Time"},
+                        {"BPKey":"Inte", "BPText":"Intercompany Customer"},
                     ],
                     "BPRoles": [
                         {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},
@@ -37,10 +37,7 @@ sap.ui.define([
                     "Status":[
                         {"value": "All"},
                         {"value": "In Draft"},
-                        {"value": "In Progress"},
-                        {"value": "Completed"},
-                        {"value": "Rejected"}
-
+                        {"value": "In Progress"}
                         // {"value": "Sendback to Initiator"},
                         // {"value": "Credit Controller Pending"},
                         // {"value": "Credit COntroller Approved"},
@@ -67,10 +64,10 @@ sap.ui.define([
             createAppModel: function () {
                 var oTemp = {
                     "BusinessPartnerDD" : [
-                        {"BPKey":"1", "BPText":"SOLD TO"},
-                        {"BPKey":"2", "BPText":"SHIP TO"},
-                        {"BPKey":"3", "BPText":"ONE TIME"},
-                        {"BPKey":"4", "BPText":"INTERCOMPANY CUSTOMER"},
+                        {"BPKey":"1", "BPText":"Sold To"},
+                        {"BPKey":"2", "BPText":"Ship To"},
+                        {"BPKey":"3", "BPText":"One Time"},
+                        {"BPKey":"4", "BPText":"Intercompany Customer"},
                     ],
                     "BPRoles": [
                         {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},

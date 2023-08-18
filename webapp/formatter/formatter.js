@@ -14,13 +14,6 @@ sap.ui.define([], function () {
             else
                 return false;
         },
-        getVarienceAmt:function(amt, proposedAmt){
-            var amt = amt ? parseInt(amt) : 0 ;
-         var proposedAmt = proposedAmt ? parseInt(proposedAmt) : 0;
-          var sumOfSecUnsecAmt = amt - proposedAmt;
-          var positiveAmt =  Math.abs(sumOfSecUnsecAmt);
-          return positiveAmt.toLocaleString('en-US', { style: 'currency', currency: 'USD' }).replace('$', '')
-        },
         formatDate: function (value) {
             if (value) {
                 var sNotifDate = new Date(value.toString().split('GMT')[0] + ' UTC').toISOString().split('.')[0];
@@ -55,7 +48,7 @@ sap.ui.define([], function () {
             // console.log(evt);
             // console.log(totalAmt);
             
-            if(this.getView().getModel("appView").getProperty("/selectedType") === 'Secured Credit Limit' || this.getView().getModel("appView").getProperty("/selectedType") === 'Both'){
+            if(this.getView().getModel("appView").getProperty("/selectedType") === 0 || this.getView().getModel("appView").getProperty("/selectedType") === 2){
                 var totalCredit = 0;
             if (amt1 && parseInt(amt1) && parseInt(amt1) > 0)
                 totalCredit += parseInt(amt1);
@@ -90,7 +83,7 @@ sap.ui.define([], function () {
           return sumOfSecUnsecAmt.toString();
         },
         getTotalUnsecuredAmount:function (amt1, amt2, amt3, amt4, amt5, amt6) {
-            if(this.getView().getModel("appView").getProperty("/selectedType") === 'Unsecured Secured Limit' || this.getView().getModel("appView").getProperty("/selectedType") === 'Both'){
+            if(this.getView().getModel("appView").getProperty("/selectedType") === 1 || this.getView().getModel("appView").getProperty("/selectedType") === 2){
                 var totalUnsecuredCredit = 0;
                 if (amt1 && parseInt(amt1) && parseInt(amt1) > 0)
                 totalUnsecuredCredit += parseInt(amt1);

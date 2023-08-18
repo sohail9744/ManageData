@@ -1,16 +1,13 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-    "sap/m/MessageBox",
-    "Iffco/clap/formatter/formatter"
+    "sap/m/MessageBox"
 ], function(
 	Controller,
-    MessageBox,
-    formatter
+    MessageBox
 ) {
 	"use strict";
 
 	return Controller.extend("Iffco.clap.sections.CreditLimit.SecuredCreditLimitController", {
-        formatter: formatter,
         onInit: function() {
             // Controller.prototype.onInit.apply(this, arguments);
             if (!this.bankCountry) {
@@ -44,31 +41,22 @@ sap.ui.define([
         },
         handleValueHelpForBank:function (evt) {
             this.bankField = evt.getSource();
-            var bankCountryOdataVal = this.getView().getModel("Customers").getData().zlc_issuance_bankcountry;
             
                 this.bank.getBinding("items").filter([]);
-                if(this.bankCountryVal){
+                if(this.bankCountryVal !== undefined){
                 this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", this.bankCountryVal)]);
                 this.bank.open();
-                }else if(bankCountryOdataVal){
-                    this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", bankCountryOdataVal)]);
-                    this.bank.open();
-                    } else{
+                }else{
                     MessageBox.error("Please Select Bank Country first");
                 }
         },
         handleValueHelpForBank1:function (evt) {
             this.bankField1 = evt.getSource();
-            var bankCountry1OdataVal = this.getView().getModel("Customers").getData().zlc_confirming_bank_country;
                 this.bank1.getBinding("items").filter([]);
                 if(this.bankCountryVal1 !== undefined){
                 this.bank1.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", this.bankCountryVal1)]);
                 this.bank1.open();
-                }else if(bankCountry1OdataVal){
-                    this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "Contains", bankCountry1OdataVal)]);
-                    this.bank.open();
-                    }
-                else{
+                }else{
                     MessageBox.error("Please Select Bank Country first");
                 }
         },
@@ -102,61 +90,21 @@ sap.ui.define([
         },
         handleValueHelpBankSearch:function (evt) {
             var sValue = evt.getParameter("value");
-
-            var val = this.getView().byId("lcIssBankCountryId").getValue();
-
-            var filters = [];
-            if (sValue.length > 0) {
-              var filter1 = new sap.ui.model.Filter({
-                  path: "bank",
-                  operator: "Contains",
-                  value1: sValue
-              });
-
-              var sFilters = [filter1];
-              filters.push(new sap.ui.model.Filter(sFilters, false));
-              if (val.length > 0) {
-                  filters.push(new sap.ui.model.Filter("country", "EQ", val));
-              }
-              this.bank.getBinding("items").filter(filters, true);
-          } else {
-              this.bank.getBinding("items").filter([new sap.ui.model.Filter("country", "EQ", val)]);
-          }
-
-                // if (sValue.length > 0) {
-                //         var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
-                //         this.bank.getBinding("items").filter([oFilter1]);
-                // } else {
-                //     this.bank.getBinding("items").filter([]);
-                // }
+                if (sValue.length > 0) {
+                        var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
+                        this.bank.getBinding("items").filter([oFilter1]);
+                } else {
+                    this.bank.getBinding("items").filter([]);
+                }
         },
         handleValueHelpBankSearch1:function (evt) {
             var sValue = evt.getParameter("value");
-            var val = this.getView().byId("lcConfBankCountryId").getValue();
-
-            var filters = [];
-            if (sValue.length > 0) {
-              var filter1 = new sap.ui.model.Filter({
-                  path: "bank",
-                  operator: "Contains",
-                  value1: sValue
-              });
-
-              var sFilters = [filter1];
-              filters.push(new sap.ui.model.Filter(sFilters, false));
-              if (val.length > 0) {
-                  filters.push(new sap.ui.model.Filter("country", "EQ", val));
-              }
-              this.bank1.getBinding("items").filter(filters, true);
-          } else {
-              this.bank1.getBinding("items").filter([new sap.ui.model.Filter("country", "EQ", val)]);
-          }
-                // if (sValue.length > 0) {
-                //         var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
-                //         this.bank1.getBinding("items").filter([oFilter1]);
-                // } else {
-                //     this.bank1.getBinding("items").filter([]);
-                // }
+                if (sValue.length > 0) {
+                        var oFilter1 = new sap.ui.model.Filter("bank", 'Contains', sValue);
+                        this.bank1.getBinding("items").filter([oFilter1]);
+                } else {
+                    this.bank1.getBinding("items").filter([]);
+                }
         },
         handleValueHelpBankCountrySearch:function (evt) {
             var sValue = evt.getParameter("value");
@@ -193,26 +141,16 @@ sap.ui.define([
               this.getView().getModel("dmsModel").updateBindings(true);
             this.firstTime=false;
         },
-        handleNo:function (evt) {
-            var val = evt.getSource().getValue();
-            // var maxLen = evt.getSource().getMaxLength();
-            // if(val >= maxLen){
-            //     evt.getSource().setType("Text");
-            // }else{
-            //     evt.getSource().setType("Number");
-            // }
-            // zirr_bank_guarantee_amt;
-            // var fieldName  = evt.getSource().mBindingInfos.value.parts[0].path.split("/")[1];
-            // this.getView().getModel("Customers").getData.zirr_bank_guarantee_amt;
-            var fieldName = "/" + evt.getSource().mBindingInfos.value.parts[0].path.split("/")[1];
-            this.getView().getModel("Customers").setProperty(fieldName, val.toString());
-            this.getView().getModel("Customers").updateBindings(true);
-            console.log(this.getView().getModel("Customers").getProperty(fieldName));
-
+        handleSetMaxLength:function (evt) {
+            var val = evt.getSource().getValue().length;
+            var maxLen = evt.getSource().getMaxLength();
+            if(val >= maxLen){
+                evt.getSource().setType("Text");
+            }else{
+                evt.getSource().setType("Number");
+            }
         },
         handleCalcuate:function (evt) {
-            var val = evt.getSource().getValue();
-            return val.toString();
         //     var that = this;
         //     // this.getView().getModel("appView").setProperty("scl", evt.getSource().getValue());
         //     if(a == undefined){
@@ -221,10 +159,6 @@ sap.ui.define([
         //     a+=parseInt(evt.getSource().getValue());
         //     console.log(a);
         //     }
-        },
-        restrictChar:function (e) {
-            
-            console.log(e);
         }
 
 

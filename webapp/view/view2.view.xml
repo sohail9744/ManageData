@@ -17,20 +17,43 @@
     xmlns:ProposedCreditType="Iffco.clap.sections.ProposedCreditType"
     xmlns:Comments="Iffco.clap.sections.Comments"
 >
-    <ObjectPageLayout id="ObjectPageLayout" enableLazyLoading="false" showFooter="true" selectedSection="orderSection" showTitleInHeaderContent="true" showEditHeaderButton="true" upperCaseAnchorBar="false">
+    <ObjectPageLayout
+        id="ObjectPageLayout"
+        enableLazyLoading="false"
+        showFooter="true"
+        selectedSection="orderSection"
+        showTitleInHeaderContent="true"
+        showEditHeaderButton="true"
+        upperCaseAnchorBar="false"
+    >
         <headerTitle>
             <ObjectPageDynamicHeaderTitle>
                 <expandedHeading>
                     <m:HBox>
-                        <m:Title text="Legal Name" wrapping="true" />
-                        <m:ObjectMarker type="Favorite" class="sapUiTinyMarginBegin" />
+                        <m:Title
+                            text="Legal Name"
+                            wrapping="true"
+                        />
+                        <m:ObjectMarker
+                            type="Favorite"
+                            class="sapUiTinyMarginBegin"
+                        />
                     </m:HBox>
                 </expandedHeading>
 
                 <snappedHeading>
-                    <m:FlexBox fitContainer="true" alignItems="Center">
-                        <m:Avatar src="sap-icon://customer" class="sapUiTinyMarginEnd" />
-                        <m:Title text="Legal Name" wrapping="true" />
+                    <m:FlexBox
+                        fitContainer="true"
+                        alignItems="Center"
+                    >
+                        <m:Avatar
+                            src="sap-icon://customer"
+                            class="sapUiTinyMarginEnd"
+                        />
+                        <m:Title
+                            text="Legal Name"
+                            wrapping="true"
+                        />
                     </m:FlexBox>
                 </snappedHeading>
 
@@ -50,7 +73,11 @@
 
         <headerContent>
             <m:FlexBox wrap="Wrap">
-                <m:Avatar class="sapUiSmallMarginEnd" src="sap-icon://customer" displaySize="L" />
+                <m:Avatar
+                    class="sapUiSmallMarginEnd"
+                    src="sap-icon://customer"
+                    displaySize="L"
+                />
 
                 <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
                     <!-- <m:Image src="./test-resources/sap/uxap/images/linkedin.png" /> -->
@@ -58,78 +85,129 @@
                 </layout:HorizontalLayout>
 
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:Label text="Customer Type :{=${appView>/vertical} === 'CASH' ? 'CASH' : 'CREDIT'}" />
+                    <m:Label
+                        text="Customer Type :{=${appView>/vertical} === 'Cash' ? 'Cash' : 'Credit'}"
+                    />
                     <m:VBox>
                         <m:Label text="Credit Limit" />
                         <!-- <m:ProgressIndicator percentValue="90" displayValue="30%" /> -->
                     </m:VBox>
                 </layout:VerticalLayout>
-<!-- 
+                <!-- 
                 <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
                     <m:Label text="Mumbai, India" />
                 </layout:VerticalLayout> -->
             </m:FlexBox>
         </headerContent>
         <sections>
-        <ObjectPageSection titleUppercase="false" id="orderSectionSum" visible="{=${Customers>/zrequest_no} ? true : false}" title="Summary">
+            <ObjectPageSection
+                titleUppercase="false"
+                id="orderSectionSum"
+                visible="{=${Customers>/zrequest_no} ? true : false}"
+                title="Summary"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="orderdataSummary" title="Summary">
+                    <ObjectPageSubSection
+                        id="orderdataSummary"
+                        title="Summary"
+                    >
                         <blocks>
                             <Summary:summary id="orderData0" />
                         </blocks>
-                        
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdatahistory" visible="false" title="History">
+                    <ObjectPageSubSection
+                        id="orderdatahistory"
+                        title="History"
+                    >
                         <blocks>
                             <Summary:RequestHistory id="orderData01" />
                         </blocks>
-                        
                     </ObjectPageSubSection>
-                    </subSections>
-                    </ObjectPageSection>
-                    
-            <ObjectPageSection titleUppercase="false" id="orderSection" title="Customer Basic Details">
+                </subSections>
+            </ObjectPageSection>
+
+            <ObjectPageSection
+                titleUppercase="false"
+                id="orderSection"
+                title="Customer Basic Details"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="orderdata" title="General">
+                    <ObjectPageSubSection
+                        id="orderdata"
+                        title="General"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:InitiationDetails id="orderData1" />
+                            <CustomerBasicDetails:InitiationDetails
+                                id="orderData1"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
 
-                    <ObjectPageSubSection id="orderdata3" title="General Data">
+                    <ObjectPageSubSection
+                        id="orderdata3"
+                        title="General Data"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:BusinessDetails id="orderData5" />
+                            <CustomerBasicDetails:BusinessDetails
+                                id="orderData5"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata2" title="Address">
+                    <ObjectPageSubSection
+                        id="orderdata2"
+                        title="Address"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:ProfileDetails id="orderData9" />
+                            <CustomerBasicDetails:ProfileDetails
+                                id="orderData9"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata4" title="Organizational Data">
+                    <ObjectPageSubSection
+                        id="orderdata4"
+                        title="Organizational Data"
+                    >
                         <blocks>
                             <CustomerBasicDetails:SiteDetails id="orderData6" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata7" title="Communication Data">
+                    <ObjectPageSubSection
+                        id="orderdata7"
+                        title="Communication Data"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:CommunicationData id="orderData8" />
+                            <CustomerBasicDetails:CommunicationData
+                                id="orderData8"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    
-                    <ObjectPageSubSection id="orderdata9" title="Roles">
+
+                    <ObjectPageSubSection
+                        id="orderdata9"
+                        title="Roles"
+                    >
                         <blocks>
                             <CustomerBasicDetails:Roles id="orderData19" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata8" title="International Versions">
+                    <ObjectPageSubSection
+                        id="orderdata8"
+                        title="International Versions"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:InternationalVersions id="orderData12" />
+                            <CustomerBasicDetails:InternationalVersions
+                                id="orderData12"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata71" title="Address Usage">
+                    <ObjectPageSubSection
+                        id="orderdata71"
+                        title="Address Usage"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:AddressUsage id="orderData81" />
+                            <CustomerBasicDetails:AddressUsage
+                                id="orderData81"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                     <!-- <ObjectPageSubSection id="orderdata82" title="Bank Accounts">
@@ -137,19 +215,32 @@
                             <CustomerBasicDetails:BankAccounts id="orderData122" />
                         </blocks>
                     </ObjectPageSubSection> -->
-                    <ObjectPageSubSection id="orderdata93" title="Identification Numbers">
+                    <ObjectPageSubSection
+                        id="orderdata93"
+                        title="Identification Numbers"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:IdentificationNumbers id="orderData193" />
+                            <CustomerBasicDetails:IdentificationNumbers
+                                id="orderData193"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata76" title="Tax Numbers">
+                    <ObjectPageSubSection
+                        id="orderdata76"
+                        title="Tax Numbers"
+                    >
                         <blocks>
                             <CustomerBasicDetails:TaxNumbers id="orderData86" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="orderdata85" title="Industries">
+                    <ObjectPageSubSection
+                        id="orderdata85"
+                        title="Industries"
+                    >
                         <blocks>
-                            <CustomerBasicDetails:Industries id="orderData125" />
+                            <CustomerBasicDetails:Industries
+                                id="orderData125"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                     <!-- <ObjectPageSubSection id="orderdata93" title="Identification Numbers">
@@ -162,95 +253,159 @@
 							<CustomerBasicDetails:ProfileDetails id="orderData11"/>
 						</blocks>
 					</ObjectPageSubSection> -->
-                    <ObjectPageSubSection id="orderdata12" title="Identity Proof">
-						<blocks>
-							<CustomerBasicDetails:IdentifyProof id="orderData13"/>
-						</blocks>
-					</ObjectPageSubSection> 
+                    <ObjectPageSubSection
+                        id="orderdata12"
+                        title="Identity Proof"
+                    >
+                        <blocks>
+                            <CustomerBasicDetails:IdentifyProof
+                                id="orderData13"
+                            />
+                        </blocks>
+                    </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? true : true}" id="erpCustomersSection" title="ERP Customers">
+            <ObjectPageSection
+                titleUppercase="false"
+                visible="{= ${appView>/bpg} !== 'Ship To' ? true : false}"
+                id="erpCustomersSection"
+                title="ERP Customers"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="erpCustomersydata" title="Accounting Information">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata"
+                        title="Accounting Information"
+                    >
                         <blocks>
-                            <ERPCustomers:AccountingInformation id="erpCustomersydata1" />
+                            <ERPCustomers:AccountingInformation
+                                id="erpCustomersydata1"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="erpCustomersydata2" title="Interest Calculation">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata2"
+                        title="Interest Calculation"
+                    >
                         <blocks>
-                            <ERPCustomers:InterestCalculation id="erpCustomersydata3" />
+                            <ERPCustomers:InterestCalculation
+                                id="erpCustomersydata3"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
 
-                    <ObjectPageSubSection id="erpCustomersydata4" title="Reference Data">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata4"
+                        title="Reference Data"
+                    >
                         <blocks>
-                            <ERPCustomers:ReferenceData id="erpCustomersydata5" />
+                            <ERPCustomers:ReferenceData
+                                id="erpCustomersydata5"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
 
-                    <ObjectPageSubSection id="erpCustomersydata6" title="Payment Data">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata6"
+                        title="Payment Data"
+                    >
                         <blocks>
                             <ERPCustomers:PaymentData id="erpCustomersydata7" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="erpCustomersydata8" title="Accounting Payment Transaction">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata8"
+                        title="Accounting Payment Transaction"
+                    >
                         <blocks>
                             <ERPCustomers:APT id="erpCustomersydata9" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="erpCustomersydata10" title="Payment Advice Notes">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata10"
+                        title="Payment Advice Notes"
+                    >
                         <blocks>
-                            <ERPCustomers:PaymentAdviceNotes id="erpCustomersydata11" />
+                            <ERPCustomers:PaymentAdviceNotes
+                                id="erpCustomersydata11"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
 
-                    <ObjectPageSubSection id="erpCustomersydata12" title="Export Credit Insurance">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata12"
+                        title="Export Credit Insurance"
+                    >
                         <blocks>
                             <ERPCustomers:ECI id="erpCustomersydata13" />
                         </blocks>
                     </ObjectPageSubSection>
 
-                    <ObjectPageSubSection id="erpCustomersydata14" title="Correspondence">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata14"
+                        title="Correspondence"
+                    >
                         <blocks>
-                            <ERPCustomers:Correspondence id="erpCustomersydata15" />
+                            <ERPCustomers:Correspondence
+                                id="erpCustomersydata15"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="erpCustomersydata16" title="Dunning Area">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata16"
+                        title="Dunning Area"
+                    >
                         <blocks>
-                            <ERPCustomers:DunningArea id="erpCustomersydata17" />
+                            <ERPCustomers:DunningArea
+                                id="erpCustomersydata17"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="erpCustomersydata18" title="Extended Withholding Tax">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata18"
+                        title="Extended Withholding Tax"
+                    >
                         <blocks>
                             <ERPCustomers:EWT id="erpCustomersydata19" />
                         </blocks>
                     </ObjectPageSubSection>
 
-                    <ObjectPageSubSection id="erpCustomersydata20" title="Payment Notice To">
+                    <ObjectPageSubSection
+                        id="erpCustomersydata20"
+                        title="Payment Notice To"
+                    >
                         <blocks>
-                            <ERPCustomers:PaymentNoticeTo id="erpCustomersydata21" />
+                            <ERPCustomers:PaymentNoticeTo
+                                id="erpCustomersydata21"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
 
-            <ObjectPageSection titleUppercase="false" id="SalesAreaSection" title="Sales Area">
+            <ObjectPageSection
+                titleUppercase="false"
+                id="SalesAreaSection"
+                title="Sales Area"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="salesAreadata" visible="false" title="General Information">
+                    <ObjectPageSubSection
+                        id="salesAreadata"
+                        visible="false"
+                        title="General Information"
+                    >
                         <blocks>
                             <SalesArea:GI id="salesAreadata1" />
                         </blocks>
                     </ObjectPageSubSection>
-                    
-					<ObjectPageSubSection id="salesAreadata16">
+
+                    <ObjectPageSubSection id="salesAreadata16">
                         <blocks>
                             <SalesArea:Accounting id="salesAreadata17" />
                         </blocks>
                     </ObjectPageSubSection>
-                    
                 </subSections>
             </ObjectPageSection>
-            <!-- <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditProfileSection" title="Credit profile">
+            <!-- <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="CreditProfileSection" title="Credit profile">
                 <subSections>
                     <ObjectPageSubSection id="CreditProfileData" title="Credit Profile">
                         <blocks>
@@ -285,70 +440,130 @@
                  
                 </subSections>
             </ObjectPageSection> -->
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="PlannedActualSection" title="Credit Limit">
+            <ObjectPageSection
+                titleUppercase="false"
+                visible="{= ${appView>/vertical} === 'Cash' ? false : true}"
+                id="PlannedActualSection"
+                title="Credit Limit"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="plannedandactual" title="Credit Limit Type">
+                    <ObjectPageSubSection
+                        id="plannedandactual"
+                        title="Credit Limit Type"
+                    >
                         <blocks>
                             <CreditLimit:CreditLimit id="Planned" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual2" visible="{= ${Customers>/zcredit_limit_type} === 'Secured Credit' ? true : false || ${appView>/selectedType} === 'Secured Credit Limit' ? true : false || ${appView>/selectedType} === 'Both' ? true : false}" title="Secured credit Limit">
+                    <ObjectPageSubSection
+                        id="plannedandactual2"
+                        visible="{= ${appView>/selectedType} === 0 ? true : false || ${appView>/selectedType} === 2 ? true : false}"
+                        title="Secured credit Limit"
+                    >
                         <blocks>
                             <CreditLimit:SecuredCreditLimit id="Planned2" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual3" visible="{= ${Customers>/zcredit_limit_type} === 'UnSecured Credit' ? true : false || ${appView>/selectedType} === 'UnSecured Credit Limit' ? true : false || ${appView>/selectedType} === 'Both' ? true : false}" title="Unsecured credit Limit">
+                    <ObjectPageSubSection
+                        id="plannedandactual3"
+                        visible="{= ${appView>/selectedType} === 1 ? true : false || ${appView>/selectedType} === 2 ? true : false}"
+                        title="Unsecured credit Limit"
+                    >
                         <blocks>
                             <CreditLimit:UnsecuredCreditLimit id="Planned3" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual4" title="Total credit Limit">
+                    <ObjectPageSubSection
+                        id="plannedandactual4"
+                        title="Total credit Limit"
+                    >
                         <blocks>
                             <CreditLimit:TotalCreditLimit id="Planned4" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual5" title="Credit Limit Validity">
+                    <ObjectPageSubSection
+                        id="plannedandactual5"
+                        title="Credit Limit Validity"
+                    >
                         <blocks>
                             <CreditLimit:CreditLimitValidity id="Planned5" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="plannedandactual6" title="Payment Terms">
+                    <ObjectPageSubSection
+                        id="plannedandactual6"
+                        title="Payment Terms"
+                    >
                         <blocks>
                             <CreditLimit:PaymentTerms id="Planned6" />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditPerformanceEvaluation" title="Credit Performance Evaluation">
+            <ObjectPageSection
+                titleUppercase="false"
+                visible="{= ${appView>/vertical} === 'Cash' ? false : true}"
+                id="CreditPerformanceEvaluation"
+                title="Credit Performance Evaluation"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="CreditPerformanceEvaluationSection" title="Credit Performance Evaluation">
+                    <ObjectPageSubSection
+                        id="CreditPerformanceEvaluationSection"
+                        title="Credit Performance Evaluation"
+                    >
                         <blocks>
-                            <CreditPerformanceEvaluation:CreditPerformanceEvaluation id="CreditPerformanceEvaluationView" />
+                            <CreditPerformanceEvaluation:CreditPerformanceEvaluation
+                                id="CreditPerformanceEvaluationView"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CreditAnalysis" title="Credit Analysis">
+            <ObjectPageSection
+                titleUppercase="false"
+                visible="{= ${appView>/vertical} === 'Cash' ? false : true}"
+                id="CreditAnalysis"
+                title="Credit Analysis"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="CreditAnalysisSection" title="Credit Analysis">
+                    <ObjectPageSubSection
+                        id="CreditAnalysisSection"
+                        title="Credit Analysis"
+                    >
                         <blocks>
-                            <CreditAnalysis:CreditAnalysis id="CreditAnalysisView" />
+                            <CreditAnalysis:CreditAnalysis
+                                id="CreditAnalysisView"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'CASH' ? false : true}" id="CustomerBackground" title="Customer Background">
+            <ObjectPageSection
+                titleUppercase="false"
+                visible="{= ${appView>/vertical} === 'Cash' ? false : true}"
+                id="CustomerBackground"
+                title="Customer Background"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="CustomerBackgroundSection" title="Customer Background">
+                    <ObjectPageSubSection
+                        id="CustomerBackgroundSection"
+                        title="Customer Background"
+                    >
                         <blocks>
-                            <CustomerBackground:CustomerBackground id="CustomerBackgroundView" />
+                            <CustomerBackground:CustomerBackground
+                                id="CustomerBackgroundView"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
                 <subSections>
-                    <ObjectPageSubSection id="DetailsOfExpectedBusiness" title="Details of Expected Business">
+                    <ObjectPageSubSection
+                        id="DetailsOfExpectedBusiness"
+                        title="Details of Expected Business"
+                    >
                         <blocks>
-                            <CustomerBackground:DetailsOfExpectedBusiness id="DetailsOfExpectedView" />
+                            <CustomerBackground:DetailsOfExpectedBusiness
+                                id="DetailsOfExpectedView"
+                            />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
@@ -361,7 +576,7 @@
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections> -->
-                <!-- <subSections>
+            <!-- <subSections>
                     <ObjectPageSubSection id="ProposedCreditTypeSection" title="Proposed Credit Type">
                         <blocks>
                             <ProposedCreditType:ProposedCreditType id="ProposedCreditTypeView" />
@@ -369,38 +584,58 @@
                     </ObjectPageSubSection>
                 </subSections> -->
             <!-- </ObjectPageSection> -->
-            <ObjectPageSection titleUppercase="false" id="Comments" title="Attachments and Comments">
+            <ObjectPageSection
+                titleUppercase="false"
+                id="Comments"
+                title="Attachments and Comments"
+            >
                 <subSections>
-                    <ObjectPageSubSection id="CommentsSection1" title="Attachments" visible="{=${Customers>/zrequest_no} ? true : false}">
+                    <ObjectPageSubSection
+                        id="CommentsSection1"
+                        title="Attachments"
+                        visible="{=${Customers>/zrequest_no} ? true : false}"
+                    >
                         <blocks>
                             <Comments:Attachments id="attachments" />
                         </blocks>
                     </ObjectPageSubSection>
-                    <ObjectPageSubSection id="CommentsSection" title="Comments">
+                    <ObjectPageSubSection
+                        id="CommentsSection"
+                        title="Comments"
+                    >
                         <blocks>
                             <Comments:Comments id="comment" />
                         </blocks>
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            
         </sections>
         <footer>
             <m:OverflowToolbar>
-            <m:Button
+                <m:Button
                     icon="sap-icon://alert"
                     text="{= ${message>/}.length }"
                     visible="{= ${message>/}.length > 0 }"
                     type="Emphasized"
-                    press="onMessagePopoverPress" />
-                <m:Button type="Emphasized" text="Back" press="onBack"/>
+                    press="onMessagePopoverPress"
+                />
+                <m:Button
+                    type="Emphasized"
+                    text="Back"
+                    press="onBack"
+                />
                 <m:ToolbarSpacer />
                 <!-- <m:Button type="Emphasized"  text="{i18n>Validate}" press="saveRequest" /> -->
-                <!-- visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" -->
-                <m:Button type="Emphasized" text="{i18n>Save}" press="saveRequest" />
-                <m:Button type="Emphasized" text="{i18n>Save}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="saveRequest" />
-                <!-- <m:Button type="Emphasized" text="{i18n>Submit}" press="submitRequest" /> -->
-                <m:Button type="Emphasized" text="{i18n>Submit}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" press="submitRequest" />
+                <m:Button
+                    type="Emphasized"
+                    text="{i18n>Save}"
+                    press="saveRequest"
+                />
+                <m:Button
+                    type="Emphasized"
+                    text="{i18n>Submit}"
+                    press="submitRequest"
+                />
             </m:OverflowToolbar>
         </footer>
     </ObjectPageLayout>

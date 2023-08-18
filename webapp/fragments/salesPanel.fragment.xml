@@ -20,7 +20,7 @@
             <content>
                 <VBox>
                     <forms:SimpleForm
-                        editable="true"
+                        editable="false"
                         layout="ColumnLayout"
                     >
                         <core:Title text="Sales Area Fields" />
@@ -28,28 +28,28 @@
                         <Label
                             text="Sales Organization"
                             visible="{=${fieldMappingModels>/SalesOrganizationVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesOrganizationMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
                             value="{salesDataModel>zsales_orgnization}"
                             valueHelpRequest="handleValueHelpForSalesOrg"
                             valueHelpOnly="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             visible="{=${fieldMappingModels>/SalesOrganizationVisible} === true ? true : false}"
                         />
                         <!-- <Input value="{salesDataModel>zsales_orgnization}" visible="{=${fieldMappingModels>/391} === true ? true : false}"/> -->
                         <Label
                             text="Distribution Channel"
                             visible="{=${fieldMappingModels>/DistributionChannelVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/DistributionChannelMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
                             value="{salesDataModel>zdistribution_channel}"
                             valueHelpRequest="handleValueHelpForDistChannel"
                             valueHelpOnly="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             visible="{=${fieldMappingModels>/DistributionChannelVisible} === true ? true : false}"
                         />
                         <!-- <Input value="{salesDataModel>zdistribution_channel}" visible="{=${fieldMappingModels>/167} === true ? true : false}"/> -->
@@ -57,14 +57,14 @@
                         <Label
                             text="Division"
                             visible="{=${fieldMappingModels>/DivisionVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/DivisionMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
                             value="{salesDataModel>zdivision}"
                             valueHelpRequest="handleValueHelpForDivision"
                             valueHelpOnly="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             visible="{=${fieldMappingModels>/DivisionVisible} === true ? true : false}"
                         />
 
@@ -298,9 +298,6 @@
                             maxLength="4"
                             visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}"
                         />
-                        <!-- <MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
-		 value="{salesDataModel>zpayment_terms}" valueHelpRequest="handleValueHelpForPaymentTerms"  maxLength="4"
-		 visible="{=${fieldMappingModels>/PaymentTermsVisible} === true ? true : false}" valueHelpOnly="true"/> -->
 
                         <Label
                             text="Credit Control Area"
@@ -495,11 +492,11 @@
                         <Label
                             text="Sales District"
                             visible="{=${fieldMappingModelss>/SalesdistrictVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesdistrictMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             valueHelpRequest="handleValueHelpForsalesDist"
                             value="{salesDataModel>zsales_district}"
                             valueHelpOnly="true"
@@ -508,10 +505,10 @@
                         <Label
                             text="Sales office"
                             visible="{=${fieldMappingModels>/SalesOfficeVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesOfficeMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             value="{salesDataModel>zsales_office}"
                             maxLength="4"
                             visible="{=${fieldMappingModels>/SalesOfficeVisible} === true ? true : false}"
@@ -520,10 +517,10 @@
                         <Label
                             text="Sales Group"
                             visible="{=${fieldMappingModels>/SalesGroupVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/SalesGroupMandatory} === true ? true : false}"
                         />
                         <Input
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             value="{salesDataModel>zsales_group}"
                             maxLength="3"
                             visible="{=${fieldMappingModels>/SalesGroupVisible} === true ? true : false}"
@@ -548,11 +545,11 @@
                         <Label
                             text="Currency"
                             visible="{=${fieldMappingModels>/CurrencyVisible} === true ? true : false}"
-                            required="true"
+                            required="{=${fieldMappingModels>/CurrencyMandatory} === true ? true : false}"
                         />
                         <MultiInput
                             showClearIcon="true"
-                            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            enabled="{appView>/clapFields}"
                             valueHelpRequest="handleValueHelpForCurrency"
                             value="{salesDataModel>zsales_currency}"
                             valueHelpOnly="true"
@@ -874,9 +871,11 @@
                             required="{=${fieldMappingModels>/LimitMandatory} === true ? true : false}"
                         />
                         <Input
-                            value="{parts: ['salesDataModel>zlimit', 'salesDataModel>/0/zsales_currency'], type:'sap.ui.model.type.Currency', formatOptions: {showMeasure: false}}"
                             enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+                            value="{salesDataModel>zlimit}"
                             maxLength="13"
+                            type="Number"
+                            liveChange="handleSetMaxLength"
                             visible="{=${fieldMappingModels>/LimitVisible} === true ? true : false}"
                         />
 

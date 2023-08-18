@@ -1,49 +1,54 @@
-<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" >
-	
-	<Table id="history" items="{historyModel>/}">
-												
-												<columns>
-													<Column>
-														<Text text="Date" />
-													</Column>
-													<Column>
-														<Text text="User" />
-													</Column>
-													<Column>
-														<Text text="Role" />
-													</Column>
-													
-													<Column>
-														<Text text="Status"/>
-													</Column>
-                                                    <Column>
-														<Text text="Total Credit Limit Approved"/>
-													</Column>
-                                                    <Column>
-														<Text text="Max Credit Days"/>
-													</Column>
-                                                    <Column>
-														<Text text="Version"/>
-													</Column>
-                                                    <Column>
-														<Text text="Remarks"/>
-													</Column>
-												</columns>
-												<items>
-													<ColumnListItem type="Active"  visible="{= ${historyModel>Flag} === 'D' ? false : true}">
-														<cells>
-															<Text text="{historyModel>ztrail_date}" />
-															<Text text="{historyModel>ztrail_user}" />
-															<Text text="{historyModel>ztrail_role}" />
-															<Text text="{historyModel>ztrail_status}" />
-															<Text text="{historyModel>ztrail_tot_cl_approved}" />
-															<Text text="{historyModel>ztrailmax_credit_days}" />
-                                                            <Text text="{historyModel>ztrail_version}" />
-															<Text text="{historyModel>ztrail_remarks}" />
-															
-															
-														</cells>
-													</ColumnListItem>
-												</items>
-											</Table>
+<mvc:View
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <Table
+        id="history"
+        items="{historyModel>/}"
+    >
+        <columns>
+            <Column>
+                <Text text="Date" />
+            </Column>
+            <Column>
+                <Text text="User" />
+            </Column>
+            <Column>
+                <Text text="Role" />
+            </Column>
+
+            <Column>
+                <Text text="Status" />
+            </Column>
+            <Column>
+                <Text text="Total Credit Limit Approved" />
+            </Column>
+            <Column>
+                <Text text="Max Credit Days" />
+            </Column>
+            <Column>
+                <Text text="Version" />
+            </Column>
+            <Column>
+                <Text text="Remarks" />
+            </Column>
+        </columns>
+        <items>
+            <ColumnListItem
+                type="Active"
+                visible="{= ${historyModel>Flag} === 'D' ? false : true}"
+            >
+                <cells>
+                    <Text text="{historyModel>ztrail_date}" />
+                    <Text text="{historyModel>ztrail_user}" />
+                    <Text text="{historyModel>ztrail_role}" />
+                    <Text text="{historyModel>ztrail_status}" />
+                    <Text text="{historyModel>ztrail_tot_cl_approved}" />
+                    <Text text="{historyModel>ztrailmax_credit_days}" />
+                    <Text text="{historyModel>ztrail_version}" />
+                    <Text text="{historyModel>ztrail_remarks}" />
+                </cells>
+            </ColumnListItem>
+        </items>
+    </Table>
 </mvc:View>

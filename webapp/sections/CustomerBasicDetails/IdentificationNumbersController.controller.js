@@ -121,7 +121,7 @@ sap.ui.define([
         handleValueHelpLicenseTypConfirm: function (evt) {
             var title = evt.getParameter("selectedItems")[0].getProperty("title");
             var desc = evt.getParameter("selectedItems")[0].getProperty("description");
-            this.LicenseField.setValue(title + " " + desc);
+            this.LicenseField.setValue(title + " - " + desc);
             this.License.getBinding("items").filter([]);
             this.License.close();
         },

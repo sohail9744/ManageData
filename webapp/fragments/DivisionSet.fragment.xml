@@ -3,8 +3,8 @@
 	xmlns:c="sap.ui.core"
 >
 <SelectDialog contentHeight="60%" showClearButton="true" title="Select Division" class="sapUiPopupWithPadding"
-		items="{path:'/ZDD_DIVISION_VH'}" search="handleValueHelpDivisionSearch"
+		items="{path:'DivModel>/'}" search="handleValueHelpDivisionSearch"
 		confirm="handleValueHelpDivisionConfirm" cancel="handleValueHelpDivisionClose" multiSelect="false">
-		<StandardListItem title="{Division}" description="{DivisionText}"/>
+		<StandardListItem title="{DivModel>Division}" description="{DivModel>Divisiontext}"/>
 	</SelectDialog>
 </c:FragmentDefinition>
