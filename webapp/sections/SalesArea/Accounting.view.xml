@@ -12,10 +12,18 @@
     >
         <l:content>
             <!-- <Button text="Add Sales Area" id="add" enabled="{=${appView>/addSales} === true ? true : false}" visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" icon="sap-icon://add" type="Transparent" press="handleCreate" /> -->
-            <Button
+            <!-- <Button
                 text="Display Sales Area"
                 tooltip="click here"
                 visible="{=${appView>/mode} === false ? true : false}"
+                id="generateSales"
+                press="handleGenerateSales"
+            /> -->
+            <Button
+                text="Display Sales Area"
+                tooltip="click here"
+                visible="true"
+                enabled="{=${appView>/process} === 'CHANGE' ? false : true}"
                 id="generateSales"
                 press="handleGenerateSales"
             />

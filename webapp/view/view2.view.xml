@@ -385,6 +385,7 @@
             <ObjectPageSection
                 titleUppercase="false"
                 id="SalesAreaSection"
+                visible="true"
                 title="Sales Area"
             >
                 <subSections>
@@ -405,41 +406,6 @@
                     </ObjectPageSubSection>
                 </subSections>
             </ObjectPageSection>
-            <!-- <ObjectPageSection titleUppercase="false" visible="{= ${appView>/vertical} === 'Cash' ? false : true}" id="CreditProfileSection" title="Credit profile">
-                <subSections>
-                    <ObjectPageSubSection id="CreditProfileData" title="Credit Profile">
-                        <blocks>
-                            <CreditProfileSegmentData:CustomerProfile id="CreditProfileSection1" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="controlData" title="Control">
-                        <blocks>
-                            <CreditProfileSegmentData:Control id="CreditProfileSection2" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="furtherInfo" title="Further Information">
-                        <blocks>
-                            <CreditProfileSegmentData:FurtherInfo id="CreditProfileSection3" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="paymentKey" title="Payment Behaviour Key Figures">
-                        <blocks>
-                            <CreditProfileSegmentData:HDL id="CreditProfileSection4" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="oot" title="Oldest Open Item">
-                        <blocks>
-                            <CreditProfileSegmentData:OOT id="CreditProfileSection5" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                    <ObjectPageSubSection id="lp" title="Last Payment">
-                        <blocks>
-                            <CreditProfileSegmentData:Lp id="CreditProfileSection6" />
-                        </blocks>
-                    </ObjectPageSubSection>
-                 
-                </subSections>
-            </ObjectPageSection> -->
             <ObjectPageSection
                 titleUppercase="false"
                 visible="{= ${appView>/vertical} === 'Cash' ? false : true}"

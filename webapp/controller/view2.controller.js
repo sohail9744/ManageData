@@ -77,10 +77,6 @@ sap.ui.define([
                 this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel([]), "creditSegmentModel");
                 this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel([]), "dmsModel");
                 this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel([]), "attachmentsModel");
-
-
-
-
                 this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel([]), "salesDataModel");
 
                 console.log(this.getView().getModel("salesDataModel").getData())
@@ -94,8 +90,8 @@ sap.ui.define([
                 // Mohammad Sohail: will add it later in Manage application is already added
                 //this.onClear();
                 // this.onClearFiles();  // commented by mujaida
-                // this.sPath = "/ZDD_CUSTOMER";
-                // this.filter = [];
+
+                
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
                     this.zcustomer_num = oEvent.getParameters().arguments.zcustomer_num;
@@ -282,7 +278,7 @@ sap.ui.define([
 
                             var masterData = this.getView().getModel("Customers").getData();
                             //Mohammad Sohail: For Temporary purpose status, we have to remove below line 293
-                            // this.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
+                            this.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
                             if (masterData.ztype_of_entity === 'Co-Operative (COOP)' || masterData.ztype_of_entity === 'CONSORTIUM'
                                 || masterData.ztype_of_entity === 'Government' || masterData.ztype_of_entity === 'Limited Liability Partnership'
                                 || masterData.ztype_of_entity === 'Other' || masterData.ztype_of_entity === 'Partnership'

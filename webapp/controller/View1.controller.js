@@ -4,7 +4,7 @@ sap.ui.define([
     'sap/ui/model/FilterOperator',
     "sap/ui/core/Fragment",
     "Iffco/clap/formatter/formatter",
-    "../utils/ruleEngine" 
+    "../utils/ruleEngine"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
@@ -122,23 +122,15 @@ sap.ui.define([
                 var busyDialog = new sap.m.BusyDialog();
                 busyDialog.open();
                 var oRouter = this.getOwnerComponent().getRouter();
+                this.getView().getModel("appView").getProperty("/process", oEvent.getSource().getBindingContext().getProperty("zrequest_type")),
+                    oRouter.navTo("CustomerDetail", {
+                        "zcustomer_num": oEvent.getSource().getBindingContext().getProperty("zcustomer_num"),
+                        "zsales_orgnization": oEvent.getSource().getBindingContext().getProperty("zsales_orgnization"),
+                        // "zsales_orgnization":'20',
+                        "mode": "edit",
+                        "process": oEvent.getSource().getBindingContext().getProperty("zrequest_type")
+                    });
 
-                // if (this.ex.getContent()[1].getSelectedItem()) {
-                //     oRouter.navTo("CustomerDetail", {
-                //         "process": this.getView().getModel("appView").getProperty("/process"),
-                //         "mode": "edit",
-                //         "zbusinessPartnerId": this.zbusinessPartnerId
-                //         // "zcustomer_num" : this.zcustNo
-                //     });
-                // } else {
-                oRouter.navTo("CustomerDetail", {
-                    "zcustomer_num": oEvent.getSource().getBindingContext().getProperty("zcustomer_num"),
-                    "zsales_orgnization": oEvent.getSource().getBindingContext().getProperty("zsales_orgnization"),
-                    // "zsales_orgnization":'20',
-                    "mode": "edit",
-                    "process": oEvent.getSource().getBindingContext().getProperty("zrequest_type")
-                });
-                // }
                 if (!this.check1 && !this.checkB) {
                     this.checkB = true;
                     setTimeout(function () {
@@ -159,7 +151,6 @@ sap.ui.define([
                     this.check2 = true;
                     var busyDialog = new sap.m.BusyDialog();
                     busyDialog.open();
-
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("CustomerDetail", {
                         "process": this.getView().getModel("appView").getProperty("/process"),
