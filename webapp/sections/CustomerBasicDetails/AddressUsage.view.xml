@@ -2,14 +2,14 @@
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
 		<Label text="Address Type" visible="{=${fieldMappingModels>/AddressTypeVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/AddressTypeMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zaddress_type}" maxLength="10" visible="{=${fieldMappingModels>/AddressTypeVisible} === true ? true : false}"/>
+		<Input enabled="{appView>/status}" value="{Customers>/zaddress_type}" maxLength="10" visible="{=${fieldMappingModels>/AddressTypeVisible} === true ? true : false}"/>
 		<Label text = "Address" visible="{=${fieldMappingModels>/AddressVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/AddressMandatory} === true ? true : false}"/>
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zaddress}" maxLength="10" visible="{=${fieldMappingModels>/AddressVisible} === true ? true : false}"/>
+		<Input enabled="{appView>/status}" value="{Customers>/zaddress}" maxLength="10" visible="{=${fieldMappingModels>/AddressVisible} === true ? true : false}"/>
 		
 		<Label text="Standard Usage" visible="{=${fieldMappingModels>/StandardUsageVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/StandardUsageMandatory} === true ? true : false}" />
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zstandard_usage}" maxLength="1" visible="{=${fieldMappingModels>/StandardUsageVisible} === true ? true : false}"/>
+		<Input enabled="{appView>/status}" value="{Customers>/zstandard_usage}" maxLength="1" visible="{=${fieldMappingModels>/StandardUsageVisible} === true ? true : false}"/>
 		
 
 	</forms:SimpleForm>

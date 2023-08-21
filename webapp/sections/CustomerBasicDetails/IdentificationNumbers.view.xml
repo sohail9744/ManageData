@@ -15,7 +15,7 @@
             required="{=${fieldMappingModels>/IdentificationTypeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zidentification_type}"
             maxLength="6"
             visible="{=${fieldMappingModels>/IdentificationTypeVisible} === true ? true : false}"
@@ -26,7 +26,7 @@
             required="{=${fieldMappingModels>/IdentificationNumberMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zidentification_number}"
             maxLength="60"
             visible="{=${fieldMappingModels>/IdentificationNumberVisible} === true ? true : false}"
@@ -69,7 +69,7 @@
             visible="{=${fieldMappingModels>/LicenseTypeVisible} === true ? true : false}"
             required="{=${fieldMappingModels>/LicenseTypeMandatory} === true ? true : false}"
         />
-        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlicense_type}" visible="{=${fieldMappingModels>/LicenseTypeVisible} === true ? true : false}"/> -->
+        <!-- <Input enabled="{appView>/status}" value="{Customers>/zlicense_type}" visible="{=${fieldMappingModels>/LicenseTypeVisible} === true ? true : false}"/> -->
         <MultiInput
             showClearIcon="true"
             value="{Customers>/zlicense_type}"
@@ -171,7 +171,7 @@
             visible="{=${fieldMappingModels>/SourceofEnquiryVisible} === true ? true : false}"
             required="{=${fieldMappingModels>/SourceofEnquiryMandatory} === true ? true : false}"
         />
-        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zsource_of_inquiry}" visible="{=${fieldMappingModels>/SourceofEnquiryVisible} === true ? true : false}"/> -->
+        <!-- <Input enabled="{appView>/status}" value="{Customers>/zsource_of_inquiry}" visible="{=${fieldMappingModels>/SourceofEnquiryVisible} === true ? true : false}"/> -->
         <MultiInput
             showClearIcon="true"
             value="{Customers>/zsource_of_inquiry}"
@@ -186,7 +186,7 @@
             required="{=${fieldMappingModels>/ResonsibleInstituteMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zresonsible_institute}"
             visible="{=${fieldMappingModels>/ResonsibleInstituteVisible} === true ? true : false}"
         />
@@ -196,7 +196,7 @@
             required="{=${fieldMappingModels>/EntryDateMandatory} === true ? true : false}"
         />
         <DatePicker
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zentry_date}"
             visible="{=${fieldMappingModels>/EntryDateVisible} === true ? true : false}"
             valueFormat="MM.dd.yyyy"
@@ -209,7 +209,7 @@
             visible="{=${fieldMappingModels>/CountryVisibleIdentificationNumbers} === true ? true : false}"
             required="{=${fieldMappingModels>/CountryMandatoryIdentificationNumbers} === true ? true : false}"
         />
-        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zcountry}" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/> -->
+        <!-- <Input enabled="{appView>/status}" value="{Customers>/zcountry}" visible="{=${fieldMappingModels>/CountryVisible} === true ? true : false}"/> -->
         <Input
             enabled="false"
             value="{Customers>/zcountry}"
@@ -220,9 +220,9 @@
             visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"
             required="{=${fieldMappingModels>/RegionMandatory} === true ? true : false}"
         />
-        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/> -->
+        <!-- <Input enabled="{appView>/status}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/> -->
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zregion}"
             visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"
         />

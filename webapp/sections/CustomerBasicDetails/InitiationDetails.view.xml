@@ -76,7 +76,7 @@
             required="{=${fieldMappingModels>/PriorityMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zpriority}"
             maxLength="10"
             visible="{=${fieldMappingModels>/PriorityVisible} === true ? true : false}"
@@ -87,7 +87,7 @@
             required="{=${fieldMappingModels>/DueDateMandatory} === true ? true : false}"
         />
         <DatePicker
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zduedate}"
             valueFormat="MM.dd.yyyy"
             visible="{=${fieldMappingModels>/DueDateVisible} === true ? true : false}"
@@ -98,7 +98,7 @@
             required="{=${fieldMappingModels>/ReasonMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zreason}"
             visible="{=${fieldMappingModels>/ReasonVisible} === true ? true : false}"
         />
@@ -108,7 +108,7 @@
             required="{=${fieldMappingModels>/StatusMandatory} === true ? true : false}"
         />
         <Input
-            value="{Customers>/zstatus}"
+            value="{Customers>/zrequest_status}"
             maxLength="10"
             enabled="false"
             visible="{=${fieldMappingModels>/StatusVisible} === true ? true : false}"

@@ -121,15 +121,27 @@ sap.ui.define([
                 this.check2 = true;
                 var busyDialog = new sap.m.BusyDialog();
                 busyDialog.open();
+                let process = oEvent.getSource().getBindingContext().getProperty("zrequest_type");
+                let zStatus = oEvent.getSource().getBindingContext().getProperty("zrequest_status");
+
+                if (zStatus === "In Progress") {
+                    this.getView().getModel("appView").setProperty("/status", false)
+                }
+                if (zStatus === "In Draft") {
+                    this.getView().getModel("appView").setProperty("/status", true)
+                }
+                if (zStatus === "Completed") {
+                    this.getView().getModel("appView").setProperty("/status", true)
+                }
+                this.getView().getModel("appView").setProperty("/process", process);
                 var oRouter = this.getOwnerComponent().getRouter();
-                this.getView().getModel("appView").getProperty("/process", oEvent.getSource().getBindingContext().getProperty("zrequest_type")),
-                    oRouter.navTo("CustomerDetail", {
-                        "zcustomer_num": oEvent.getSource().getBindingContext().getProperty("zcustomer_num"),
-                        "zsales_orgnization": oEvent.getSource().getBindingContext().getProperty("zsales_orgnization"),
-                        // "zsales_orgnization":'20',
-                        "mode": "edit",
-                        "process": oEvent.getSource().getBindingContext().getProperty("zrequest_type")
-                    });
+                oRouter.navTo("CustomerDetail", {
+                    "zcustomer_num": oEvent.getSource().getBindingContext().getProperty("zcustomer_num"),
+                    "zsales_orgnization": oEvent.getSource().getBindingContext().getProperty("zsales_orgnization"),
+                    // "zsales_orgnization":'20',
+                    "mode": "edit",
+                    "process": oEvent.getSource().getBindingContext().getProperty("zrequest_type")
+                });
 
                 if (!this.check1 && !this.checkB) {
                     this.checkB = true;
@@ -171,14 +183,12 @@ sap.ui.define([
             },
             handleChangeCustomer: function (oEvent) {
                 this.getView().getModel("appView").setProperty("/process", 'CHANGE');
-                this.getView().getModel("appView").setProperty("/status", 'Change');
                 this.onClearSelection();
                 this.onSearchExist();
                 this.ex.open();
             },
             handleExtendCustomer: function (oEvent) {
                 this.getView().getModel("appView").setProperty("/process", 'EXTEND');
-                this.getView().getModel("appView").setProperty("/status", 'Extend');
                 this.onClearSelection();
                 this.onSearchExist();
                 this.ex.open();

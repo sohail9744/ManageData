@@ -27,7 +27,7 @@
 															<Text id="fieldName" text="{path:'attachmentsModel>FieldName', formatter: '.formatter.getFieldSpace'}"/>
 															<Link id="fileName" text="{attachmentsModel>FileName}" press="onClickAttachment"/>
 															
-															<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" icon="sap-icon://delete" type="Transparent" press="handleDeleteAttachment"/>
+															<Button enabled="{appView>/status}" icon="sap-icon://delete" type="Transparent" press="handleDeleteAttachment"/>
 														</cells>
 													</ColumnListItem>
 												</items>

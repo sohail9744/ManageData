@@ -34,7 +34,7 @@
             required="{=${fieldMappingModels>/TitleMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/ztitle}"
             visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"
         />
@@ -66,7 +66,7 @@
             required="{=${fieldMappingModels>/SalutationMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zsalutation}"
             liveChange="handleSetMaxLength"
             type="Number"
@@ -79,7 +79,7 @@
             required="{=${fieldMappingModels>/SearchTermMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zsearch_term1}"
             maxLength="25"
             visible="{=${fieldMappingModels>/SearchTerm1Visible} === true ? true : false}"

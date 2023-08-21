@@ -2,6 +2,6 @@
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
 		<Label text="Date" visible="{=${fieldMappingModels>/DateVisible} === true ? true : false}"
 		required="{=${fieldMappingModels>/DateMandatory} === true ? true : false}" />
-		<DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zdate}" valueFormat="MM.dd.yyyy" visible="{=${fieldMappingModels>/DateVisible} === true ? true : false}"/>
+		<DatePicker enabled="{appView>/status}" value="{Customers>/zdate}" valueFormat="MM.dd.yyyy" visible="{=${fieldMappingModels>/DateVisible} === true ? true : false}"/>
 	</forms:SimpleForm>
 </mvc:View>

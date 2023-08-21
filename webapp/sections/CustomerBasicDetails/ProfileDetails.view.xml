@@ -41,7 +41,7 @@
             visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"
             required="{=${fieldMappingModels>/StateMandatory} === true ? true : false}"
         />
-        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zstate}" maxLength="20" visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"/> -->
+        <!-- <Input enabled="{appView>/status}" value="{Customers>/zstate}" maxLength="20" visible="{=${fieldMappingModels>/StateVisible} === true ? true : false}"/> -->
         <MultiInput
             showClearIcon="true"
             enabled="{appView>/clapFields}"
@@ -56,10 +56,10 @@
             visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"
             required="{=${fieldMappingModels>/LanguageMandatory} === true ? true : false}"
         />
-        <!-- <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zlanguage}" maxLength="2" visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"/> -->
+        <!-- <Input enabled="{appView>/status}" value="{Customers>/zlanguage}" maxLength="2" visible="{=${fieldMappingModels>/LanguageVisible} === true ? true : false}"/> -->
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zlanguage}"
             valueHelpRequest="handleValueHelpForLanguage"
             valueHelpOnly="true"
@@ -87,7 +87,7 @@
             required="{=${fieldMappingModels>/POBoxPostalCodeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zcompany_postal_code}"
             maxLength="10"
             visible="{=${fieldMappingModels>/POBoxPostalCodeVisible} === true ? true : false}"
@@ -98,7 +98,7 @@
             required="{=${fieldMappingModels>/POBOXWithoutNumberMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zcompany_postal_code}"
             maxLength="10"
             visible="{=${fieldMappingModels>/POBOXWithoutNumberVisible} === true ? true : false}"
@@ -109,7 +109,7 @@
             required="{=${fieldMappingModels>/CompanyPostalCodeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zcompany_postal_code}"
             maxLength="10"
             visible="{=${fieldMappingModels>/CompanyPostalCodeVisible} === true ? true : false}"
@@ -136,7 +136,7 @@
         />
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/ztype_of_Entity}"
             valueHelpRequest="handleValueHelpForEntityType"
             valueHelpOnly="true"

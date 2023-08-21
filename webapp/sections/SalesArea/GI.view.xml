@@ -4,7 +4,7 @@
 												<headerToolbar>
 													<Toolbar>
 														<ToolbarSpacer/>
-														<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleAddSales"/>
+														<Button enabled="{appView>/status}" id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleAddSales"/>
 													</Toolbar>
 												</headerToolbar>
 												<columns>
@@ -29,7 +29,7 @@
 															<Text id="taxNameId" text="{salesModel>zdistribution_channel} - {salesModel>zdistribution_channel_text}" visible="{=${fieldMappingModel>/167/visibility} === 'Y' ? true : false}"/>
 															<Text id="TAXTYPE" text="{salesModel>zdivision} - {salesModel>zdivision_text}"  visible="{=${fieldMappingModel>/168/visibility} === 'Y' ? true : false}"/>
 															
-															<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" icon="sap-icon://delete" type="Transparent" press="handleDeleteSalesGrid"/>
+															<Button enabled="{appView>/status}" icon="sap-icon://delete" type="Transparent" press="handleDeleteSalesGrid"/>
 														</cells>
 													</ColumnListItem>
 												</items>

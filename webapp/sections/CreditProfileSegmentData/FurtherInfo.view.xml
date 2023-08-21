@@ -3,7 +3,7 @@
 <forms:SimpleForm editable="false" layout="ColumnLayout">
 
     <Label text="Information Cat" />
-		<MultiInput showClearIcon="true" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="infoCat" value="{Customers>/zinfo_category}" valueHelpRequest="handleValueHelpForInfoCat"
+		<MultiInput showClearIcon="true" enabled="{appView>/status}" id="infoCat" value="{Customers>/zinfo_category}" valueHelpRequest="handleValueHelpForInfoCat"
 		valueHelpOnly="true" />
 	
 	</forms:SimpleForm>
@@ -11,7 +11,7 @@
 												<headerToolbar>
 													<Toolbar>
 														<ToolbarSpacer/>
-														<Button enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleFurtherOpen"/>
+														<Button enabled="{appView>/status}" id="addSalesId" icon="sap-icon://add" type="Transparent" press="handleFurtherOpen"/>
 													</Toolbar>
 												</headerToolbar>
 												<columns>

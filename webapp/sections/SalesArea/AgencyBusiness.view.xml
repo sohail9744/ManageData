@@ -2,9 +2,9 @@
     <forms:SimpleForm editable="false" layout="ColumnLayout">
         <Label text="Agency Business" visible="{=${fieldMappingModels>/AgencyBusinessVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/AgencyBusinessMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zagency_business}" maxLength="20" visible="{=${fieldMappingModels>/AgencyBusinessVisible} === true ? true : false}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"/>
+        <Input value="{Customers>/zagency_business}" maxLength="20" visible="{=${fieldMappingModels>/AgencyBusinessVisible} === true ? true : false}" enabled="{appView>/status}"/>
         <Label text="Document Index Active" visible="{=${fieldMappingModels>/DocumentIndexActiveVisible} === true ? true : false}"
  required="{=${fieldMappingModels>/DocumentIndexActiveMandatory} === true ? true : false}"/>
-        <Input value="{Customers>/zdocument_index_active}" maxLength="1" visible="{=${fieldMappingModels>/DocumentIndexActiveVisible} === true ? true : false}" enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"/>
+        <Input value="{Customers>/zdocument_index_active}" maxLength="1" visible="{=${fieldMappingModels>/DocumentIndexActiveVisible} === true ? true : false}" enabled="{appView>/status}"/>
     </forms:SimpleForm>
 </mvc:View>

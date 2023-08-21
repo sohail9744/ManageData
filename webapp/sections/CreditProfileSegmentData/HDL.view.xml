@@ -2,19 +2,19 @@
 	<forms:SimpleForm editable="false" layout="ColumnLayout">
     <core:Title text="Highest Dunning Level"/>
     <Label text="Data Outdated" />
-		<CheckBox enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" selected="{=${Customers>/zdata_outdated} === 'Y' ? true : false}" />
+		<CheckBox enabled="{appView>/status}" selected="{=${Customers>/zdata_outdated} === 'Y' ? true : false}" />
 
 		<Label text="Dunning Level" />
-		<Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zdunning_level}" maxLength="8" />
+		<Input enabled="{appView>/status}" value="{Customers>/zdunning_level}" maxLength="8" />
       
         <Label text="Amount" />
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value= "{Customers>/zdunning_amt}" liveChange="handleSetMaxLength" maxLength="7" type="Number"/>
+        <Input enabled="{appView>/status}" value= "{Customers>/zdunning_amt}" liveChange="handleSetMaxLength" maxLength="7" type="Number"/>
 
         <Label text="Document" />
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value= "{Customers>/zdunning_doc}" maxLength="32"/>
+        <Input enabled="{appView>/status}" value= "{Customers>/zdunning_doc}" maxLength="32"/>
 
         <Label text="No.Dunning Nots" />
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value= "{Customers>/zdunning_not}" liveChange="handleSetMaxLength" maxLength="4" type="Number"/>
+        <Input enabled="{appView>/status}" value= "{Customers>/zdunning_not}" liveChange="handleSetMaxLength" maxLength="4" type="Number"/>
         
 
 

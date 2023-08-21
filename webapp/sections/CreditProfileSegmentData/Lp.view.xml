@@ -4,13 +4,13 @@
 		<CheckBox selected="{=${Customers>/zdata_outdated} === 'Y' ? true : false}" /> -->
 
 		<Label text="Payment On" />
-        <DatePicker enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value="{Customers>/zpayment_on}" placeholder="Enter Date" valueFormat="MM.dd.yyyy" />
+        <DatePicker enabled="{appView>/status}" value="{Customers>/zpayment_on}" placeholder="Enter Date" valueFormat="MM.dd.yyyy" />
       
         <Label text="Amount" />
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value= "{Customers>/zlast_payment_amount}" liveChange="handleSetMaxLength" maxLength="12" type="Number"/>
+        <Input enabled="{appView>/status}" value= "{Customers>/zlast_payment_amount}" liveChange="handleSetMaxLength" maxLength="12" type="Number"/>
 
         <Label text="Document" />
-        <Input enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}" value= "{Customers>/zlast_payment_doc}" maxLength="32"/>
+        <Input enabled="{appView>/status}" value= "{Customers>/zlast_payment_doc}" maxLength="32"/>
 
         </forms:SimpleForm>
 </mvc:View>

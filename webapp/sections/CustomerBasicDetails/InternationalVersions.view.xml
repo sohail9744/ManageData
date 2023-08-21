@@ -13,7 +13,7 @@
             required="{=${fieldMappingModels>/AddressVersionMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zaddress_version}"
             maxLength="10"
             visible="{=${fieldMappingModels>/AddressVersionVisible} === true ? true : false}"
@@ -24,7 +24,7 @@
             required="{=${fieldMappingModels>/TitleMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/ztitle}"
             visible="{=${fieldMappingModels>/TitleVisible} === true ? true : false}"
         />
@@ -35,7 +35,7 @@
             required="{=${fieldMappingModels>/NameMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zfirst_name}"
             visible="{=${fieldMappingModels>/NameVisible} === true ? true : false}"
         />
@@ -45,7 +45,7 @@
             required="{=${fieldMappingModels>/Name2Mandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zlast_name}"
             visible="{=${fieldMappingModels>/Name2Visible} === true ? true : false}"
         />
@@ -68,7 +68,7 @@
             required="{=${fieldMappingModels>/CityMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zcity}"
             visible="{=${fieldMappingModels>/CityVisible} === true ? true : false}"
         />

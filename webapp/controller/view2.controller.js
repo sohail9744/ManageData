@@ -91,7 +91,7 @@ sap.ui.define([
                 //this.onClear();
                 // this.onClearFiles();  // commented by mujaida
 
-                
+
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
                     this.zcustomer_num = oEvent.getParameters().arguments.zcustomer_num;
@@ -124,6 +124,27 @@ sap.ui.define([
                                 }
                                 this.zcustomer_num = oData.zcustomer_num;
                                 this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
+
+                                let process = this.getView().getModel("appView").getProperty("/process");
+                                let zStatus = oData.zrequest_status;
+
+                                if (zStatus === "In Progress" || process === "EXTEND") {
+                                    this.getView().getModel("appView").setProperty("/status", false)
+                                }
+                                if (zStatus === "In Draft") {
+                                    if (process === "EXTEND") {
+                                        this.getView().getModel("appView").setProperty("/status", false)
+                                    } else {
+                                        this.getView().getModel("appView").setProperty("/status", true)
+                                    }
+                                }
+                                if (zStatus === "Completed") {
+                                    if (process === "EXTEND") {
+                                        this.getView().getModel("appView").setProperty("/status", false)
+                                    } else {
+                                        this.getView().getModel("appView").setProperty("/status", true)
+                                    }
+                                }
                             }
                             var oCustomerDetailModel = this.getView().getModel("Customers");
                             delete oData.__metadata;
@@ -277,8 +298,6 @@ sap.ui.define([
                             oCustomerDetailModel.refresh();
 
                             var masterData = this.getView().getModel("Customers").getData();
-                            //Mohammad Sohail: For Temporary purpose status, we have to remove below line 293
-                            this.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
                             if (masterData.ztype_of_entity === 'Co-Operative (COOP)' || masterData.ztype_of_entity === 'CONSORTIUM'
                                 || masterData.ztype_of_entity === 'Government' || masterData.ztype_of_entity === 'Limited Liability Partnership'
                                 || masterData.ztype_of_entity === 'Other' || masterData.ztype_of_entity === 'Partnership'

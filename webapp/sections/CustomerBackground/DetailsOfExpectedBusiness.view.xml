@@ -29,7 +29,7 @@
             required="{=${fieldMappingModels>/ActualVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zannual_actual_volume}"
             maxLength="20"
@@ -43,7 +43,7 @@
         />
         <Input
             value="{Customers>/zannual_value}"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             liveChange="handleSetMaxLength"
             maxLength="8"
             type="Number"
@@ -58,7 +58,7 @@
         <!-- <Input value="{Customers>/zcredit_limit_currency}"  visible="{=${fieldMappingModels>/CreditlimitCurrencyVisible} === true ? true : false}"/> -->
         <MultiInput
             showClearIcon="true"
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             valueHelpRequest="handleValueHelpForCurrency"
             value="{Customers>/zcredit_limit_currency}"
             valueHelpOnly="true"
@@ -71,7 +71,7 @@
             required="{=${fieldMappingModels>/ActualTurnoverMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             value="{Customers>/zannual_actual_turnover}"
             liveChange="handleSetMaxLength"
             maxLength="8"
@@ -86,7 +86,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zmonthly_sales_volume}"
             maxLength="20"
@@ -99,7 +99,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zmonthly_actual_sales_volume}"
             maxLength="20"
@@ -112,7 +112,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zmonthly_sales_volume_unit}"
             maxLength="20"
@@ -125,7 +125,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zmonthly_actual_volume}"
             maxLength="20"
@@ -150,7 +150,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zmonthly_actual_sales_value}"
             maxLength="20"
@@ -163,7 +163,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             id="salesCuurency"
             type="Number"
             value="{Customers>/zcredit_limit_currency}"
@@ -177,7 +177,7 @@
             required="{=${fieldMappingModels>/MonthlyPhysicalBuyVolumeMandatory} === true ? true : false}"
         />
         <Input
-            enabled="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
+            enabled="{appView>/status}"
             type="Number"
             value="{Customers>/zmonthly_actual_turnover}"
             maxLength="20"
