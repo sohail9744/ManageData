@@ -43,6 +43,15 @@
                     "odataVersion": "2.0"
                 }
             },
+            "S4D111": {
+                "uri": "/sap/opu/odata/sap/ZIFFCO_VALUEHELP_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "annotations": [],
+                    "localUri": "localService/ZIFFCO_VALUEHELP_SRV/metadata.xml"
+                }
+            },
             "DMS":{
                 "uri": "/sap/opu/odata/sap/API_CV_ATTACHMENT_SRV",
                 "type": "OData",
@@ -120,6 +129,11 @@
                 "preload": true,
                 "settings": {}
             },
+            "S4D111":{
+                "dataSource": "S4D",
+                "preload": true,
+                "settings": {}
+            },
             "DMS":{
                 "dataSource": "DMS",
                 "preload": true,
@@ -158,7 +172,7 @@
                     ]
                 },
                 {
-                    "pattern": "CustomerDetail/{zcustomer_num}/:zsales_orgnization:/{mode}/{process}",
+                    "pattern": "CustomerDetail/:zcustomer_num:/:zsales_orgnization:/{mode}/{process}/:zbusinessPartnerId:",
                     "name": "CustomerDetail",
                     "target": [
                         "TargetView2"

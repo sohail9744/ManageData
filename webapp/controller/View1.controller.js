@@ -4,12 +4,13 @@ sap.ui.define([
     'sap/ui/model/FilterOperator',
     "sap/ui/core/Fragment",
     "Iffco/clap/formatter/formatter",
-    "../utils/ruleEngine"
+    "../utils/ruleEngine" 
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
     function (Controller, Filter, FilterOperator, Fragment, formatter, ruleEngine) {
+
         "use strict";
 
         return Controller.extend("Iffco.clap.controller.View1", {
@@ -25,6 +26,12 @@ sap.ui.define([
                     this.CompCode = new sap.ui.xmlfragment("Iffco.clap.fragments.CompCode", this);
                     this.getView().addDependent(this.CompCode);
                 }
+                if (!this.ex) {
+                    this.ex = new sap.ui.xmlfragment("Iffco.clap.fragments.ExistingCustomer", this);
+                    this.getView().addDependent(this.ex);
+                    this.ex.setModel(this.getOwnerComponent().getModel());
+                }
+                this.existingCustomerList();
                 var oRouter = this.getOwnerComponent().getRouter();
                 oRouter.getRoute("RouteView1").attachPatternMatched(this._onRouteMatched, this);
             },
@@ -48,6 +55,31 @@ sap.ui.define([
                         filterBars[i].setVisibleInFilterBar(true);
                     }
                 }
+            },
+            existingCustomerList: function (evt) {
+                var serviceURL = this.getOwnerComponent().getModel("S4D111").sServiceUrl;
+                var oModel = new sap.ui.model.odata.ODataModel(serviceURL, true);
+                this.arr = [];
+
+                oModel.read("/ExistingCustomerSet", {
+                    success: function (oData, oResponse) {
+                        var aCombinedData = [];
+                        var aUniqueCustomers = [];
+                        oData.results.forEach(function (oCustomer) {
+                            if (!aUniqueCustomers.includes(oCustomer.zbusiness_partner_id)) {
+                                aUniqueCustomers.push(oCustomer.zbusiness_partner_id);
+                                aCombinedData.push(oCustomer);
+                            }
+                        });
+                        this.getOwnerComponent().setModel(new sap.ui.model.json.JSONModel(aCombinedData), "existingCustomerSet");
+                    }.bind(this),
+                    error: function (error) {
+                        console.log("Existing Customer API error: " + oData);
+                    },
+                });
+            },
+            handleCancel: function () {
+                this.ex.close();
             },
             handleValueHelpForCompCode: function (evt) {
                 this.CompCodeField = evt.getSource();
@@ -90,6 +122,15 @@ sap.ui.define([
                 var busyDialog = new sap.m.BusyDialog();
                 busyDialog.open();
                 var oRouter = this.getOwnerComponent().getRouter();
+
+                // if (this.ex.getContent()[1].getSelectedItem()) {
+                //     oRouter.navTo("CustomerDetail", {
+                //         "process": this.getView().getModel("appView").getProperty("/process"),
+                //         "mode": "edit",
+                //         "zbusinessPartnerId": this.zbusinessPartnerId
+                //         // "zcustomer_num" : this.zcustNo
+                //     });
+                // } else {
                 oRouter.navTo("CustomerDetail", {
                     "zcustomer_num": oEvent.getSource().getBindingContext().getProperty("zcustomer_num"),
                     "zsales_orgnization": oEvent.getSource().getBindingContext().getProperty("zsales_orgnization"),
@@ -97,6 +138,7 @@ sap.ui.define([
                     "mode": "edit",
                     "process": oEvent.getSource().getBindingContext().getProperty("zrequest_type")
                 });
+                // }
                 if (!this.check1 && !this.checkB) {
                     this.checkB = true;
                     setTimeout(function () {
@@ -105,14 +147,123 @@ sap.ui.define([
                 } else {
                     busyDialog.close();
                 }
-                // if(!this.check2 && !this.checkB2){
-                //     this.checkB2  = true;
-                //     setTimeout(function () {
-                //         BI.close();
-                //     }, 28000);
-                // }else{
-                //     BI.close(); 
-                // }
+            },
+            getSelections: function (evt) {
+                var that = this;
+                this.getView().getModel("appView").setProperty("/selectedMode", evt.getParameters().selected);
+                this.zcustomer_legal_name = evt.getSource().getSelectedContexts()[0].getObject().zcustomer_legal_name;
+                this.zbusinessPartnerId = evt.getSource().getSelectedContexts()[0].getObject().zbusiness_partner_id;
+            },
+            handleOK: function (evt) {
+                if (this.ex.getContent()[1].getSelectedItem()) {
+                    this.check2 = true;
+                    var busyDialog = new sap.m.BusyDialog();
+                    busyDialog.open();
+
+                    var oRouter = this.getOwnerComponent().getRouter();
+                    oRouter.navTo("CustomerDetail", {
+                        "process": this.getView().getModel("appView").getProperty("/process"),
+                        "mode": "CHANGE",
+                        "zbusinessPartnerId": this.zbusinessPartnerId
+                    });
+                    if (!this.check1 && !this.checkB) {
+                        this.checkB = true;
+                        setTimeout(function () {
+                            busyDialog.close();
+                        }, 28000);
+                    } else {
+                        busyDialog.close();
+                    }
+                } else {
+                    sap.m.MessageBox.information("Please select a record to continue.");
+                }
+            },
+            handleChangeCustomer: function (oEvent) {
+                this.getView().getModel("appView").setProperty("/process", 'CHANGE');
+                this.getView().getModel("appView").setProperty("/status", 'Change');
+                this.onClearSelection();
+                this.onSearchExist();
+                this.ex.open();
+            },
+            handleExtendCustomer: function (oEvent) {
+                this.getView().getModel("appView").setProperty("/process", 'EXTEND');
+                this.getView().getModel("appView").setProperty("/status", 'Extend');
+                this.onClearSelection();
+                this.onSearchExist();
+                this.ex.open();
+            },
+            onClearSelection: function () {
+                var table = this.ex.getContent()[1]; // Replace "yourTableId" with the actual ID of your table
+                // Get all items/rows in the table
+                var items = table.getItems();
+
+                // Iterate over each item and set its "selected" property to false
+                items.forEach(function (item) {
+                    item.setSelected(false);
+                });
+
+                //to remove the preselected filters - Mujaida
+                var filterItems = this.ex.getContent()[0].getFilterItems();
+                if (filterItems.length > 0) {
+                    for (var a = 0; a < filterItems.length; a++) {
+                        filterItems[a].getControl().setValue();
+                    }
+                }
+            },
+            onSearchExist: function () {
+                var oTable = this.ex;
+                var oFilter = this.ex.getContent()[0];
+                var aFilters = [];
+                for (var i = 0; i < oFilter.getAllFilterItems().length; i++) {
+                    var sName = oFilter.getAllFilterItems()[i].getProperty("name");
+                    var sPath = "";
+                    var dPath = "";
+                    var sValue = "";
+                    var sKeys = [];
+                    if (sName === "Business Partner Id") {
+                        sPath = "zbusiness_partner_id";
+                        sValue = oFilter.getAllFilterItems()[i].getControl().getValue();
+                    } else if (sName === "Customer Name") {
+                        sPath = "zfirst_name";
+                        sValue = oFilter.getAllFilterItems()[i].getControl().getValue();
+
+                    } else if (sName === "Company Code") {
+                        sPath = "zcompany_code";
+                        sValue = oFilter.getAllFilterItems()[i].getControl().getValue();
+                    }
+                    else if (sName === "Customer Legal Name") {
+                        sPath = "zcustomer_legal_name";
+                        sValue = oFilter.getAllFilterItems()[i].getControl().getValue();
+                    }
+                    else if (sName == "Status") {
+                        sPath = "zrequest_status";
+                        sKeys = oFilter.getAllFilterItems()[i].getControl().getSelectedKeys();
+                    }
+                    else if (sName == "Request Type") {
+                        sPath = "zrequest_type";
+                        sKeys = oFilter.getAllFilterItems()[i].getControl().getSelectedKeys();
+                    }
+                    if (sPath !== "") {
+                        if (sValue !== "") {
+                            aFilters.push(new Filter({ path: sPath, operator: FilterOperator.Contains, value1: sValue }));
+                        }
+                        if (sKeys.length > 0) {
+                            var aKeysFilter = [];
+                            for (var j = 0; j < sKeys.length; j++) {
+                                if (sKeys[j] !== "All") {
+                                    aKeysFilter.push(new Filter({ path: sPath, operator: FilterOperator.Contains, value1: sKeys[j] }));
+                                }
+                            }
+                            if (aKeysFilter.length > 0) {
+                                aFilters.push(new Filter({
+                                    filters: aKeysFilter,
+                                    and: false
+                                }));
+                            }
+                        }
+                    }
+                }
+                oTable.getContent()[1].getBinding("items").filter(aFilters);
             },
             onSearch: function () {
                 var oModel = this.getView().getModel();
@@ -221,30 +372,30 @@ sap.ui.define([
                 oEvent.getSource().getBinding("items").filter([]);
             },
 
-            handleNewCustomer: function (oEvent) {
-                this.check2 = true;
-                this.getView().getModel("appView").setProperty("/addSales", true);
-                this.getView().getModel("appView").setProperty("/selectedType", "Secured Credit Limit");
+            // handleNewCustomer: function (oEvent) {
+            //     this.check2 = true;
+            //     this.getView().getModel("appView").setProperty("/addSales", true);
+            //     this.getView().getModel("appView").setProperty("/selectedType", "Secured Credit Limit");
 
-                var busyDialog = new sap.m.BusyDialog();
-                busyDialog.open();
-                var oRouter = this.getOwnerComponent().getRouter();
-                oRouter.navTo("CustomerDetail", {
-                    "zcustomer_num": "1",
-                    "zsales_orgnization": "2",
-                    "mode": "add",
-                    "process": "Create Customer"
-                });
-                if (!this.check1 && !this.checkB) {
-                    this.checkB = true;
-                    setTimeout(function () {
-                        busyDialog.close();
-                    }, 28000);
-                } else {
-                    busyDialog.close();
-                }
+            //     var busyDialog = new sap.m.BusyDialog();
+            //     busyDialog.open();
+            //     var oRouter = this.getOwnerComponent().getRouter();
+            //     oRouter.navTo("CustomerDetail", {
+            //         "zcustomer_num": "1",
+            //         "zsales_orgnization": "2",
+            //         "mode": "add",
+            //         "process": "Create Customer"
+            //     });
+            //     if (!this.check1 && !this.checkB) {
+            //         this.checkB = true;
+            //         setTimeout(function () {
+            //             busyDialog.close();
+            //         }, 28000);
+            //     } else {
+            //         busyDialog.close();
+            //     }
 
-            },
+            // },
             // handleBulkRequest:function () {
             //         this.bulkRequest.open();
 

@@ -94,23 +94,26 @@ sap.ui.define([
                 // Mohammad Sohail: will add it later in Manage application is already added
                 //this.onClear();
                 // this.onClearFiles();  // commented by mujaida
+                // this.sPath = "/ZDD_CUSTOMER";
+                // this.filter = [];
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
-
                     this.zcustomer_num = oEvent.getParameters().arguments.zcustomer_num;
-
                     this.zsales_orgnization = oEvent.getParameters().arguments.zsales_orgnization !== undefined ? oEvent.getParameters().arguments.zsales_orgnization : "";
-
+                    // this.filter.push(new sap.ui.model.Filter("zcustomer_num", "EQ", this.zcustomer_num));
                     this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
                     this.onCustomerData();
-                } else {
-                    this.getView().getModel("Customers").setData({});
-                    // this.getView().getModel("appView").setProperty("/addSales", true);
-                    this.getView().getModel("appView").updateBindings(true);
+                    this.handleRuleEngineConfiguration();
                 }
-                this.handleRuleEngineConfiguration();
+                if (this.mode === "CHANGE") {
+                    this.zbusinessId = oEvent.getParameters().arguments.zbusinessPartnerId
+                    this.sPath = '/ZDD_CUSTOMER'
+                    // this.sPath = `/ZDD_CUSTOMER/?$filter=zbusiness_partner_id eq '${this.zbusinessId}'`;
+                    this.onCustomerData();
+                    this.handleRuleEngineConfiguration();
+                }
             },
-            onCustomerData: function () {
+            onCustomerData: function (filters) {
                 return new Promise((resolve, reject) => {
                     var oModel = this.getView().getModel();
                     oModel.read(this.sPath, {
@@ -118,10 +121,17 @@ sap.ui.define([
                             "$expand": "to_salesarea,to_comments,to_credit"
                         },
                         success: function (oData, oResponse) {
+                            if (this.mode === "CHANGE") {
+                                oData = oData.results.filter(item => item.zbusiness_partner_id === this.zbusinessId);
+                                if (oData.length > 0) {
+                                    oData = oData[0]
+                                }
+                                this.zcustomer_num = oData.zcustomer_num;
+                                this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
+                            }
                             var oCustomerDetailModel = this.getView().getModel("Customers");
                             delete oData.__metadata;
                             delete oData.to_zdd_comments;
-
 
                             var salesItem = this.getOwnerComponent().getModel("salesDataModel").getData();
                             var listItem = this.getOwnerComponent().getModel("commentsModel").getData();
@@ -272,7 +282,7 @@ sap.ui.define([
 
                             var masterData = this.getView().getModel("Customers").getData();
                             //Mohammad Sohail: For Temporary purpose status, we have to remove below line 293
-                            this.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
+                            // this.getView().getModel("Customers").setProperty("/zrequest_status", "In Draft");
                             if (masterData.ztype_of_entity === 'Co-Operative (COOP)' || masterData.ztype_of_entity === 'CONSORTIUM'
                                 || masterData.ztype_of_entity === 'Government' || masterData.ztype_of_entity === 'Limited Liability Partnership'
                                 || masterData.ztype_of_entity === 'Other' || masterData.ztype_of_entity === 'Partnership'

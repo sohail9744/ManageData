@@ -167,12 +167,12 @@
                                     <Button
                                         text="Change"
                                         type="Emphasized"
-                                        press="handleNewCustomer"
+                                        press="handleChangeCustomer"
                                     />
                                     <Button
                                         text="Extend"
                                         type="Emphasized"
-                                        press="handleNewCustomer"
+                                        press="handleExtendCustomer"
                                     />
                                     <!-- <Button text="Extend" type="Emphasized" press="handleNewCustomer" /> -->
                                 </content>

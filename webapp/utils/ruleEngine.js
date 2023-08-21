@@ -69,10 +69,7 @@ sap.ui.define([], function () {
                     },
                     error: function (oError) {
                         console.log("Rule Engine is calling Again:", oError);
-                        console.log("<h1>Triggering Rule engine in 2 seconds</h1>");
-                        // setTimeout(() => {
                         retryFunction()
-                        // }, 2000);
                     }
                 });
             }
