@@ -150,10 +150,12 @@
                     <Table
                         id="table"
                         inset="false"
-                        items="{
-						path: '/ZDD_CUSTOMER', filters:[{path:'zrequest_type',operator:'EQ',value1:'Create Customer'}],
-                         sorter: [{ path: 'zcreated_date', descending: 'true'}]
-					}"
+                        fixedLayout="Strict"
+                        updateFinished="onUpdateFinished"
+                        growing="true"
+                        growingThreshold="100"
+                        growingTriggerText="Load More..."
+                        items="{path: '/ZDD_CUSTOMER', sorter: [{ path: 'zupdated_date', descending: 'true'}]}"
                     >
                         <headerToolbar>
                             <OverflowToolbar>

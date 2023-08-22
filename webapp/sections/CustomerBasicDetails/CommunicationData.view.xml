@@ -98,7 +98,7 @@
         <Label
             text="Email"
             visible="{=${fieldMappingModels>/EmailVisible} === true ? true : false}"
-            required="{=${fieldMappingModels>/EmailMandatory} === true ? true : false}"
+            required="{=${fieldMappingModels>/EmailMandatory} === false ? false : false}"
         />
         <Input
             enabled="{appView>/clapFields}"
