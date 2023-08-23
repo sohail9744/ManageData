@@ -222,7 +222,7 @@
         />
         <!-- <Input enabled="{appView>/status}" value="{Customers>/zregion}" visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"/> -->
         <Input
-            enabled="{appView>/status}"
+            enabled="false"
             value="{Customers>/zregion}"
             visible="{=${fieldMappingModels>/RegionVisible} === true ? true : false}"
         />

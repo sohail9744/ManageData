@@ -60,7 +60,7 @@ sap.ui.define([
                 var serviceURL = this.getOwnerComponent().getModel("S4D111").sServiceUrl;
                 var oModel = new sap.ui.model.odata.ODataModel(serviceURL, true);
                 this.arr = [];
-
+                //i don't thing
                 oModel.read("/ExistingCustomerSet", {
                     success: function (oData, oResponse) {
                         var aCombinedData = [];

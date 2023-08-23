@@ -85,6 +85,7 @@ sap.ui.define([
                 this.process = oEvent.getParameters().arguments.process;
 
                 this.getView().getModel("appView").setProperty("/firstTym", 'add');
+                this.getView().getModel("appView").setProperty("/process", oEvent.getParameters().arguments.process);
                 this.mode = oEvent.getParameters().arguments.mode;
                 this.getView().getModel("appView").setProperty("/mode", this.mode);
                 // Mohammad Sohail: will add it later in Manage application is already added
@@ -443,7 +444,7 @@ sap.ui.define([
                     if (this.mode == "edit" || this.mode == "CHANGE") {
                         // oEntry.zrequest_no = req_no;
                         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                        oEntry.zrequest_type = "Change Customer";
+                        oEntry.zrequest_type = this.getView().getModel("appView").getProperty("/process");
                         oEntry.zrequest_status = "In Draft";
                         delete oEntry.zindividual_paymen;
                         delete oEntry.ztelephone_country_number_exte;
@@ -581,6 +582,7 @@ sap.ui.define([
                         oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                        oEntry.zreconciliation_account = oEntry.zreconciliation_account ? oEntry.zreconciliation_account.split(" - ")[0] : "";
                         // delete oEntry.ztype_of_Entity;
                         if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
                             oEntry.zbusiness_partner_grouping = "Z070";
@@ -607,8 +609,8 @@ sap.ui.define([
                             }
                         });
 
-                     } 
-                   // else {
+                    }
+                    // else {
                     //     if (!oEntry.zbusiness_unit_name || !oEntry.zvertical || !oEntry.zcustomer_type || !oEntry.zchannel_group || !oEntry.zcustomer_legal_name || !oEntry.zcompany_code) {
                     //         // MessageBox.error("Please fill Mandotry fields");
                     //         var mandatoryFields = [
@@ -841,7 +843,7 @@ sap.ui.define([
                         // if (this.mode == "edit" || this.custNum) {
                         if (this.mode == "edit" || this.mode === "CHANGE") {
                             // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                            oEntry.zrequest_type = "Change Customer"
+                            oEntry.zrequest_type = this.getView().getModel("appView").getProperty("/process");
                             oEntry.zrequest_status = "In Progress";
                             delete oEntry.zindividual_paymen;
                             delete oEntry.ztelephone_country_number_exte;
@@ -981,6 +983,7 @@ sap.ui.define([
                             oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                             oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                             oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                            oEntry.zreconciliation_account = oEntry.zreconciliation_account ? oEntry.zreconciliation_account.split(" - ")[0] : "";
                             if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
                                 oEntry.zbusiness_partner_grouping = "Z070";
                             }
@@ -1022,7 +1025,7 @@ sap.ui.define([
                                         var body = {
                                             "definitionId": "eu10.iffcodevprocessautomation.iffcocustomerservices.iFFCOCustomerCreate",
                                             "context": {
-                                                "requesttype": "createDatasteward",
+                                                "requesttype": "createDataSteward",
                                                 "customerid": oEntry.zcustomer_num,
                                                 "customername": oEntry.zfirst_name,
                                                 "customersitename": oEntry.zfirst_name,
@@ -1040,7 +1043,6 @@ sap.ui.define([
                                                 "channel": oEntry.zchannel
                                             }
                                         };
-                                        debugger
                                         oWFModel.create("/createWF", { body: JSON.stringify(body) }, {
                                             success: function (oData) {
                                                 sap.m.MessageToast.show("Customer is submitted Successfully");

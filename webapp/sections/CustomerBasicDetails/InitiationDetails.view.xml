@@ -18,8 +18,13 @@
             visible="{=${Customers>/zrequest_no} ? true : false}"
         />
         <Label text="Request Type" />
-        <Input
+        <!-- <Input
             value="{= ${Customers>/zrequest_type} !== '' ? 'Change Customer' : '{Customers>/zrequest_type}'}"
+            enabled="false"
+            maxLength="20"
+        /> -->
+        <Input
+            value="{appView>/process}"
             enabled="false"
             maxLength="20"
         />
@@ -141,7 +146,7 @@
         <Label
             text="Finished On/By"
             visible="{=${fieldMappingModels>/FinalizedOnVisible} === true ? true : false}"
-            required="{=${fieldMappingModels>/FinalizedOnMandatory} === true ? true : false}"
+            required="{=${fieldMappingModels>/FinalizedOnMandatory} === false ? false : false}"
         />
         <DatePicker
             enabled="false"
