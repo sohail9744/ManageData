@@ -3,13 +3,12 @@ sap.ui.define([
     'sap/ui/model/Filter',
     'sap/ui/model/FilterOperator',
     "sap/ui/core/Fragment",
-    "Iffco/clap/formatter/formatter",
-    "../utils/ruleEngine"
+    "Iffco/clap/formatter/formatter"
 ],
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller, Filter, FilterOperator, Fragment, formatter, ruleEngine) {
+    function (Controller, Filter, FilterOperator, Fragment, formatter) {
 
         "use strict";
 
@@ -166,7 +165,7 @@ sap.ui.define([
                     var oRouter = this.getOwnerComponent().getRouter();
                     oRouter.navTo("CustomerDetail", {
                         "process": this.getView().getModel("appView").getProperty("/process"),
-                        "mode": "CHANGE",
+                        "mode": "COPY S4 RECORD",
                         "zbusinessPartnerId": this.zbusinessPartnerId
                     });
                     if (!this.check1 && !this.checkB) {

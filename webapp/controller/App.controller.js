@@ -19,7 +19,7 @@ sap.ui.define(
             selectedMode:false,
             distributionChannel:"",
             cca:"",
-            bpg:"Sold To",
+            bpg:"SOLD TO",
             process:"",
             salesFlag:false,
             addSales: false,

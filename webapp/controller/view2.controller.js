@@ -102,7 +102,7 @@ sap.ui.define([
                     this.onCustomerData();
                     this.handleRuleEngineConfiguration();
                 }
-                if (this.mode === "CHANGE") {
+                if (this.mode === "COPY S4 RECORD") {
                     this.zbusinessId = oEvent.getParameters().arguments.zbusinessPartnerId
                     this.sPath = '/ZDD_CUSTOMER'
                     this.onCustomerData();
@@ -117,7 +117,7 @@ sap.ui.define([
                             "$expand": "to_salesarea,to_comments,to_credit"
                         },
                         success: function (oData, oResponse) {
-                            if (this.mode === "CHANGE") {
+                            if (this.mode === "COPY S4 RECORD") {
                                 oData = oData.results.filter(item => item.zbusiness_partner_id === this.zbusinessId);
                                 if (oData.length > 0) {
                                     oData = oData[0]
@@ -126,6 +126,8 @@ sap.ui.define([
                                 this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
 
                                 let process = this.getView().getModel("appView").getProperty("/process");
+                                //Temporary bases
+                                // oData.zrequest_status = "Completed"
                                 let zStatus = oData.zrequest_status;
 
                                 if (zStatus === "In Progress" || process === "EXTEND") {
@@ -149,6 +151,8 @@ sap.ui.define([
                             var oCustomerDetailModel = this.getView().getModel("Customers");
                             delete oData.__metadata;
                             delete oData.to_zdd_comments;
+                            //Temporary bases
+                            oData.zrequest_status = "In Draft"
 
                             var salesItem = this.getOwnerComponent().getModel("salesDataModel").getData();
                             var listItem = this.getOwnerComponent().getModel("commentsModel").getData();
@@ -374,8 +378,17 @@ sap.ui.define([
             },
             handleRuleEngineConfiguration: async function () {
                 this.busyDialog.open();
-                this.process = (this.process == "Create Customer") ? "CREATE" : (this.process == "Change Customer") ? "CHANGE" : "EXTEND";
-                // this.process = this.getView().getModel("appView").getProperty("/process");
+                let process = this.getView().getModel("appView").getProperty("/process");
+                if(process == "Change Customer" || process == "CHANGE"){
+                    this.process = "CHANGE"
+                }
+                if(process == "EXTEND" || process == "Extend Customer" ){
+                    this.process = "EXTEND"
+                }
+                if(process == "CREATE" || process == "Create Customer"){
+                    this.process = "CREATE"
+                } 
+                // this.process = (this.process == "Create Customer") ? "CREATE" : (this.process == "Change Customer") ? "CHANGE" : "EXTEND";
                 var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit'
                 var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
                 const configObject = {
@@ -439,12 +452,21 @@ sap.ui.define([
                     }
 
                     this.handleAmtFields();
-
-                    // if (this.mode == "edit" && that.custNum) {
-                    if (this.mode == "edit" || this.mode == "CHANGE") {
+                    if (this.mode == "edit" && oEntry.zrequest_status == "In Draft" || this.mode == "COPY S4 RECORD" && oEntry.zrequest_status == "In Draft") {
                         // oEntry.zrequest_no = req_no;
-                        // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                        oEntry.zrequest_type = this.getView().getModel("appView").getProperty("/process");
+                        // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : ""; 
+                        let process = this.getView().getModel("appView").getProperty("/process");
+
+                        if(process == "CHANGE"){
+                            oEntry.zrequest_type = "Change Customer"
+                        }
+                        
+                        if(process == "EXTEND"){
+                            oEntry.zrequest_type = "Extend Customer"
+                        }
+                        if(process == "CREATE"){
+                            oEntry.zrequest_type = "Create Customer"
+                        } 
                         oEntry.zrequest_status = "In Draft";
                         delete oEntry.zindividual_paymen;
                         delete oEntry.ztelephone_country_number_exte;
@@ -610,201 +632,190 @@ sap.ui.define([
                         });
 
                     }
-                    // else {
-                    //     if (!oEntry.zbusiness_unit_name || !oEntry.zvertical || !oEntry.zcustomer_type || !oEntry.zchannel_group || !oEntry.zcustomer_legal_name || !oEntry.zcompany_code) {
-                    //         // MessageBox.error("Please fill Mandotry fields");
-                    //         var mandatoryFields = [
-                    //             { field: "zbusiness_unit_name", label: "Business Unit" },
-                    //             { field: "zvertical", label: "Vertical" },
-                    //             { field: "zcustomer_type", label: "Customer Type" },
-                    //             { field: "zchannel_group", label: "Channel Group" },
-                    //             { field: "zcustomer_legal_name", label: "Legal Name" },
-                    //             { field: "zcompany_code", label: "Company Code" }
-                    //         ];
-                    //         var missingFields = [];
-                    //         mandatoryFields.forEach(function (fieldObj) {
-                    //             var fieldValue = oEntry[fieldObj.field];
-                    //             if (!fieldValue) {
-                    //                 missingFields.push(fieldObj.label);
-                    //             }
-                    //         });
-                    //         if (missingFields.length > 0) {
-                    //             var errorMessage = "Please fill in the following mandatory fields: " + missingFields.join(", ");
-                    //             MessageBox.error(errorMessage);
-                    //         }
-                    //     } else {
-                    //         // this.handleAmtFields();
-                    //         var req_no = Math.floor(1000 + Math.random() * 9000) + "";
-                    //         oEntry.zrequest_no = req_no;
-                    //         // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                    //         oEntry.zrequest_type = "Change Customer";
-                    //         oEntry.zrequest_status = "In Draft";
-                    //         delete oEntry.zindividual_paymen;
-                    //         delete oEntry.ztelephone_country_number_exte;
-                    //         delete oEntry.zfax_country_number_extension;
-                    //         delete oEntry.zhouse_number;
-                    //         delete oEntry.zindividual_paymen;
-                    //         delete oEntry.zamount_insured;
-                    //         delete oEntry.to_comments;
-                    //         delete oEntry.to_salesarea;
-                    //         delete oEntry.zmobile_country_number;
+                    else {
+                            // this.handleAmtFields();
+                            var req_no = Math.floor(1000 + Math.random() * 9000) + "";
+                            oEntry.zrequest_no = req_no;
+                            // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
+                            let process = this.getView().getModel("appView").getProperty("/process");
 
-                    //         delete oEntry.BusinessPartnerDD;
-                    //         delete oEntry.BPRoles;
-                    //         delete oEntry.requests;
-                    //         delete oEntry.EntryCollection;
+                            if(process == "CHANGE"){
+                                oEntry.zrequest_type = "Change Customer"
+                            }
+                            
+                            if(process == "EXTEND"){
+                                oEntry.zrequest_type = "Extend Customer"
+                            }
+                            if(process == "CREATE"){
+                                oEntry.zrequest_type = "Create Customer"
+                            } 
+                            oEntry.zrequest_status = "In Draft";
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.ztelephone_country_number_exte;
+                            delete oEntry.zfax_country_number_extension;
+                            delete oEntry.zhouse_number;
+                            delete oEntry.zindividual_paymen;
+                            delete oEntry.zamount_insured;
+                            delete oEntry.to_comments;
+                            delete oEntry.to_salesarea;
+                            delete oEntry.zmobile_country_number;
 
-                    //         // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
-                    //         // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
-                    //         //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
-                    //         //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
-                    //         // }
-                    //         if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
-                    //             oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
-                    //         }
-                    //         if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
-                    //             oEntry.zbusiness_partner_grouping = "Z070";
-                    //         }
-                    //         else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
-                    //             oEntry.zbusiness_partner_grouping = "BP01"
-                    //         }
-                    //         else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
-                    //             oEntry.zbusiness_partner_grouping = "BP02"
-                    //         }
-                    //         else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
-                    //             oEntry.zbusiness_partner_grouping = "BP08"
-                    //         }
-                    //         oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
-                    //         oEntry.ztype_of_customer = oEntry.zdescription;
-                    //         // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
-                    //         // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+                            delete oEntry.BusinessPartnerDD;
+                            delete oEntry.BPRoles;
+                            delete oEntry.requests;
+                            delete oEntry.EntryCollection;
 
-                    //         // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
-                    //         //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
-                    //         // }
-                    //         if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
-                    //             oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
-                    //         }
-                    //         // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
-                    //         //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
-                    //         //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
-                    //         // }
-                    //         // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
-                    //         //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
-                    //         // }
-                    //         // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
-                    //         //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
-                    //         // }
+                            // oEntry.zcredit_limit_type = this.getView().getModel("appView").getProperty("/selectedType") === 0 ? "Secured Credit" : "UnSecured Credit";
+                            // if (this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null) {
+                            //     oEntry.zblockedincm = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[1].getSelected() ? 'Y' : 'N';
+                            //     oEntry.zspecialattention = this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[3].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("orderData13").getAggregation("_views") !== null) {
+                                oEntry.zroute_audit_is_performed = this.getView().byId("orderData13").getAggregation("_views")[0].getContent()[0].getContent()[25].getSelected() ? 'Y' : 'N';
+                            }
+                            if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
+                                oEntry.zbusiness_partner_grouping = "Z070";
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Sold")) {
+                                oEntry.zbusiness_partner_grouping = "BP01"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Ship")) {
+                                oEntry.zbusiness_partner_grouping = "BP02"
+                            }
+                            else if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("One")) {
+                                oEntry.zbusiness_partner_grouping = "BP08"
+                            }
+                            oEntry.zdescription = this.getView().getModel("appView").getProperty("/vertical") === 'CASH' ? 'CASH' : 'CREDIT';
+                            oEntry.ztype_of_customer = oEntry.zdescription;
+                            // oEntry.zcountry = this.getView().byId("orderData9").getAggregation("_views")[0].getContent()[0].getContent()[3].getValue().split(" - ")[0];
+                            // oEntry.zblock_reason = this.getView().byId("CreditProfileSection2").getAggregation("_views") !== null ? this.getView().byId("CreditProfileSection2").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" - ")[0] : "";
+
+                            // if (this.getView().byId("CreditProfileSection4").getAggregation("_views") !== null) {
+                            //     oEntry.zdata_outdated = this.getView().byId("CreditProfileSection4").getAggregation("_views")[0].getContent()[0].getContent()[2].getSelected() ? 'Y' : 'N';
+                            // }
+                            if (this.getView().byId("Planned6").getAggregation("_views") !== null) {
+                                oEntry.zproxima = this.getView().byId("Planned6").getAggregation("_views")[0].getContent()[0].getContent()[9].getSelected() ? 'Y' : 'N';
+                            }
+                            // if (this.getView().byId("salesAreadata15").getAggregation("_views") !== null) {
+                            //     oEntry.zcredit_control_area = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[7].getValue().split(" - ")[0];
+                            //     // oEntry.zpayment_terms = this.getView().byId("salesAreadata15").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().split(" ")[0];
+                            // }
+                            // if (this.getView().byId("CreditAnalysisView").getAggregation("_views") !== null) {
+                            //     oEntry.zcountry_rating = this.getView().byId("CreditAnalysisView").getAggregation("_views")[0].getContent()[0].getContent()[23].getValue().split(" ; ")[0];
+                            // }
+                            // if (this.getView().byId("Planned4").getAggregation("_views") !== null) {
+                            //     oEntry.ztotal_credit_amount = this.getView().byId("Planned4").getAggregation("_views")[0].getContent()[0].getContent()[5].getValue().toString();
+                            // }
 
 
-                    //         // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
-                    //         // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
-                    //         // }
+                            // if(this.getView().byId("erpCustomersydata7").getAggregation("_views") !== null){
+                            // oEntry.zterms_of_payment = this.getView().byId("erpCustomersydata7").getAggregation("_views")[0].getContent()[0].getContent()[1].getValue().split(' ')[0];
+                            // }
 
-                    //         var custData = this.getView().getModel("Customers").getData();
-                    //         if (custData.zdate_founded === undefined || custData.zdate_founded === null || custData.zdate_founded.length < 13) {
-                    //             oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
-                    //         }
-                    //         if (custData.zliquidationdate === undefined || custData.zliquidationdate === null || custData.zliquidationdate.length < 13) {
-                    //             oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
-                    //         }
-                    //         if (custData.zdate === undefined || custData.zdate === null || custData.zdate.length < 13) {
-                    //             oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
-                    //         }
-                    //         // if (custData.zvalidity_to === undefined || custData.zvalidity_to === null || custData.zvalidity_to.length < 13) {
-                    //         //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
-                    //         // }
-                    //         if (custData.zvalid_from === undefined || custData.zvalid_from === null || custData.zvalid_from.length < 13) {
-                    //             oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
-                    //         }
-                    //         if (custData.zvalid_to === undefined || custData.zvalid_to === null || custData.zvalid_to.length < 13) {
-                    //             oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
-                    //         }
-                    //         // if (custData.zentry_date === undefined || custData.zentry_date === null || custData.zentry_date.length < 13) {
-                    //         //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
-                    //         // }
-                    //         if (custData.zduedate === undefined || custData.zduedate === null || custData.zduedate.length < 13) {
-                    //             oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
-                    //         }
-                    //         //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                    //         if (custData.zupdated_date === undefined || custData.zupdated_date === null || custData.zupdated_date.length < 13) {
-                    //             oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
-                    //         }
-                    //         if (custData.zfinalizedon === undefined || custData.zfinalizedon === null || custData.zfinalizedon.length < 13) {
-                    //             oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
-                    //         }
-                    //         // if (custData.zlast_key_date === undefined || custData.zlast_key_date === null || custData.zlast_key_date.length < 13) {
-                    //         //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
-                    //         // }
-                    //         // if (custData.zpayment_on === undefined || custData.zpayment_on === null || custData.zpayment_on.length < 13) {
-                    //         //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
-                    //         // }
-                    //         if (custData.zcreated_date === undefined || custData.zcreated_date === null || custData.zcreated_date.length < 13) {
-                    //             oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
-                    //         }
-                    //         if (custData.zcl_validity_proposed_date === undefined || custData.zcl_validity_proposed_date === null || custData.zcl_validity_proposed_date.length < 13) {
-                    //             oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
-                    //         }
-                    //         // if (custData.zresubmission_on === undefined || custData.zresubmission_on === null || custData.zresubmission_on.length < 13) {
-                    //         //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
-                    //         // }
-                    //         if (custData.zvalid_passport_date === undefined || custData.zvalid_passport_date === null || custData.zvalid_passport_date.length < 13) {
-                    //             oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
-                    //         }
-                    //         if (custData.zvisa_valid_date === undefined || custData.zvisa_valid_date === null || custData.zvisa_valid_date.length < 13) {
-                    //             oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
-                    //         }
-                    //         // if (custData.znet_due_date === undefined || custData.znet_due_date === null || custData.znet_due_date.length < 13) {
-                    //         //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
-                    //         // }
-                    //         oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
-                    //         oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
-                    //         oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
-                    //         oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                    //         oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                    //         oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
-                    //         oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
-                    //         oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
-                    //         oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
-                    //         oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
-                    //         oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
-                    //         oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
-                    //         oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
-                    //         oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
-                    //         oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
-                    //         oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
-                    //         oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
-                    //         oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
-                    //         oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
-                    //         oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
-                    //         oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
-                    //         oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
-                    //         oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
-                    //         oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
-                    //         oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
-                    //         oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
-                    //         oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
-                    //         oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
-                    //         // delete oEntry.ztype_of_Entity;
+                            var custData = this.getView().getModel("Customers").getData();
+                            if (custData.zdate_founded === undefined || custData.zdate_founded === null || custData.zdate_founded.length < 13) {
+                                oEntry.zdate_founded = oEntry.zdate_founded ? this.dateFormatter(oEntry.zdate_founded) : null;
+                            }
+                            if (custData.zliquidationdate === undefined || custData.zliquidationdate === null || custData.zliquidationdate.length < 13) {
+                                oEntry.zliquidationdate = oEntry.zliquidationdate ? this.dateFormatter(oEntry.zliquidationdate) : null;
+                            }
+                            if (custData.zdate === undefined || custData.zdate === null || custData.zdate.length < 13) {
+                                oEntry.zdate = oEntry.zdate ? this.dateFormatter(oEntry.zdate) : null;
+                            }
+                            // if (custData.zvalidity_to === undefined || custData.zvalidity_to === null || custData.zvalidity_to.length < 13) {
+                            //     oEntry.zvalidity_to = oEntry.zvalidity_to ? this.dateFormatter(oEntry.zvalidity_to) : null;
+                            // }
+                            if (custData.zvalid_from === undefined || custData.zvalid_from === null || custData.zvalid_from.length < 13) {
+                                oEntry.zvalid_from = oEntry.zvalid_from ? this.dateFormatter(oEntry.zvalid_from) : null;
+                            }
+                            if (custData.zvalid_to === undefined || custData.zvalid_to === null || custData.zvalid_to.length < 13) {
+                                oEntry.zvalid_to = oEntry.zvalid_to ? this.dateFormatter(oEntry.zvalid_to) : null;
+                            }
+                            // if (custData.zentry_date === undefined || custData.zentry_date === null || custData.zentry_date.length < 13) {
+                            //     oEntry.zentry_date = oEntry.zentry_date ? this.dateFormatter(oEntry.zentry_date) : null;
+                            // }
+                            if (custData.zduedate === undefined || custData.zduedate === null || custData.zduedate.length < 13) {
+                                oEntry.zduedate = oEntry.zduedate ? this.dateFormatter(oEntry.zduedate) : null;
+                            }
+                            //oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            if (custData.zupdated_date === undefined || custData.zupdated_date === null || custData.zupdated_date.length < 13) {
+                                oEntry.zupdated_date = oEntry.zupdated_date ? this.dateFormatter(oEntry.zupdated_date) : null;
+                            }
+                            if (custData.zfinalizedon === undefined || custData.zfinalizedon === null || custData.zfinalizedon.length < 13) {
+                                oEntry.zfinalizedon = oEntry.zfinalizedon ? this.dateFormatter(oEntry.zfinalizedon) : null;
+                            }
+                            // if (custData.zlast_key_date === undefined || custData.zlast_key_date === null || custData.zlast_key_date.length < 13) {
+                            //     oEntry.zlast_key_date = oEntry.zlast_key_date ? this.dateFormatter(oEntry.zlast_key_date) : null;
+                            // }
+                            // if (custData.zpayment_on === undefined || custData.zpayment_on === null || custData.zpayment_on.length < 13) {
+                            //     oEntry.zpayment_on = oEntry.zpayment_on ? this.dateFormatter(oEntry.zpayment_on) : null;
+                            // }
+                            if (custData.zcreated_date === undefined || custData.zcreated_date === null || custData.zcreated_date.length < 13) {
+                                oEntry.zcreated_date = oEntry.zcreated_date ? this.dateFormatter(oEntry.zcreated_date) : null;
+                            }
+                            if (custData.zcl_validity_proposed_date === undefined || custData.zcl_validity_proposed_date === null || custData.zcl_validity_proposed_date.length < 13) {
+                                oEntry.zcl_validity_proposed_date = oEntry.zcl_validity_proposed_date ? this.dateFormatter(oEntry.zcl_validity_proposed_date) : null;
+                            }
+                            // if (custData.zresubmission_on === undefined || custData.zresubmission_on === null || custData.zresubmission_on.length < 13) {
+                            //     oEntry.zresubmission_on = oEntry.zresubmission_on ? this.dateFormatter(oEntry.zresubmission_on) : null;
+                            // }
+                            if (custData.zvalid_passport_date === undefined || custData.zvalid_passport_date === null || custData.zvalid_passport_date.length < 13) {
+                                oEntry.zvalid_passport_date = oEntry.zvalid_passport_date ? this.dateFormatter(oEntry.zvalid_passport_date) : null;
+                            }
+                            if (custData.zvisa_valid_date === undefined || custData.zvisa_valid_date === null || custData.zvisa_valid_date.length < 13) {
+                                oEntry.zvisa_valid_date = oEntry.zvisa_valid_date ? this.dateFormatter(oEntry.zvisa_valid_date) : null;
+                            }
+                            // if (custData.znet_due_date === undefined || custData.znet_due_date === null || custData.znet_due_date.length < 13) {
+                            //     oEntry.znet_due_date = oEntry.znet_due_date ? this.dateFormatter(oEntry.znet_due_date) : null;
+                            // }
+                            oEntry.zstate = oEntry.zstate ? oEntry.zstate.split(" - ")[0] : "";
+                            oEntry.zcountry = oEntry.zcountry ? oEntry.zcountry.split(" - ")[0] : "";
+                            oEntry.ztransportation_zone = oEntry.ztransportation_zone ? oEntry.ztransportation_zone.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zlanguage = oEntry.zlanguage ? oEntry.zlanguage.split(" - ")[0] : "";
+                            oEntry.zcompany_code = oEntry.zcompany_code ? oEntry.zcompany_code.split(" - ")[0] : "";
+                            oEntry.zar_pledging_indicator = oEntry.zar_pledging_indicator ? oEntry.zar_pledging_indicator.split(" - ")[0] : "";
+                            oEntry.zgrouping_key = oEntry.zgrouping_key ? oEntry.zgrouping_key.split(" - ")[0] : "";
+                            oEntry.zaccounting_clerk = oEntry.zaccounting_clerk ? oEntry.zaccounting_clerk.split(" - ")[0] : "";
+                            oEntry.zaccount_statement = oEntry.zaccount_statement ? oEntry.zaccount_statement.split(" - ")[0] : "";
+                            oEntry.zselection_rule = oEntry.zselection_rule ? oEntry.zselection_rule.split(" - ")[0] : "";
+                            oEntry.zreason_code_conversion = oEntry.zreason_code_conversion ? oEntry.zreason_code_conversion.split(" - ")[0] : "";
+                            oEntry.zhouse_bank = oEntry.zhouse_bank ? oEntry.zhouse_bank.split(" - ")[0] : "";
+                            oEntry.zpayment_method_supplement = oEntry.zpayment_method_supplement ? oEntry.zpayment_method_supplement.split(" - ")[0] : "";
+                            oEntry.znegotiated_leave = oEntry.zknown_egotiated_leave ? oEntry.zknown_egotiated_leave.split(" - ")[0] : "";
+                            oEntry.zinterest_indicator = oEntry.zinterest_indicator ? oEntry.zinterest_indicator.split(" - ")[0] : "";
+                            oEntry.zrelease_group = oEntry.zrelease_group ? oEntry.zrelease_group.split(" - ")[0] : "";
+                            oEntry.zplanning_group = oEntry.zplanning_group ? oEntry.zplanning_group.split(" - ")[0] : "";
+                            oEntry.zsort_key = oEntry.zsort_key ? oEntry.zsort_key.split(" - ")[0] : "";
+                            oEntry.zvalue_adjustment = oEntry.zvalue_adjustment ? oEntry.zvalue_adjustment.split(" - ")[0] : "";
+                            oEntry.zauthorization_group = oEntry.zauthorization_group ? oEntry.zauthorization_group.split(" - ")[0] : "";
+                            oEntry.zhead_office = oEntry.zhead_office ? oEntry.zhead_office.split(" - ")[0] : "";
+                            oEntry.zcustomer_legal_name = oEntry.zcustomer_legal_name ? oEntry.zcustomer_legal_name.split(" - ")[0] : "";
+                            oEntry.zcredit_limit_currency = oEntry.zcredit_limit_currency ? oEntry.zcredit_limit_currency.split(" - ")[0] : "";
+                            oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
+                            oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
+                            oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                            // delete oEntry.ztype_of_Entity;
+                            oEntry.zreconciliation_account = oEntry.zreconciliation_account ? oEntry.zreconciliation_account.split(" - ")[0] : "";
+                            oEntry.zregion = oEntry.zstate;
 
-                    //         oEntry.zregion = oEntry.zstate;
+                            oModel.create("/ZDD_CUSTOMER", oEntry, {
+                                success: function (oData, oResponse) {
+                                    that.reqestNo = req_no;
+                                    that.custNum = oData.zcustomer_num;
+                                    this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
+                                    //         jQuery.sap.require("sap.m.MessageBox");
+                                    // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
+                                    this.handleSalesData();
 
-                    //         oModel.create("/ZDD_CUSTOMER", oEntry, {
-                    //             success: function (oData, oResponse) {
-                    //                 that.reqestNo = req_no;
-                    //                 that.custNum = oData.zcustomer_num;
-                    //                 this.getView().getModel("appView").setProperty("/newCustId", oData.zcustomer_num);
-                    //                 //         jQuery.sap.require("sap.m.MessageBox");
-                    //                 // sap.m.MessageBox.success("Customer Id " + this.reqestNo + " saved Successfully");
-                    //                 this.handleSalesData();
-
-                    //             }.bind(this),
-                    //             error: function (oError) {
-                    //                 this.getView().setBusy(false);
-                    //             }
-                    //         });
-                    //     }
-                    // }
+                                }.bind(this),
+                                error: function (oError) {
+                                    this.getView().setBusy(false);
+                                }
+                            });
+                        
+                    }
                 } else {
                     MessageBox.error(this.amtValidationMesg);
                 }
@@ -841,9 +852,19 @@ sap.ui.define([
                         this.handleAmtFields();
 
                         // if (this.mode == "edit" || this.custNum) {
-                        if (this.mode == "edit" || this.mode === "CHANGE") {
+                        if (this.mode == "edit" && oEntry.zrequest_status == "In Draft" || this.mode == "COPY S4 RECORD" && oEntry.zrequest_status == "In Draft") {
                             // oEntry.zsales_orgnization =  this.getView().getModel("salesModel").getData().length > 0 ? this.getView().getModel("salesModel").getData()[0].zsales_orgnization.split(" - ")[0] : "";
-                            oEntry.zrequest_type = this.getView().getModel("appView").getProperty("/process");
+                            let process = this.getView().getModel("appView").getProperty("/process");
+
+                            if(process == "CHANGE"){
+                                oEntry.zrequest_type = "Change Customer"
+                            }
+                            if(process == "EXTEND"){
+                                oEntry.zrequest_type = "Extend Customer"
+                            }
+                            if(process == "CREATE"){
+                                oEntry.zrequest_type = "Create Customer"
+                            } 
                             oEntry.zrequest_status = "In Progress";
                             delete oEntry.zindividual_paymen;
                             delete oEntry.ztelephone_country_number_exte;
@@ -1066,7 +1087,17 @@ sap.ui.define([
                             var req_no = Math.floor(1000 + Math.random() * 9000) + "";
                             oEntry.zrequest_no = req_no;
 
-                            oEntry.zrequest_type = "Change Customer"
+                            let process = this.getView().getModel("appView").getProperty("/process");
+
+                            if(process == "CHANGE"){
+                                oEntry.zrequest_type = "Change Customer"
+                            }
+                            if(process == "EXTEND"){
+                                oEntry.zrequest_type = "Extend Customer"
+                            }
+                            if(process == "CREATE"){
+                                oEntry.zrequest_type = "Create Customer"
+                            } 
                             oEntry.zrequest_status = "In Progress";
                             delete oEntry.zindividual_paymen;
                             delete oEntry.ztelephone_country_number_exte;
@@ -1188,6 +1219,7 @@ sap.ui.define([
                             oEntry.ztype_of_entity = oEntry.ztype_of_entity ? oEntry.ztype_of_entity.split(" - ")[0] : "";
                             oEntry.zsource_of_inquiry = oEntry.zsource_of_inquiry ? oEntry.zsource_of_inquiry.split(" - ")[0] : "";
                             oEntry.zlicense_type = oEntry.zlicense_type ? oEntry.zlicense_type.split(" - ")[0] : "";
+                            oEntry.zreconciliation_account = oEntry.zreconciliation_account ? oEntry.zreconciliation_account.split(" - ")[0] : "";
                             // delete oEntry.ztype_of_Entity;
                             if (this.getView().getModel("appView").getProperty("/bpg").split(" ")[0].includes("Intercompany")) {
                                 oEntry.zbusiness_partner_grouping = "Z070";

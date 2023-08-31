@@ -24,10 +24,10 @@ sap.ui.define([
             createMasterDataModel: function(){
                 var oTemp = {
                     "BusinessPartnerDD" : [
-                        {"BPKey":"Sold", "BPText":"Sold To"},
-                        {"BPKey":"Ship", "BPText":"Ship To"},
-                        {"BPKey":"One", "BPText":"One Time"},
-                        {"BPKey":"Inte", "BPText":"Intercompany Customer"},
+                        {"BPKey":"Sold", "BPText":"SOLD TO"},
+                        {"BPKey":"Ship", "BPText":"SHIPT TO"},
+                        {"BPKey":"One", "BPText":"ONE TIME"},
+                        {"BPKey":"Inte", "BPText":"INTERCOMPANY CUSTOMER"},
                     ],
                     "BPRoles": [
                         {"BPRole": "FLCU00", "BPRoleDesc":"FI Customer"},

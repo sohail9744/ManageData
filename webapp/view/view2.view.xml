@@ -594,6 +594,7 @@
                 <!-- <m:Button type="Emphasized"  text="{i18n>Validate}" press="saveRequest" /> -->
                 <m:Button
                     type="Emphasized"
+                    visible="{=${Customers>/zrequest_status} !== 'In Progress' ? true : false}"
                     text="{i18n>Save}"
                     press="saveRequest"
                 />
