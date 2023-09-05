@@ -32,7 +32,7 @@
 
         <RadioButtonGroup
             selectedIndex="0"
-            enabled="{appView>/clapFields}"
+            enabled="false"
             select="onDescriptionSelect"
         >
             <RadioButton

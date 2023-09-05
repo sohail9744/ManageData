@@ -25,7 +25,7 @@ sap.ui.define([
                 var oTemp = {
                     "BusinessPartnerDD" : [
                         {"BPKey":"Sold", "BPText":"SOLD TO"},
-                        {"BPKey":"Ship", "BPText":"SHIPT TO"},
+                        {"BPKey":"Ship", "BPText":"SHIP TO"},
                         {"BPKey":"One", "BPText":"ONE TIME"},
                         {"BPKey":"Inte", "BPText":"INTERCOMPANY CUSTOMER"},
                     ],

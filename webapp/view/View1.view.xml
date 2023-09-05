@@ -172,9 +172,10 @@
                                         press="handleChangeCustomer"
                                     />
                                     <Button
-                                        text="Extend"
+                                        text="Add Cash Customer"
                                         type="Emphasized"
-                                        press="handleExtendCustomer"
+                                        icon="sap-icon://add"
+                                        press="handleCashCustomer"
                                     />
                                     <!-- <Button text="Extend" type="Emphasized" press="handleNewCustomer" /> -->
                                 </content>
