@@ -182,6 +182,7 @@ sap.ui.define(
           }
         }
         this.getView().getModel("appView").setProperty("/process", process);
+        this.getView().getModel("appView").setProperty("/vertical", cashOrCredit);
         var oRouter = this.getOwnerComponent().getRouter();
         oRouter.navTo("CustomerDetail", {
           zcustomer_num: oEvent
@@ -198,6 +199,7 @@ sap.ui.define(
             .getSource()
             .getBindingContext()
             .getProperty("zrequest_type"),
+            blockCustomer: false
         });
 
         if (!this.check1 && !this.checkB) {
@@ -219,6 +221,7 @@ sap.ui.define(
           zsales_orgnization: "2",
           mode: "add",
           process: "Create Customer",
+          blockCustomer: false
         });
         if (!this.check1 && !this.checkB) {
           this.checkB = true;
@@ -230,7 +233,6 @@ sap.ui.define(
         }
       },
       getSelections: function (evt) {
-        var that = this;
         this.getView()
           .getModel("appView")
           .setProperty("/selectedMode", evt.getParameters().selected);
@@ -252,6 +254,9 @@ sap.ui.define(
           oRouter.navTo("CustomerDetail", {
             process: this.getView().getModel("appView").getProperty("/process"),
             mode: "COPY S4 RECORD",
+            blockCustomer: this.getView()
+              .getModel("appView")
+              .getProperty("/blockCustomer"),
             zbusinessPartnerId: this.zbusinessPartnerId,
           });
           if (!this.check1 && !this.checkB) {
@@ -267,15 +272,19 @@ sap.ui.define(
         }
       },
       handleChangeCustomer: function (oEvent) {
+        this.getView().getModel("appView").setProperty("/blockCustomer", false);
         this.getView().getModel("appView").setProperty("/process", "CHANGE");
         this.onClearSelection();
         this.onSearchExist();
         this.ex.open();
       },
-      // handleCashCustomer: function (oEvent) {
-      //   this.getView().getModel("appView").setProperty("/process", "CASH");
-
-      // },
+      handleBlockCustomer: function (oEvent) {
+        this.getView().getModel("appView").setProperty("/process", "CHANGE");
+        this.getView().getModel("appView").setProperty("/blockCustomer", true);
+        this.onClearSelection();
+        this.onSearchExist();
+        this.ex.open();
+      },
       onClearSelection: function () {
         var table = this.ex.getContent()[1]; // Replace "yourTableId" with the actual ID of your table
         // Get all items/rows in the table
@@ -494,16 +503,6 @@ sap.ui.define(
           }.bind(this)
         );
       },
-
-      // onDialogClose: function (oEvent) {
-      //     var aContexts = oEvent.getParameter("selectedContexts");
-      //     // if (aContexts && aContexts.length) {
-      //     //     MessageToast.show("You have chosen " + aContexts.map(function (oContext) { return oContext.getObject().Name; }).join(", "));
-      //     // } else {
-      //     //     MessageToast.show("No new item was selected.");
-      //     // }
-      //     oEvent.getSource().getBinding("items").filter([]);
-      // },
     });
   }
 );

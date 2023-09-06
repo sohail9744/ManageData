@@ -37,13 +37,13 @@
         >
             <RadioButton
                 id="0"
-                selected="{= ${Customers>/zdescription} === 'Credit' || ${appView>/customerType} === 0 ? true : false}"
+                selected="{= ${Customers>/zdescription} === 'CREDIT' || ${appView>/customerType} === 0 ? true : false}"
                 text="Credit"
             />
             <RadioButton
                 id="1"
                 text="Cash"
-                selected="{= ${Customers>/zdescription} === 'Cash' || ${appView>/customerType} === 1 ? true : false}"
+                selected="{= ${Customers>/zdescription} === 'CASH' || ${appView>/customerType} === 1 ? true : false}"
             />
         </RadioButtonGroup>
 

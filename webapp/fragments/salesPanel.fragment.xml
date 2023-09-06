@@ -23,6 +23,7 @@
                         editable="false"
                         layout="ColumnLayout"
                     >
+                     
                         <core:Title text="Sales Area Fields" />
 
                         <Label

@@ -92,7 +92,7 @@ sap.ui.define([
                 //this.onClear();
                 // this.onClearFiles();  // commented by mujaida
 
-
+                this.blockCustomer = JSON.parse(oEvent.getParameters().arguments.blockCustomer);
                 if (this.mode == "edit") {
                     this.getView().getModel("appView").setProperty("/mode", false);
                     this.zcustomer_num = oEvent.getParameters().arguments.zcustomer_num;
@@ -103,10 +103,9 @@ sap.ui.define([
                     this.handleRuleEngineConfiguration();
                 }
                 if (this.mode === "COPY S4 RECORD") {
-                    this.zbusinessId = oEvent.getParameters().arguments.zbusinessPartnerId
-                    this.sPath = '/ZDD_CUSTOMER'
+                    this.zbusinessId = oEvent.getParameters().arguments.zbusinessPartnerId;
+                    this.sPath = '/ZDD_CUSTOMER';
                     this.onCustomerData();
-                    this.handleRuleEngineConfiguration();
                 }
                 if(this.mode === "add"){
                     this.getView().getModel("Customers").setData({});
@@ -139,23 +138,33 @@ sap.ui.define([
                                 }
                                 this.zcustomer_num = oData.zcustomer_num;
                                 this.sPath = "/ZDD_CUSTOMER(zcustomer_num=guid'" + this.zcustomer_num + "')";
-                            
-
-                                let process = this.getView().getModel("appView").getProperty("/process");
-                                //Temporary bases
-                                // oData.zrequest_status = "Completed"
-                                let zStatus = oData.zrequest_status;
-
-                                if (zStatus === "In Progress" ) {
+                                
+                                //Mohammad Sohail: we want description and partner id //credit //SOLD TO
+                                this.getView().getModel("appView").setProperty("/vertical", oData.zdescription) //credit
+                                this.getView().getModel("appView").setProperty("/bpg", oData.zbusiness_partner_id_grouping) //SOLD TO
+                                
+                                //Mohammad Sohail: If the blockCustomer is false then only Change request will work
+                                if(!this.blockCustomer){
+                                    let zStatus = oData.zrequest_status;
+                                    if (zStatus === "In Progress" ) {
                                     this.getView().getModel("appView").setProperty("/status", false)
-                                }
-                                if (zStatus === "In Draft") {
+                                    this.getView().getModel("appView").setProperty("/clapFields", false)
+                                    }
+                                    if (zStatus === "In Draft") {
                                     this.getView().getModel("appView").setProperty("/status", false)
-                                }
-                                if (zStatus === "Completed") {
-                                    this.getView().getModel("appView").setProperty("/status", false) 
+                                    }
+                                    if (zStatus === "Completed") {
+                                    this.getView().getModel("appView").setProperty("/status", true)
                                 }
                             }
+                            
+                            if(this.blockCustomer){
+                                this.getView().getModel("appView").setProperty("/status", false)
+                                this.getView().getModel("appView").setProperty("/clapFields", false)
+                                this.getView().getModel("appView").setProperty("/process", oData.zrequest_type)
+                            }
+                            this.handleRuleEngineConfiguration();
+                        }
                             var oCustomerDetailModel = this.getView().getModel("Customers");
                             delete oData.__metadata;
                             delete oData.to_zdd_comments;
@@ -396,15 +405,18 @@ sap.ui.define([
                 if(process == "CREATE" || process == "Create Customer"){
                     this.process = "CREATE"
                 } 
-                // this.process = (this.process == "Create Customer") ? "CREATE" : (this.process == "Change Customer") ? "CHANGE" : "EXTEND";
-                var sCustomerType = this.getView().getModel("appView").getProperty("/vertical") === 'Cash' ? 'Cash' : 'Credit'
+
+                var sCustomerType = this.getView().getModel("appView").getProperty("/vertical").toLocaleUpperCase() == 'CASH' ? 'Cash' : 'Credit'
                 var sBPGrouping = this.getView().getModel("appView").getProperty("/bpg");
                 const configObject = {
                     oModel: this.getOwnerComponent().getModel("RuleEngine"),
                     process: this.process,
                     aCustomerType: sCustomerType.toLocaleUpperCase(),
-                    sBPGrouping: sBPGrouping.toLocaleUpperCase()
-                }
+                    sBPGrouping:
+                      sBPGrouping.toLocaleUpperCase() === "SOLD"
+                        ? "SOLD TO"
+                        : sBPGrouping.toLocaleUpperCase(),
+                  };
 
                 let fieldMappingModelsData = await ruleEngine(configObject);
 

@@ -29,7 +29,6 @@
             <Button
                 text="Display Sales Area"
                 tooltip="click here"
-                visible="true"
                 enabled="{=${appView>/process} === 'CHANGE' ? false : true}"
                 id="generateSales"
                 press="handleGenerateSales"

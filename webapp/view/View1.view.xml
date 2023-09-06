@@ -165,19 +165,24 @@
                                         level="H2"
                                     />
                                     <ToolbarSpacer />
-
-                                    <Button
-                                        text="Change"
-                                        type="Emphasized"
-                                        press="handleChangeCustomer"
-                                    />
                                     <Button
                                         text="Add Cash Customer"
-                                        type="Emphasized"
+                                        type="Success"
                                         icon="sap-icon://add"
                                         press="handleCashCustomer"
                                     />
-                                    <!-- <Button text="Extend" type="Emphasized" press="handleNewCustomer" /> -->
+                                    <Button
+                                        text="Change Request"
+                                        type="Emphasized"
+                                        icon="sap-icon://customer-and-contacts"
+                                        press="handleChangeCustomer"
+                                    />
+                                    <Button
+                                        text="Block Cutomer"
+                                        type="Reject"
+                                        icon="sap-icon://sys-minus"
+                                        press="handleBlockCustomer"
+                                    />
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>

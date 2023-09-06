@@ -40,7 +40,8 @@ sap.ui.define(
             TypeOfEntity9: "",
             dmsFile:[{}],
             clapFields: false,
-            status: true
+            status: true,
+            blockCustomer: false
           });
           this.getView().setModel(oViewModel, "appView");
           this.getView().getModel("appView").updateBindings(true);

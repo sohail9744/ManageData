@@ -172,7 +172,7 @@
                     ]
                 },
                 {
-                    "pattern": "CustomerDetail/:zcustomer_num:/:zsales_orgnization:/{mode}/{process}/:zbusinessPartnerId:",
+                    "pattern": "CustomerDetail/:zcustomer_num:/:zsales_orgnization:/{mode}/{process}/:zbusinessPartnerId:/:blockCustomer:",
                     "name": "CustomerDetail",
                     "target": [
                         "TargetView2"
