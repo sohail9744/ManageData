@@ -287,8 +287,6 @@ sap.ui.define([
                                     "ztext_field": oData.to_salesarea.results[i].ztext_field,
                                     "zcredit_curr": oData.to_salesarea.results[i].zcredit_curr,
                                     "zblock_reason": oData.to_salesarea.results[i].zblock_reason
-
-
                                 });
                             }
                             this.getOwnerComponent().getModel("salesDataModel").updateBindings(true);
@@ -335,7 +333,7 @@ sap.ui.define([
                                 this.getView().getModel("appView").getData().TypeOfEntity9 = true;
                             }
                             this.getView().getModel("appView").setProperty("/vertical", this.getView().getModel("Customers").getData().zdescription);
-                            this.getDmsData();
+                            this.getDmsData()
                             resolve();
                         }.bind(this),
                         error: function (oError) {
@@ -1456,20 +1454,9 @@ sap.ui.define([
                         obj.zvalidity_to = obj.zvalidity_to ? this.dateFormatter(obj.zvalidity_to) : null;
                         obj.zresubmission_date = obj.zresubmission_date ? this.dateFormatter(obj.zresubmission_date) : null;
                         obj.zlimit = obj.zlimit ? obj.zlimit.toString() : '0';
+                        debugger
                         var salesVal = this.getView().byId("salesAreadata17").getAggregation("_views")[0].getContent()[0].getContent()[2].getItems();
                         var checkBoxValue = salesVal.length > 0 ? salesVal[index].getItems()[0].getContent()[0].getItems()[0].getContent() : "";
-
-                        //    delete obj.zpayment_terms;
-
-                        // if(checkBoxValue.length > 0){
-                        //     obj.zblockedincm = checkBoxValue[123].getSelected() ? 'Y' : 'N';
-                        //     obj.zspecialattention = checkBoxValue[125].getSelected() ? 'Y' : 'N';
-                        //     obj.zrelevant = checkBoxValue[152].getSelected() ? 'Y' : 'N';
-                        // }else{
-                        //     obj.zblockedincm = 'N';
-                        //     obj.zspecialattention = 'N';
-                        //     obj.zrelevant = 'N';
-                        // }
                         if (checkBoxValue.length > 0) {
                             if (checkBoxValue[123].getId().includes("box")) {
                                 obj.zblockedincm = checkBoxValue[123].getSelected() ? 'Y' : 'N';
@@ -1500,7 +1487,7 @@ sap.ui.define([
 
                         obj.zdivision = obj.zdivision ? obj.zdivision.split(" - ")[0] : "";
 
-
+                        debugger
                         obj.zinvoicing_dates = obj.zinvoicing_dates ? obj.zinvoicing_dates.split(" - ")[0] : "";
                         obj.zinvoicing_list_dates = obj.zinvoicing_list_dates ? obj.zinvoicing_list_dates.split(" - ")[0] : "";
                         obj.zcustomer_group1 = obj.zcustomer_group1 ? obj.zcustomer_group1.split(" - ")[0] : "";

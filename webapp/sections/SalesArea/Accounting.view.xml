@@ -11,21 +11,19 @@
         width="100%"
     >
         <l:content>
-            <!-- <Button
-                text="Add Sales Area"
-                enabled="{=${appView>/addSales} === true ? true : false}"
-                visible="{=${appView>/vertical} == 'Cash' ? true : false}"
-                icon="sap-icon://add"
-                type="Transparent"
-                press="handleCreate"
-            /> -->
             <Button
                 text="Add Sales Area"
                 icon="sap-icon://add"
                 type="Transparent"
                 press="handleCreate"
-                visible="{appView>/clapFields}"
             />
+            <!-- <Button
+                text="Add Sales Area"
+                icon="sap-icon://add"
+                type="Transparent"
+                press="handleCreate"
+                visible="{appView>/clapFields}"
+            /> -->
             <Button
                 text="Display Sales Area"
                 tooltip="click here"

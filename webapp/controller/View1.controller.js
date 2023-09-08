@@ -182,7 +182,9 @@ sap.ui.define(
           }
         }
         this.getView().getModel("appView").setProperty("/process", process);
-        this.getView().getModel("appView").setProperty("/vertical", cashOrCredit);
+        this.getView()
+          .getModel("appView")
+          .setProperty("/vertical", cashOrCredit);
         var oRouter = this.getOwnerComponent().getRouter();
         oRouter.navTo("CustomerDetail", {
           zcustomer_num: oEvent
@@ -199,7 +201,7 @@ sap.ui.define(
             .getSource()
             .getBindingContext()
             .getProperty("zrequest_type"),
-            blockCustomer: false
+          blockCustomer: false,
         });
 
         if (!this.check1 && !this.checkB) {
@@ -221,7 +223,7 @@ sap.ui.define(
           zsales_orgnization: "2",
           mode: "add",
           process: "Create Customer",
-          blockCustomer: false
+          blockCustomer: false,
         });
         if (!this.check1 && !this.checkB) {
           this.checkB = true;
@@ -371,6 +373,11 @@ sap.ui.define(
               }
             }
           }
+        }
+        if (!oTable.getContent()[1].getBinding("items")) {
+          sap.m.MessageBox.warning(
+            "The server is slow or down please try later"
+          );
         }
         oTable.getContent()[1].getBinding("items").filter(aFilters);
       },

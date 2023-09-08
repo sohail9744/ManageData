@@ -1,0 +1,17 @@
+<c:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:c="sap.ui.core">
+    <SelectDialog
+        contentHeight="60%"
+        showClearButton="true"
+        title="Sales Order Block All "
+        class="sapUiPopupWithPadding"
+        items="{S4D>/SalesBlockSet}"
+        search="handleAllBlockSalesSearch"
+        confirm="handleAllBlockSalesConfirm"
+        multiSelect="false">
+        <StandardListItem
+            title="{S4D>Salesorderblock}"
+            description="{S4D>SalesorderblockDesc}"/>
+    </SelectDialog>
+</c:FragmentDefinition>

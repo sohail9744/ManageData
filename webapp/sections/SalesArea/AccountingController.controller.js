@@ -300,6 +300,67 @@ sap.ui.define(
             this.getView().addDependent(this.indusType);
             this.indusType.setModel(this.getOwnerComponent().getModel());
           }
+          // Block Sales Area Framgment
+
+          if (!this.salesBlockAll) {
+            this.salesBlockAll = new sap.ui.xmlfragment(
+              "Iffco.clap.fragments.SalesOrderBlockAll",
+              this
+            );
+            this.getView().addDependent(this.salesBlockAll);
+            this.salesBlockAll.setModel(
+              this.getOwnerComponent().getModel("S4D")
+            );
+          }
+          if (!this.salesBlockSel) {
+            this.salesBlockSel = new sap.ui.xmlfragment(
+              "Iffco.clap.fragments.SalesOrderBlockSelected",
+              this
+            );
+            this.getView().addDependent(this.salesBlockSel);
+            this.salesBlockSel.setModel(
+              this.getOwnerComponent().getModel("S4D")
+            );
+          }
+          if (!this.deliveryBlockAll) {
+            this.deliveryBlockAll = new sap.ui.xmlfragment(
+              "Iffco.clap.fragments.deliveryBlockAll",
+              this
+            );
+            this.getView().addDependent(this.deliveryBlockAll);
+            this.deliveryBlockAll.setModel(
+              this.getOwnerComponent().getModel("S4D")
+            );
+          }
+          if (!this.deliveryBlockSel) {
+            this.deliveryBlockSel = new sap.ui.xmlfragment(
+              "Iffco.clap.fragments.deliveryBlockSel",
+              this
+            );
+            this.getView().addDependent(this.deliveryBlockSel);
+            this.deliveryBlockSel.setModel(this.getOwnerComponent().getModel());
+          }
+          if (!this.billingBlockAll) {
+            this.billingBlockAll = new sap.ui.xmlfragment(
+              "Iffco.clap.fragments.BillingBlockAll",
+              this
+            );
+            this.getView().addDependent(this.billingBlockAll);
+            this.billingBlockAll.setModel(
+              this.getOwnerComponent().getModel("S4D")
+            );
+          }
+          if (!this.billingBlockSel) {
+            this.billingBlockSel = new sap.ui.xmlfragment(
+              "Iffco.clap.fragments.BillingBlockSel",
+              this
+            );
+            this.getView().addDependent(this.billingBlockSel);
+            this.billingBlockSel.setModel(
+              this.getOwnerComponent().getModel("S4D")
+            );
+          }
+          // Block Sales Area END
         },
         onAfterRendering: function (oEvent) {
           var that = this;
@@ -765,212 +826,212 @@ sap.ui.define(
           this.DelvryPlant.close();
         },
         handleCreate: function (evt) {
-        //   let firstComing = 0;
+          //   let firstComing = 0;
 
-        //   let isValid = this.handleValidateSalesFields();
-        //   if (firstComing === 0) {
-        //     isValid = true;
-        //     firstComing++
-        //   }
-        //   if (isValid === true) {
-            var that = this;
-            var objects = {
-              zsettlement_group: "",
-              zaccount_assignment_group: "",
-              zagency_business: "",
-              zdocument_index_active: "",
-              zmanual_invoice_maintenance: "",
-              zrebate: "",
-              zpricing: "",
-              zinvoicing_dates: "",
-              zinvoicing_list_dates: "",
-              zcustomer_group1: "",
-              zcustomer_group2: "",
-              zcustomer_group3: "",
-              zcustomer_group4: "",
-              zcustomer_group5: "",
-              zcustomer_group: "",
-              zinco_term: "",
-              zinco_location1: "",
-              zpayment_terms: "",
-              zcredit_control_area: "",
-              zpayment_gurantee_procedure: "",
-              zcomplete_delivery: "",
-              zmaximum_number_of_part_delive: "0.0",
-              zpartial_delivery_per_item: "",
-              zunlimited_tolerance: "",
-              zunder_delivery_tolerance: "0.0",
-              zover_delivery_tolerance: "0.0",
-              zbill_to_buyer: "",
-              zonly_ship_to: "",
-              zsales_person: "",
-              zagent: "",
-              zprice_group: "",
-              zpricelist: "",
-              zprice_procedured_term: "",
-              zcustomer_statistics_group: "",
-              zsales_district: "",
-              zsales_office: "",
-              zsales_group: "",
-              zcustomer_group: "",
-              zabc_class: "",
-              zsales_currency: "",
-              zaccount_at_customer: "",
-              zswitch_off_rounding: "",
-              zorderprobability: "",
-              zauthorization_group: "",
-              zitemproposal: "",
-              zunit_of_measure_group: "",
-              zexchange_rate_type: "",
-              zpp_customer_procedure: "",
-              zdelivery_priority: "",
-              zshipping_conditions: "",
-              zdelivery_plant: "",
-              zorder_combination: "",
-              zrelevant_pod: "",
-              zpod_timeframe: "0.0",
-              // "zcountry" : "",
-              ztaxcategory: "",
-              ztax_classification: "",
-              ztax_category2: "",
-              ztax_classification2: "",
-              zrule: "",
-              zrisk_class: "",
-              zcheck_rule: "",
-              zlimit_define: "",
-              zlimit: "0.0",
-              zvalidity_to: "",
-              zcredit_segment: "",
-              zrelationship_to_bp: "",
-              zcredit_control_area_desc: "",
-              zcredit_segment_desc: "",
-              zblockedincm: "",
-              zspecialattention: "",
-              zblock_reason: "",
-              // "zcredit_exposure" : "",
-              zutiliation_ptg: "0.0",
-              zresubmission_on: "",
-              zinfo_category: "",
-              zinfo_type: "",
-              zname_of_type: "",
-              zrelevant: "",
-              zindividual_step: "",
-              zcredit_amount: "0.0",
-              zcredit_curr: "",
-              zdate_from: "",
-              zdate_to: "",
-              zentered_on: "",
-              zdeleted_on: "",
-              zresubmission_date: "",
-              ztext_field: "",
-              // "zhighest_dunning_data_outdated" : "",
-              // "zdunning_level" : "",
-              // "zdunning_amt" : "",
-              // "zdunning_doc" : "",
-              // "zdunning_not" : "",
-              // "zhighest_dunning_currency" : "",
-              // "zdunning_notice_id" : "",
-              // "zdunning_notice_date" : "",
-              // "zoldest_open_data_outdated" : "",
-              // "zoldest_open_amount" : "",
-              // "znet_due_date" : "",
-              // "zdays_in_arrears" : "",
-              // "zoldest_open_doc" : "",
-              // "zoldest_open_currency" : "",
-              // "zoldest_open_id" : "",
-              // "zlast_payment_outdated" : "",
-              // "zpayment_on" : "",
-              // "zlast_payment_amount" : "",
-              // "zlast_payment_doc" : "",
-              // "zpayment_currency" : "",
-              // "zpayment_id" : "",
-              // "zkey_figures_data_outdated" : "",
-              // "zdso" : "",
-              // "zdso_amount" : "",
-              // "zkey_figures_currency" : "",
-              // "zwo_cash_discount" : "",
-              // "zwith_cash_discount" : "",
-              // "zmax_sales" : "",
-              // "zwo_cash_days_in_arrears" : "",
-              // "zwith_cash_days_in_arrears" : "",
-              // "zsales" : "",
-              // "zcollection_amt_ptg" : "",
-            };
+          //   let isValid = this.handleValidateSalesFields();
+          //   if (firstComing === 0) {
+          //     isValid = true;
+          //     firstComing++
+          //   }
+          //   if (isValid === true) {
+          var that = this;
+          var objects = {
+            zsettlement_group: "",
+            zaccount_assignment_group: "",
+            zagency_business: "",
+            zdocument_index_active: "",
+            zmanual_invoice_maintenance: "",
+            zrebate: "",
+            zpricing: "",
+            zinvoicing_dates: "",
+            zinvoicing_list_dates: "",
+            zcustomer_group1: "",
+            zcustomer_group2: "",
+            zcustomer_group3: "",
+            zcustomer_group4: "",
+            zcustomer_group5: "",
+            zcustomer_group: "",
+            zinco_term: "",
+            zinco_location1: "",
+            zpayment_terms: "",
+            zcredit_control_area: "",
+            zpayment_gurantee_procedure: "",
+            zcomplete_delivery: "",
+            zmaximum_number_of_part_delive: "0.0",
+            zpartial_delivery_per_item: "",
+            zunlimited_tolerance: "",
+            zunder_delivery_tolerance: "0.0",
+            zover_delivery_tolerance: "0.0",
+            zbill_to_buyer: "",
+            zonly_ship_to: "",
+            zsales_person: "",
+            zagent: "",
+            zprice_group: "",
+            zpricelist: "",
+            zprice_procedured_term: "",
+            zcustomer_statistics_group: "",
+            zsales_district: "",
+            zsales_office: "",
+            zsales_group: "",
+            zcustomer_group: "",
+            zabc_class: "",
+            zsales_currency: "",
+            zaccount_at_customer: "",
+            zswitch_off_rounding: "",
+            zorderprobability: "",
+            zauthorization_group: "",
+            zitemproposal: "",
+            zunit_of_measure_group: "",
+            zexchange_rate_type: "",
+            zpp_customer_procedure: "",
+            zdelivery_priority: "",
+            zshipping_conditions: "",
+            zdelivery_plant: "",
+            zorder_combination: "",
+            zrelevant_pod: "",
+            zpod_timeframe: "0.0",
+            // "zcountry" : "",
+            ztaxcategory: "",
+            ztax_classification: "",
+            ztax_category2: "",
+            ztax_classification2: "",
+            zrule: "",
+            zrisk_class: "",
+            zcheck_rule: "",
+            zlimit_define: "",
+            zlimit: "0.0",
+            zvalidity_to: "",
+            zcredit_segment: "",
+            zrelationship_to_bp: "",
+            zcredit_control_area_desc: "",
+            zcredit_segment_desc: "",
+            zblockedincm: "",
+            zspecialattention: "",
+            zblock_reason: "",
+            // "zcredit_exposure" : "",
+            zutiliation_ptg: "0.0",
+            zresubmission_on: "",
+            zinfo_category: "",
+            zinfo_type: "",
+            zname_of_type: "",
+            zrelevant: "",
+            zindividual_step: "",
+            zcredit_amount: "0.0",
+            zcredit_curr: "",
+            zdate_from: "",
+            zdate_to: "",
+            zentered_on: "",
+            zdeleted_on: "",
+            zresubmission_date: "",
+            ztext_field: "",
+            // "zhighest_dunning_data_outdated" : "",
+            // "zdunning_level" : "",
+            // "zdunning_amt" : "",
+            // "zdunning_doc" : "",
+            // "zdunning_not" : "",
+            // "zhighest_dunning_currency" : "",
+            // "zdunning_notice_id" : "",
+            // "zdunning_notice_date" : "",
+            // "zoldest_open_data_outdated" : "",
+            // "zoldest_open_amount" : "",
+            // "znet_due_date" : "",
+            // "zdays_in_arrears" : "",
+            // "zoldest_open_doc" : "",
+            // "zoldest_open_currency" : "",
+            // "zoldest_open_id" : "",
+            // "zlast_payment_outdated" : "",
+            // "zpayment_on" : "",
+            // "zlast_payment_amount" : "",
+            // "zlast_payment_doc" : "",
+            // "zpayment_currency" : "",
+            // "zpayment_id" : "",
+            // "zkey_figures_data_outdated" : "",
+            // "zdso" : "",
+            // "zdso_amount" : "",
+            // "zkey_figures_currency" : "",
+            // "zwo_cash_discount" : "",
+            // "zwith_cash_discount" : "",
+            // "zmax_sales" : "",
+            // "zwo_cash_days_in_arrears" : "",
+            // "zwith_cash_days_in_arrears" : "",
+            // "zsales" : "",
+            // "zcollection_amt_ptg" : "",
+          };
 
-            //    this.getOwnerComponent().getModel("salesDataModel").getData().push(JSON.parse(JSON.stringify(objects)));
-            //    this.getOwnerComponent().getModel("salesDataModel").updateBindings(true);
-            //    this.getView().getModel("appView").setProperty("/count", this.count+1);
-            //    console.log(this.count);
-            var count = this.getView()
-              .getModel("salesDataModel")
-              .getData().length;
-            var container = this.getView().byId("container");
-            this.salesPanel = new sap.ui.xmlfragment(
-              "frag" + count,
-              "Iffco.clap.fragments.salesPanel",
-              this
-            );
-            this.getView().addDependent(this.salesPanel);
-            this.getOwnerComponent()
-              .getModel("salesDataModel")
-              .getData()
-              .push(JSON.parse(JSON.stringify(objects)));
-            this.getOwnerComponent()
-              .getModel("salesDataModel")
-              .updateBindings(true);
-            //    var count = this.getView().getModel("salesDataModel").getData().length;
+          //    this.getOwnerComponent().getModel("salesDataModel").getData().push(JSON.parse(JSON.stringify(objects)));
+          //    this.getOwnerComponent().getModel("salesDataModel").updateBindings(true);
+          //    this.getView().getModel("appView").setProperty("/count", this.count+1);
+          //    console.log(this.count);
+          var count = this.getView()
+            .getModel("salesDataModel")
+            .getData().length;
+          var container = this.getView().byId("container");
+          this.salesPanel = new sap.ui.xmlfragment(
+            "frag" + count,
+            "Iffco.clap.fragments.salesPanel",
+            this
+          );
+          this.getView().addDependent(this.salesPanel);
+          this.getOwnerComponent()
+            .getModel("salesDataModel")
+            .getData()
+            .push(JSON.parse(JSON.stringify(objects)));
+          this.getOwnerComponent()
+            .getModel("salesDataModel")
+            .updateBindings(true);
+          //    var count = this.getView().getModel("salesDataModel").getData().length;
 
-            //    this.getView().getModel("appView").setProperty("/count", this.count+1);
-            console.log(count);
-            container.addItem(this.salesPanel);
-            //   var headerText = salesPanel.getItems()[0].getContent()[0].getParent().getHeaderText();
-            var headerCount = count + 1;
-            // var buttonText =   salesPanel.getItems()[0].getHeaderToolbar().getContent()[2];
-            // var buttonText =   salesPanel.getItems()[0].getHeaderToolbar().getContent()[0];
-            // var headerText = salesPanel.getItems()[0].getHeaderToolbar().getContent()[0].getText();
-            //   salesPanel.getItems()[0].getContent()[0].getParent().getHeaderToolbar().getContent()[0].getText()
+          //    this.getView().getModel("appView").setProperty("/count", this.count+1);
+          console.log(count);
+          container.addItem(this.salesPanel);
+          //   var headerText = salesPanel.getItems()[0].getContent()[0].getParent().getHeaderText();
+          var headerCount = count + 1;
+          // var buttonText =   salesPanel.getItems()[0].getHeaderToolbar().getContent()[2];
+          // var buttonText =   salesPanel.getItems()[0].getHeaderToolbar().getContent()[0];
+          // var headerText = salesPanel.getItems()[0].getHeaderToolbar().getContent()[0].getText();
+          //   salesPanel.getItems()[0].getContent()[0].getParent().getHeaderToolbar().getContent()[0].getText()
 
-            // salesPanel.getItems()[0].getHeaderToolbar().getContent()[0].setText(headerText+ " "+headerCount);
-            // buttonText.setText(headerText +" "+headerCount);
+          // salesPanel.getItems()[0].getHeaderToolbar().getContent()[0].setText(headerText+ " "+headerCount);
+          // buttonText.setText(headerText +" "+headerCount);
 
-            var simpleForm = this.salesPanel
-              .getItems()[0]
-              .getContent()[0]
-              .getItems()[0];
+          var simpleForm = this.salesPanel
+            .getItems()[0]
+            .getContent()[0]
+            .getItems()[0];
 
-            simpleForm.bindElement({
-              path: "/" + count,
-              model: "salesDataModel",
-            });
-            var oModel = this.getOwnerComponent().getModel();
-            let custdata = this.getView().getModel("Customers").getData();
-            var that = this;
-            if (custdata.zbusiness_unit_name) {
-              oModel.read("/ZDD_BU_CC_VH", {
-                success: function (oData, oResponse) {
-                  var bpRelData = [];
-                  oData.results.forEach(function (obj) {
-                    if (obj.Businessunit === custdata.zbusiness_unit_name) {
-                      bpRelData.push(obj);
-                    }
-                  });
-                  var bpValue = this.getOwnerComponent()
-                    .getModel("salesDataModel")
-                    .getData();
-                  for (let m = 0; m < bpValue.length; m++) {
-                    bpValue[m].zrelationship_to_bp = bpRelData[0].cc;
+          simpleForm.bindElement({
+            path: "/" + count,
+            model: "salesDataModel",
+          });
+          var oModel = this.getOwnerComponent().getModel();
+          let custdata = this.getView().getModel("Customers").getData();
+          var that = this;
+          if (custdata.zbusiness_unit_name) {
+            oModel.read("/ZDD_BU_CC_VH", {
+              success: function (oData, oResponse) {
+                var bpRelData = [];
+                oData.results.forEach(function (obj) {
+                  if (obj.Businessunit === custdata.zbusiness_unit_name) {
+                    bpRelData.push(obj);
                   }
-                  this.getOwnerComponent()
-                    .getModel("salesDataModel")
-                    .updateBindings(true);
-                }.bind(this),
+                });
+                var bpValue = this.getOwnerComponent()
+                  .getModel("salesDataModel")
+                  .getData();
+                for (let m = 0; m < bpValue.length; m++) {
+                  bpValue[m].zrelationship_to_bp = bpRelData[0].cc;
+                }
+                this.getOwnerComponent()
+                  .getModel("salesDataModel")
+                  .updateBindings(true);
+              }.bind(this),
 
-                error: function (oError) {},
-              });
-            }
-        //   } else {
-        //     MessageToast.show("Please first Enter the Sales Area Data");
-        //   }
+              error: function (oError) {},
+            });
+          }
+          //   } else {
+          //     MessageToast.show("Please first Enter the Sales Area Data");
+          //   }
         },
         handleGenerateSales: function () {
           // var generateSale=false;
@@ -2240,6 +2301,242 @@ sap.ui.define(
             this.ExpEndDate1.setValueState("None").setValueStateText("");
           }
         },
+        // Block sales area functionality
+        // All Block Sales
+        handleValueHelpForBlockAllSales: function (evt) {
+          this.salesBlockAllField = evt.getSource();
+          this.salesBlockAll.getBinding("items").filter([]);
+          this.salesBlockAll.open();
+        },
+        handleAllBlockSalesConfirm: function (evt) {
+          this.blockSalesAllTitle = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("title");
+          var desc = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("description");
+          this.salesBlockAllField.setValue(
+            this.blockSalesAllTitle + " - " + desc
+          );
+        },
+        handleAllBlockSalesSearch: function (evt) {
+          var sValue = evt.getParameter("value");
+          var filters = [];
+          if (sValue.length > 0) {
+            var filter1 = new sap.ui.model.Filter({
+              path: "Salesorderblock",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var filter2 = new sap.ui.model.Filter({
+              path: "SalesorderblockDesc",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var sFilters = [filter1, filter2];
+            filters.push(new sap.ui.model.Filter(sFilters, false));
+            this.salesBlockAll.getBinding("items").filter(filters, false);
+          } else {
+            this.salesBlockAll.getBinding("items").filter([]);
+          }
+        },
+
+        // Selected Sales block
+        handleValueHelpForBlockSelectedSales: function (evt) {
+          this.salesBlockSelField = evt.getSource();
+          this.salesBlockSel.getBinding("items").filter([]);
+          this.salesBlockSel.open();
+        },
+        handleSelBlockSalesConfirm: function (evt) {
+          this.blockSalesSelTitle = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("title");
+          let desc = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("description");
+          this.salesBlockSelField.setValue(
+            this.blockSalesSelTitle + " - " + desc
+          );
+        },
+        handleSelBlockSalesSearch: function (evt) {
+          var sValue = evt.getParameter("value");
+          var filters = [];
+          if (sValue.length > 0) {
+            var filter1 = new sap.ui.model.Filter({
+              path: "Salesorderblock",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var filter2 = new sap.ui.model.Filter({
+              path: "SalesorderblockDesc",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var sFilters = [filter1, filter2];
+            filters.push(new sap.ui.model.Filter(sFilters, false));
+            this.salesBlockSel.getBinding("items").filter(filters, false);
+          } else {
+            this.salesBlockSel.getBinding("items").filter([]);
+          }
+        },
+
+        //Delivery Block All
+        handleValueHelpForDelBlockAll: function (evt) {
+          this.deliveryBlockAllField = evt.getSource();
+          this.deliveryBlockAll.getBinding("items").filter([]);
+          this.deliveryBlockAll.open();
+        },
+        handleDelBlockAllConfirm: function (evt) {
+          this.deliveryBlockAllTitle = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("title");
+          let desc = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("description");
+          this.deliveryBlockAllField.setValue(
+            this.deliveryBlockAllTitle + " - " + desc
+          );
+        },
+        handleValueHelpSalesDelBlockAll: function (evt) {
+          var sValue = evt.getParameter("value");
+          var filters = [];
+          if (sValue.length > 0) {
+            var filter1 = new sap.ui.model.Filter({
+              path: "Deliveryblock",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var filter2 = new sap.ui.model.Filter({
+              path: "DeliveryblockDesc",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var sFilters = [filter1, filter2];
+            filters.push(new sap.ui.model.Filter(sFilters, false));
+            this.deliveryBlockAll.getBinding("items").filter(filters, false);
+          } else {
+            this.deliveryBlockAll.getBinding("items").filter([]);
+          }
+        },
+
+        //Delivery Block Selected
+        handleValueHelpForDelBlockSel: function (evt) {
+          this.deliveryBlockSelField = evt.getSource();
+          this.deliveryBlockSel.getBinding("items").filter([]);
+          this.deliveryBlockSel.open();
+        },
+        handleDelBlockSelConfirm: function (evt) {
+          this.deliveryBlockSelTitle = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("title");
+          let desc = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("description");
+          this.deliveryBlockSelField.setValue(
+            this.deliveryBlockSelTitle + " - " + desc
+          );
+        },
+        handleValueHelpSalesDelBlockSel: function (evt) {
+          var sValue = evt.getParameter("value");
+          var filters = [];
+          if (sValue.length > 0) {
+            var filter1 = new sap.ui.model.Filter({
+              path: "Deliveryblock",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var filter2 = new sap.ui.model.Filter({
+              path: "DeliveryblockDesc",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var sFilters = [filter1, filter2];
+            filters.push(new sap.ui.model.Filter(sFilters, false));
+            this.deliveryBlockSel.getBinding("items").filter(filters, false);
+          } else {
+            this.deliveryBlockSel.getBinding("items").filter([]);
+          }
+        },
+
+        //Billing Block all
+        handleValueHelpForBillingBlockAll: function (evt) {
+          this.billingBlockAllField = evt.getSource();
+          this.billingBlockAll.getBinding("items").filter([]);
+          this.billingBlockAll.open();
+        },
+        BillingBlockAllConfirm: function (evt) {
+          this.billingBlockAllTitle = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("title");
+          let desc = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("description");
+          this.billingBlockAllField.setValue(
+            this.billingBlockAllTitle + " - " + desc
+          );
+        },
+        ValueHelpBillingBlockAllSearch: function (evt) {
+          var sValue = evt.getParameter("value");
+          var filters = [];
+          if (sValue.length > 0) {
+            var filter1 = new sap.ui.model.Filter({
+              path: "Deliveryblock",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var filter2 = new sap.ui.model.Filter({
+              path: "DeliveryblockDesc",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var sFilters = [filter1, filter2];
+            filters.push(new sap.ui.model.Filter(sFilters, false));
+            this.billingBlockAll.getBinding("items").filter(filters, false);
+          } else {
+            this.billingBlockAll.getBinding("items").filter([]);
+          }
+        },
+
+        //Billing Block sel
+        handleValueHelpForBillingBlockSel: function (evt) {
+          this.billingBlockSelField = evt.getSource();
+          this.billingBlockSel.getBinding("items").filter([]);
+          this.billingBlockSel.open();
+        },
+        handleBillingBlockSelConfirm: function (evt) {
+          this.billingBlockSelTitle = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("title");
+          let desc = evt
+            .getParameter("selectedItems")[0]
+            .getProperty("description");
+          this.billingBlockSelField.setValue(
+            this.billingBlockSelTitle + " - " + desc
+          );
+        },
+        handleValueHelpBillingBlockSelSearch: function (evt) {
+          var sValue = evt.getParameter("value");
+          var filters = [];
+          if (sValue.length > 0) {
+            var filter1 = new sap.ui.model.Filter({
+              path: "Deliveryblock",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var filter2 = new sap.ui.model.Filter({
+              path: "DeliveryblockDesc",
+              operator: "Contains",
+              value1: sValue,
+            });
+            var sFilters = [filter1, filter2];
+            filters.push(new sap.ui.model.Filter(sFilters, false));
+            this.billingBlockSel.getBinding("items").filter(filters, false);
+          } else {
+            this.billingBlockSel.getBinding("items").filter([]);
+          }
+        },
+
+        // Block sales area functionality
       }
     );
   }

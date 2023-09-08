@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <SelectDialog
+        contentHeight="60%"
+        showClearButton="true"
+        title="Billing Block Selected"
+        class="sapUiPopupWithPadding"
+        items="{S4D>/BillingBlockSet}"
+        search="handleValueHelpBillingBlockSelSearch"
+        confirm="handleBillingBlockSelConfirm"
+        cancel=""
+        multiSelect="false"
+    >
+        <StandardListItem
+            title="{S4D>Billingblock}"
+            description="{S4D>BillingblockDesc}"
+        />
+    </SelectDialog>
+</core:FragmentDefinition>
+

@@ -64,7 +64,6 @@
                 <snappedContent>
                     <m:Text text="City" />
                 </snappedContent>
-
                 <actions>
                     <m:Button text="{Customers>/zrequest_status}" />
                 </actions>
@@ -72,31 +71,35 @@
         </headerTitle>
 
         <headerContent>
-            <m:FlexBox wrap="Wrap">
-                <m:Avatar
-                    class="sapUiSmallMarginEnd"
-                    src="sap-icon://customer"
-                    displaySize="L"
-                />
-
-                <layout:HorizontalLayout class="sapUiSmallMarginBeginEnd">
-                    <!-- <m:Image src="./test-resources/sap/uxap/images/linkedin.png" /> -->
-                    <!-- <m:Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin" /> -->
-                </layout:HorizontalLayout>
-
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:Label
-                        text="Customer Type :{=${appView>/vertical} === 'Cash' ? 'Cash' : 'Credit'}"
+            <m:FlexBox alignItems="Start" justifyContent="SpaceBetween">
+                <m:HBox>
+                    <m:Avatar
+                        class="sapUiSmallMarginEnd"
+                        src="sap-icon://customer"
+                        displaySize="L"
                     />
-                    <m:VBox>
-                        <m:Label text="Credit Limit" />
-                        <!-- <m:ProgressIndicator percentValue="90" displayValue="30%" /> -->
-                    </m:VBox>
-                </layout:VerticalLayout>
-                <!-- 
-                <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-                    <m:Label text="Mumbai, India" />
-                </layout:VerticalLayout> -->
+                    <layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
+                        <m:Label
+                            text="Customer Type: {=${appView>/vertical} === 'Cash' ? 'Cash' : 'Credit'}"
+                        />
+                        <m:VBox>
+                            <!-- <m:Label text="Credit Limit" /> -->
+                            <!-- <m:ProgressIndicator percentValue="90" displayValue="30%" /> -->
+                        </m:VBox>
+                    </layout:VerticalLayout>
+                </m:HBox>
+                <m:HBox alignItems="Start" direction="Column" justifyContent="Start">
+                    <m:Label
+                        text="Block Customer"
+                        visible="{appView>/blockCustomer}"
+                        required="false"
+                    />
+                    <m:CheckBox
+                        enabled="true"
+                        selected="{Customers>/zcentral_block}"
+                        visible="{appView>/blockCustomer}"
+                    />
+                </m:HBox>
             </m:FlexBox>
         </headerContent>
         <sections>
